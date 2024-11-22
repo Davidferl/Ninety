@@ -21,6 +21,7 @@ final _router = GoRouter(
   ],
 );
 
+//TODO add useful stuff from last year's main.dart
 void main() {
   runApp(DevicePreview(
     enabled: false,
