@@ -29,7 +29,6 @@ class UserRepository {
       return User(
         name: data['name'],
         surname: data['surname'],
-        carId: data['carId'],
       );
     } on Exception catch (e) {
       print(e);
