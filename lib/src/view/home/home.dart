@@ -1,5 +1,9 @@
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/page1/page1.dart';
+import 'package:bonne_reponse/src/view/page2/page2.dart';
+import 'package:bonne_reponse/src/view/page3/page3.dart';
+import 'package:bonne_reponse/src/view/page4/page4.dart';
+import 'package:bonne_reponse/src/view/page5/page5.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -16,10 +20,10 @@ class _HomeState extends State<Home> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const Page1(),
-    //const Electricity(),
-    //const Transport(),
-    //const Leftover(),
-    //const Profile(),
+    const Page2(),
+    const Page3(),
+    const Page4(),
+    const Page5(),
   ];
 
   void _onItemTapped(int index) {
