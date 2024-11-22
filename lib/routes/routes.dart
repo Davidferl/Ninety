@@ -1,3 +1,4 @@
+import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:flutter/material.dart';
 
 enum Routes {
@@ -16,3 +17,4 @@ extension RoutesExtension on Routes {
 Map<String, Widget Function(BuildContext)> appRoutes = {
   Routes.startup.name: (context) => const Startup(),
 };
+
