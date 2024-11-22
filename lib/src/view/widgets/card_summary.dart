@@ -1,6 +1,5 @@
-import 'package:amc_2024/src/theme/colors.dart';
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CardSummary extends StatelessWidget {
   final IconData topIcon;

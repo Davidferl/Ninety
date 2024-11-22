@@ -1,6 +1,5 @@
-import 'package:amc_2024/src/view/widgets/text_input.dart';
+import 'package:bonne_reponse/src/view/widgets/text_input.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomAutocomplete extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -39,11 +38,11 @@ class CustomAutocomplete extends StatelessWidget {
       },
       fieldViewBuilder: (context, textEditingController,
           FocusNode fieldFocusNode, VoidCallback onFieldSubmitted) {
-        return EchoHubTextInput(
+        return CustomTextInput(
           controller: textEditingController,
           focusNode: fieldFocusNode,
           validator: validateName,
-          labelText: AppLocalizations.of(context)!.car_model,
+          labelText: "Hello", //TODO: Change this to the actual label
         );
       },
       optionsViewBuilder: (BuildContext context,

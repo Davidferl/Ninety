@@ -1,13 +1,16 @@
-import 'package:amc_2024/src/theme/colors.dart';
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CardTip extends StatelessWidget {
   final IconData topIcon;
   final String descriptionText;
   final String titleText;
 
-  const CardTip({super.key, required this.topIcon, required this.descriptionText, required this.titleText});
+  const CardTip(
+      {super.key,
+      required this.topIcon,
+      required this.descriptionText,
+      required this.titleText});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,8 @@ class CardTip extends StatelessWidget {
         child: Container(
           width: 260,
           height: 105,
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 8.0),
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 8.0, left: 16.0, right: 8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +39,10 @@ class CardTip extends StatelessWidget {
                   Text(
                     titleText,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white, fontSize: 13),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: Colors.white, fontSize: 13),
                   ),
                 ],
               ),

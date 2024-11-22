@@ -1,7 +1,7 @@
-import 'package:amc_2024/src/theme/colors.dart';
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-class EchoHubTextInput extends StatelessWidget {
+class CustomTextInput extends StatelessWidget {
   final String? initialValue;
   final String? hintText;
   final String? labelText;
@@ -17,7 +17,7 @@ class EchoHubTextInput extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool? enabled;
 
-  const EchoHubTextInput({
+  const CustomTextInput({
     Key? key,
     this.initialValue,
     this.hintText,
@@ -79,10 +79,8 @@ class EchoHubTextInput extends StatelessWidget {
         errorBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: kcError),
         ),
-        errorStyle: Theme.of(context)
-            .textTheme
-            .bodySmall!
-            .copyWith(color: kcError),
+        errorStyle:
+            Theme.of(context).textTheme.bodySmall!.copyWith(color: kcError),
       ),
     );
   }
