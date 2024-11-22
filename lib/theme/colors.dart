@@ -27,12 +27,10 @@ const ColorScheme colorScheme = ColorScheme(
   primary: kcPrimary,
   secondary: kcSecondary,
   surface: kcSurface,
-  background: kcBackground,
   error: kcPrimary,
   onPrimary: kcOnPrimary,
   onSecondary: kcOnSecondary,
   onSurface: kcOnSurface,
-  onBackground: kcOnBackground,
   onError: kcOnError,
   brightness: Brightness.light,
 );
