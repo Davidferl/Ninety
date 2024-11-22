@@ -1,39 +1,40 @@
-import 'package:bonne_reponse/view/page/home.dart';
+import 'package:bonne_reponse/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:device_preview/device_preview.dart';
 
-final GoRouter _router = GoRouter(routes: <RouteBase>[
-  GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const HomePage();
-      },
-      routes: <RouteBase>[
-        GoRoute(
-            path: 'home',
-            name: 'home',
-            builder: (BuildContext context, GoRouterState state) {
-              return const HomePage();
-            })
-      ]),
-]);
+import 'injection_container.dart';
+import 'routes/routes.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  setupLocator();
+
+  runApp(DevicePreview(
+    enabled: true,
+    builder: (context) => const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-      title: 'Bonne réponse!',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      title: 'Flutter Demo',
+      theme: appTheme,
+      localizationsDelegates: const [],
+      supportedLocales: const [
+        Locale('fr'),
+        Locale('en'),
+      ],
+      initialRoute: Routes.startup.name,
+      routes: appRoutes,
     );
   }
 }
