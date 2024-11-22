@@ -6,7 +6,8 @@ import '../../domain/user/user.dart';
 class UserRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> addUser(String uid, String name, String surname, String carId) async {
+  Future<void> addUser(
+      String uid, String name, String surname, String carId) async {
     final User user = User(
       name: name,
       surname: surname,
@@ -24,8 +25,10 @@ class UserRepository {
 
   Future<User> getUser(String uid) async {
     try {
-      final DocumentSnapshot documentSnapshot = await _firestore.collection('users').doc(uid).get();
-      final Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+      final DocumentSnapshot documentSnapshot =
+          await _firestore.collection('users').doc(uid).get();
+      final Map<String, dynamic> data =
+          documentSnapshot.data() as Map<String, dynamic>;
       return User(
         name: data['name'],
         surname: data['surname'],
