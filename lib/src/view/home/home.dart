@@ -1,16 +1,16 @@
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-class MyHubPage extends StatefulWidget {
-  const MyHubPage({super.key, required this.title});
+class Home extends StatefulWidget {
+  const Home({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHubPage> createState() => _MyHubPageState();
+  State<Home> createState() => _HomeState();
 }
 
-class _MyHubPageState extends State<MyHubPage> {
+class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
