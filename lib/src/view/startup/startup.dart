@@ -7,6 +7,8 @@ class Startup extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    Navigator.pushReplacementNamed(context, "/home");
+
     //final AuthService authService = locator<AuthService>();
 
     //useEffect(() {
