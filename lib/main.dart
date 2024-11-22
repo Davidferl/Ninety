@@ -13,7 +13,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
       },
       routes: <RouteBase>[
         GoRoute(
-            path: 'home',
+            path: '/home',
             name: 'home',
             builder: (BuildContext context, GoRouterState state) {
               return const Home(title: 'Home');
@@ -23,7 +23,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
 
 void main() {
   runApp(DevicePreview(
-    enabled: true,
+    enabled: false,
     builder: (context) => const MyApp(),
   ));
 }

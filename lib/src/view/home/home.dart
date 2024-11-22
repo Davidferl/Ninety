@@ -14,7 +14,9 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    //const Home(),
+    const Home(
+      title: "Home",
+    ),
     //const Electricity(),
     //const Transport(),
     //const Leftover(),
