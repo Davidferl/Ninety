@@ -42,7 +42,6 @@ dependencies:
   device_preview: ^1.2.0
   flutter_localizations:
     sdk: flutter
-  firebase_auth: ^5.3.3
 
 dev_dependencies:
   flutter_test:

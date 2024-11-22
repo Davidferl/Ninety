@@ -9,7 +9,7 @@ final _router = GoRouter(
   initialLocation: '/startup',
   routes: [
     GoRoute(
-      name: 'home', // Optional, add name to your routes. Allows you navigate by name instead of path
+      name: 'home',
       path: '/home',
       builder: (context, state) => const Home(title: "default"),
     ),

@@ -22,9 +22,11 @@ class Startup extends HookWidget {
     //}, const []);
 
     useEffect(() {
-      context.goNamed('home');
+      Future.delayed(const Duration(seconds: 3), () {
+        context.goNamed("home");
+      });
       return null;
-    }, const []);
+    }, []);
 
     return Scaffold(
       body: Container(

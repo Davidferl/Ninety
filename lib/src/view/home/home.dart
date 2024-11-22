@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/src/theme/colors.dart';
+import 'package:bonne_reponse/src/view/page1/page1.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -14,9 +15,7 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const Home(
-      title: "Home",
-    ),
+    const Page1(),
     //const Electricity(),
     //const Transport(),
     //const Leftover(),
