@@ -4,7 +4,8 @@ class RoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String buttonText;
 
-  RoundedButton({required this.onPressed, required this.buttonText});
+  const RoundedButton(
+      {super.key, required this.onPressed, required this.buttonText});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class RoundedButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           child: Text(
             buttonText,
-            style: TextStyle(fontSize: 16.0),
+            style: const TextStyle(fontSize: 16.0),
           ),
         ),
       ),

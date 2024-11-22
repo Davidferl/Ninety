@@ -9,8 +9,7 @@ class CustomAutocomplete extends StatelessWidget {
   final List<String> options;
 
   CustomAutocomplete(
-      {Key? key, required this.textEditingController, required this.options})
-      : super(key: key);
+      {super.key, required this.textEditingController, required this.options});
 
   void clear() {
     textEditingController.clear();

@@ -18,7 +18,7 @@ class CustomTextInput extends StatelessWidget {
   final bool? enabled;
 
   const CustomTextInput({
-    Key? key,
+    super.key,
     this.initialValue,
     this.hintText,
     this.labelText,
@@ -33,7 +33,7 @@ class CustomTextInput extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

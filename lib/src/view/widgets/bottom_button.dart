@@ -9,11 +9,11 @@ class BottomButton extends StatelessWidget {
   final Color? color;
 
   const BottomButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.title,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
