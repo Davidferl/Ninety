@@ -5,21 +5,21 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-final GoRouter _router = GoRouter(routes: <RouteBase>[
-  GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const Startup();
-      },
-      routes: <RouteBase>[
-        GoRoute(
-            path: '/home',
-            name: 'home',
-            builder: (BuildContext context, GoRouterState state) {
-              return const Home(title: 'Home');
-            })
-      ]),
-]);
+final _router = GoRouter(
+  initialLocation: '/startup',
+  routes: [
+    GoRoute(
+      name: 'home', // Optional, add name to your routes. Allows you navigate by name instead of path
+      path: '/home',
+      builder: (context, state) => const Home(title: "default"),
+    ),
+    GoRoute(
+      name: 'startup',
+      path: '/startup',
+      builder: (context, state) => const Startup(),
+    ),
+  ],
+);
 
 void main() {
   runApp(DevicePreview(
