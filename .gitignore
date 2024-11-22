@@ -48,8 +48,9 @@ macos/Flutter/GeneratedPluginRegistrant.swift
 windows/flutter/generated_plugin_registrant.cc
 windows/flutter/generated_plugin_registrant.h
 windows/flutter/generated_plugins.cmake
-
-
+windows/
+linux/
+macos/
 # Created by https://www.toptal.com/developers/gitignore/api/dart,vs,android,flutter
 # Edit at https://www.toptal.com/developers/gitignore?templates=dart,vs,android,flutter
 
