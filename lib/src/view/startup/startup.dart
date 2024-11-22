@@ -8,6 +8,7 @@ class Startup extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO uncomment this when Firebase auth is setup
     //final AuthService authService = locator<AuthService>();
 
     //useEffect(() {

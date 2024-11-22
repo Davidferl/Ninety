@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../exceptions/exceptions.dart';
 
 class AuthService {
+  //TODO firebaseAuth not gonna work right now
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   bool isLogged() => _auth.currentUser != null;
