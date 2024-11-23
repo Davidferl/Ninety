@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/src/view/explore/tile.dart';
+import 'package:bonne_reponse/src/view/widgets/section_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -13,15 +14,7 @@ class Explore extends HookWidget {
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 4.0, 0, 12.0),
-              child: Text(
-                "Explore Group",
-                style: TextStyle(color: Colors.black, fontSize: 24),
-              ),
-            ),
-          ),
+          const SectionName(name: 'Explore Groups'),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0.0, 0, 8.0),
             child: SearchAnchor(
