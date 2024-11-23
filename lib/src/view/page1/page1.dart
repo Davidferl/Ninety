@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 
-class Page1 extends StatefulWidget {
+import '../../../main.dart';
+import '../../authentication/hooks/use_authentication.dart';
+
+class Page1 extends HookWidget {
   const Page1({super.key});
 
   @override
-  State<Page1> createState() => _Page1State();
-}
-
-class _Page1State extends State<Page1> {
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("Page 1"),
+    final auth = useAuthentication();
+
+    void onLogout() {
+      context.goNamed(Routes.login.name);
+    }
+
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('Welcome to page 1'),
+            ElevatedButton(
+              onPressed: () => auth.logout(onLogout),
+              child: const Text('Logout'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
