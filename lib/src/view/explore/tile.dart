@@ -1,3 +1,5 @@
+import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Tile extends StatelessWidget {
@@ -19,7 +21,10 @@ class Tile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
               child: Image.asset(
                 index % 2 == 0
                     ? 'assets/images/explore_1.jpg'
@@ -29,28 +34,35 @@ class Tile extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0.0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Sleep earlier',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: kcSecondaryVariant,
+                        ),
                   ),
-                  SizedBox(height: 2),
+                  verticalSpace(2),
                   Text(
                     'This is a description of the card content.',
-                    style: TextStyle(fontSize: 14),
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: kcSecondaryVariant, fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(height: 12),
-                  Text(
-                    '100 members.',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
+                  verticalSpace(12),
+                  Row(
+                    children: [
+                      Text(
+                        '100 members',
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             )
