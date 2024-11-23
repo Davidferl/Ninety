@@ -1,19 +1,17 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user.g.dart';
+
+@JsonSerializable()
 class User {
   final String name;
   final String surname;
-  List<String> ids;
+  List<String> groupIds;
 
   User({
     required this.name,
     required this.surname,
-    this.ids = const [],
+    this.groupIds = const [],
   });
-
-  toMap() {
-    return {
-      'name': name,
-      'surname': surname,
-    };
-  }
 }
 
