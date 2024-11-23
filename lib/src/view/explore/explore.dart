@@ -6,7 +6,13 @@ class Explore extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(child: Column(children: [Center(child: Text("Hello from profile log."),)],));
+    return const SafeArea(
+        child: Column(
+      children: [
+        Center(
+          child: Text("Hello from profile log."),
+        )
+      ],
+    ));
   }
-
 }
