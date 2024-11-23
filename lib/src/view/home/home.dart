@@ -1,8 +1,8 @@
-import 'package:bonne_reponse/src/dashboard/views/dashboard.dart';
-import 'package:bonne_reponse/src/explore/views/explore.dart';
-import 'package:bonne_reponse/src/feed/views/feed.dart';
-import 'package:bonne_reponse/src/log/views/log.dart';
-import 'package:bonne_reponse/src/profile/views/profile.dart';
+import 'package:bonne_reponse/src/view/addLog/add_log.dart';
+import 'package:bonne_reponse/src/view/dashboard/dashboard.dart';
+import 'package:bonne_reponse/src/view/explore/explore.dart';
+import 'package:bonne_reponse/src/view/feed/feed.dart';
+import 'package:bonne_reponse/src/view/profile/profile.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Explore(),
-    const Log(),
+    const AddLog(),
     const Feed(),
     const Profile(),
   ];

@@ -1,6 +1,6 @@
 import 'package:bonne_reponse/injection_container.dart';
-import 'package:bonne_reponse/src/authentication/views/login.dart';
-import 'package:bonne_reponse/src/startup/views/startup.dart';
+import 'package:bonne_reponse/src/view/authentication/login.dart';
+import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
 import 'package:device_preview/device_preview.dart';

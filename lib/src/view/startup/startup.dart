@@ -2,7 +2,7 @@ import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../hooks/use_startup.dart';
+import '../../startup/hooks/use_startup.dart';
 
 class Startup extends HookWidget {
   const Startup({super.key});

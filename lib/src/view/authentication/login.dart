@@ -1,7 +1,7 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
-import 'package:bonne_reponse/src/view/account/validators.dart';
+import 'package:bonne_reponse/src/authentication/validators.dart';
 import 'package:bonne_reponse/src/view/widgets/bottom_button.dart';
 import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +9,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../exceptions/exceptions.dart';
-import '../../view/widgets/error_dialog.dart';
-import '../hooks/use_authentication.dart';
+import '../widgets/error_dialog.dart';
+import '../../authentication/hooks/use_authentication.dart';
 
 class Login extends HookWidget {
   const Login({super.key});
