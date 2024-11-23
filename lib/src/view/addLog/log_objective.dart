@@ -1,3 +1,4 @@
+import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/addLog/tile_objective.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
@@ -18,6 +19,7 @@ class LogObjective extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SectionName(name: AppLocalizations.of(context)!.new_log),
+                verticalSpaceSmall,
                 Text(
                   AppLocalizations.of(context)!.pick_objective,
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -30,18 +32,21 @@ class LogObjective extends HookWidget {
                         color: kcDarkGray,
                       ),
                 ),
+                verticalSpaceMedium,
                 Expanded(
                     child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {
-                    return const Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 0.0),
-                        child: Tile(
+                    return Column(
+                      children: [
+                        const Tile(
                           imageUri: "assets/images/explore_3.jpg",
                           title: "Sleep at 9pm",
                           description: "Last entry yesterday",
-                        ));
+                        ),
+                        verticalSpace(10),
+                      ],
+                    );
                   },
                 ))
               ],

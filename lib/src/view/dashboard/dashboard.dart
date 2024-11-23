@@ -17,41 +17,44 @@ class Dashboard extends HookWidget {
     }
 
     return SafeArea(
-        child: Column(
-      children: [
-        ElevatedButton(
-          onPressed: () => auth.logout(onLogout),
-          child: const Text('Logout'),
-        ),
-        const Text("Dashboard"),
-        CalendarTimeline(
-          initialDate: DateTime(2020, 4, 20),
-          firstDate: DateTime(2019, 1, 15),
-          lastDate: DateTime(2020, 11, 20),
-          onDateSelected: (date) => print(date),
-          leftMargin: 20,
-          monthColor: Colors.blueGrey,
-          dayColor: Colors.teal[200],
-          activeDayColor: Colors.white,
-          activeBackgroundDayColor: Colors.redAccent[100],
-          dotColor: const Color(0xFF333A47),
-          selectableDayPredicate: (date) => date.day != 23,
-          locale: 'en_ISO',
-        ),
-        Expanded(
-          child: GridView.count(
-            crossAxisCount: 2,
-            children: List.generate(6, (index) {
-              return Center(
-                child: Text(
-                  'Item $index',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-              );
-            }),
+        child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () => auth.logout(onLogout),
+            child: const Text('Logout'),
           ),
-        )
-      ],
+          const Text("Dashboard"),
+          CalendarTimeline(
+            initialDate: DateTime(2020, 4, 20),
+            firstDate: DateTime(2019, 1, 15),
+            lastDate: DateTime(2020, 11, 20),
+            onDateSelected: (date) => print(date),
+            leftMargin: 20,
+            monthColor: Colors.blueGrey,
+            dayColor: Colors.teal[200],
+            activeDayColor: Colors.white,
+            activeBackgroundDayColor: Colors.redAccent[100],
+            dotColor: const Color(0xFF333A47),
+            selectableDayPredicate: (date) => date.day != 23,
+            locale: 'en_ISO',
+          ),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              children: List.generate(6, (index) {
+                return Center(
+                  child: Text(
+                    'Item $index',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                );
+              }),
+            ),
+          )
+        ],
+      ),
     ));
   }
 }

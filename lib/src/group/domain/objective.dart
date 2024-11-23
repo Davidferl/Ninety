@@ -18,4 +18,12 @@ class Objective {
   factory Objective.fromJson(Map<String, dynamic> json) =>
       _$ObjectiveFromJson(json);
   Map<String, dynamic> toJson() => _$ObjectiveToJson(this);
+
+  double getProgress() {
+    double total = 0;
+    for (var post in posts) {
+      total += post.quantity;
+    }
+    return total / quantity;
+  }
 }
