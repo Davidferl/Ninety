@@ -73,8 +73,6 @@ class GroupService {
     await _groupRepository.save(group);
   }
 
-  // Thom en bas moi en haut
-
   Future<void> reactToPost(String groupId, String userId, String postId) async {
     Group group = await _groupRepository.getById(groupId);
 
