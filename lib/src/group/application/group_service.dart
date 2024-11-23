@@ -31,9 +31,9 @@ class GroupService {
 
     await _groupRepository.save(group);
 
-    User user = await _userRepository.getUserById(memberId);
+    User user = await _userRepository.getById(memberId);
     user.groupIds.add(groupId);
-    await _userRepository.saveUser(user);
+    await _userRepository.save(user);
   }
 
   // Thom en bas moi en haut
