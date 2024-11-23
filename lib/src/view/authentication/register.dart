@@ -13,7 +13,7 @@ import 'package:go_router/go_router.dart';
 import '../../../helpers/ui_helpers.dart';
 import '../../../injection_container.dart';
 import '../../theme/colors.dart';
-import '../widgets/bottom_button.dart';
+import '../widgets/floating_action_button.dart';
 
 class Register extends HookWidget {
   const Register({super.key});
@@ -78,22 +78,19 @@ class Register extends HookWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 76, 24, 24),
+          padding: const EdgeInsets.fromLTRB(24, 84, 24, 24),
           child: Form(
             key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Ninety",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: kcPrimary,
-                      ),
+                Image.asset(
+                  'assets/images/ninety_small_logo.png',
                 ),
                 verticalSpace(36),
                 Text(
-                  AppLocalizations.of(context)!.sign_up,
+                  AppLocalizations.of(context)!.get_started,
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         color: kcPrimaryVariant,
                       ),
@@ -131,13 +128,9 @@ class Register extends HookWidget {
                   obscureText: true,
                   labelText: AppLocalizations.of(context)!.password,
                 ),
-                verticalSpace(48),
-                BottomButton(
-                  onPressed: () => register(),
-                  title: AppLocalizations.of(context)!.sign_up,
-                ),
+                verticalSpace(16),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.already_have_account,
@@ -149,7 +142,7 @@ class Register extends HookWidget {
                     TextButton(
                       onPressed: () => context.goNamed(Routes.login.name),
                       child: Text(
-                        AppLocalizations.of(context)!.login.toUpperCase(),
+                        AppLocalizations.of(context)!.login,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -163,6 +156,7 @@ class Register extends HookWidget {
           ),
         ),
       ),
+      floatingActionButton: GradientFloatingActionButton(onPressed: () => register(), icon: const Icon(Icons.arrow_forward_ios)),
     );
   }
 }
