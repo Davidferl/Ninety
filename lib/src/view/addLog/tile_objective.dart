@@ -18,7 +18,7 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.goNamed(Routes.progress.name),
+      onTap: () => context.goNamed(Routes.progress.name, pathParameters: {"name": title}),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
