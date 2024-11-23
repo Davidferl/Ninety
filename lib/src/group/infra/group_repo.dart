@@ -2,7 +2,7 @@ import 'package:bonne_reponse/src/exceptions/exceptions.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoreGroupRepo {
+class GroupRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> save(Group group) async {

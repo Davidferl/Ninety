@@ -1,14 +1,11 @@
 import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
-import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
 import 'package:bonne_reponse/src/authentication/validators.dart';
 import 'package:bonne_reponse/src/exceptions/exceptions.dart';
-import 'package:bonne_reponse/src/user/infra/user_repo.dart';
-import 'package:bonne_reponse/src/view/widgets/custom_auto_complete.dart';
+import 'package:bonne_reponse/src/user/services/user_service.dart';
 import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
 import 'package:bonne_reponse/src/view/widgets/error_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -43,14 +40,12 @@ class Register extends HookWidget {
         isLoading.value = true;
 
         try {
-          AuthService authService = locator<AuthService>();
           await auth.register(email, password);
 
           try {
             isLoading.value = false;
-            UserRepository profileRepository = locator<UserRepository>();
-            final userId = authService.currentUser!.uid;
-            await profileRepository.addUser(userId, name, surname, "123");
+            UserService userService = locator<UserService>();
+            await userService.createUser(name, surname);
 
             if (context.mounted) {
               context.goNamed(Routes.home.name);
