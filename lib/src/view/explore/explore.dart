@@ -13,7 +13,7 @@ class Explore extends HookWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           SectionName(name: AppLocalizations.of(context)!.explore),
@@ -28,7 +28,7 @@ class Explore extends HookWidget {
                   shadowColor:
                       const WidgetStatePropertyAll<Color>(Colors.transparent),
                   textStyle: WidgetStatePropertyAll<TextStyle>(
-                      Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      Theme.of(context).textTheme.labelLarge!.copyWith(
                             color: kcDarkGray,
                           )),
                   controller: searchController,

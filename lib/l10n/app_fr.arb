@@ -1,6 +1,7 @@
 {
     "@@locale": "fr",
     "hello": "Bonjour",
+    "welcome_back": "Bienvenue!",
     "unknown_error": "Oups! Une erreur est survenue!",
     "login_error": "Ces informations ne correspondent à aucun compte.",
     "login": "Se connecter",
@@ -12,5 +13,8 @@
     "sign_up": "Créer un compte",
     "first_name": "Prénom",
     "last_name": "Nom",
-    "explore": "Explore des groupes"
+    "explore": "Explore des groupes",
+    "new_log": "Entrer un nouveau log",
+    "pick_objective": "Choisir un objectif",
+    "pick_objective_description": "Montre au monde de quoi tu es capable!"
 }

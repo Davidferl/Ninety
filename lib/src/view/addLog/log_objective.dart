@@ -1,7 +1,10 @@
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/addLog/tile_objective.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LogObjective extends HookWidget {
   const LogObjective({super.key});
@@ -10,24 +13,35 @@ class LogObjective extends HookWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SectionName(name: 'Log progress'),
-                const Text("Pick your objective"),
-                const Text("Show the words how it is done!"),
+                SectionName(name: AppLocalizations.of(context)!.new_log),
+                Text(
+                  AppLocalizations.of(context)!.pick_objective,
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: kcSecondaryVariant,
+                      ),
+                ),
+                Text(
+                  AppLocalizations.of(context)!.pick_objective_description,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: kcDarkGray,
+                      ),
+                ),
                 Expanded(
                     child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {
                     return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 0.0),
-                    child: Tile(
-                      imageUri: "assets/images/explore_3.jpg",
-                      title: "Sleep at 9pm",
-                      description: "Last entry yesterday",
-                    ));
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 0.0),
+                        child: Tile(
+                          imageUri: "assets/images/explore_3.jpg",
+                          title: "Sleep at 9pm",
+                          description: "Last entry yesterday",
+                        ));
                   },
                 ))
               ],

@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/main.dart';
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -36,18 +37,17 @@ class Tile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: kcSecondaryVariant,
+                      ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: kcDarkGray,
+                        fontWeight: FontWeight.w500
+                      ),
                 ),
               ],
             ),
