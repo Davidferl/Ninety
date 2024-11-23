@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/main.dart';
+import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
 import 'package:bonne_reponse/src/authentication/validators.dart';
 import 'package:bonne_reponse/src/exceptions/exceptions.dart';
@@ -22,6 +23,7 @@ class Register extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final auth = useAuthentication();
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     final firstNameController = useTextEditingController();
@@ -42,7 +44,7 @@ class Register extends HookWidget {
 
         try {
           AuthService authService = locator<AuthService>();
-          await authService.register(email, password);
+          await auth.register(email, password);
 
           try {
             isLoading.value = false;
