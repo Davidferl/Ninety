@@ -1,8 +1,11 @@
+import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 final _router = GoRouter(
@@ -21,8 +24,32 @@ final _router = GoRouter(
   ],
 );
 
-//TODO add useful stuff from last year's main.dart
+//TODO firebase
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   print("Handling a background message: ${message.messageId}");
+// }
+
+// TODO: Add useful stuff from last year's main.dart
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized(); //TODO copied from last year, do we need this?
+
+  setupLocator();
+
+  //TODO firebase
+  //     await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+
+  // final token = await FirebaseMessaging.instance.getToken();
+
+  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+  //   alert: true,
+  //   badge: true,
+  //   sound: true,
+  // );
+
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   runApp(DevicePreview(
     enabled: false,
     builder: (context) => const MyApp(),
@@ -37,9 +64,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       title: 'Bonne réponse!',
       theme: appTheme,
-      localizationsDelegates: const [],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       supportedLocales: const [
         Locale('fr'),
         Locale('en'),
