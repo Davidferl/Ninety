@@ -6,18 +6,19 @@ part 'group.g.dart';
 
 @JsonSerializable()
 class Group {
-  final String groupId = const Uuid().v4();
+  final String groupId;
   final String title;
   final String description;
   final List<String> tags;
   final List<Member> members;
 
   Group({
+    String? groupId,
     required this.title,
     required this.description,
     required this.tags,
     required this.members,
-  });
+  }) : groupId = groupId ?? const Uuid().v4();
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
   Map<String, dynamic> toJson() => _$GroupToJson(this);

@@ -5,7 +5,7 @@ part 'member.g.dart';
 
 @JsonSerializable()
 class Member {
-  final String userId; // MemberId is userId
+  final String userId; // Member id is userId
   final Objective objective;
 
   Member({

@@ -5,14 +5,15 @@ part 'objective.g.dart';
 
 @JsonSerializable()
 class Objective {
-  final List<Post> posts = const [];
+  final List<Post> posts;
   final String unit;
   final int quantity;
 
   Objective({
+    List<Post>? posts,
     required this.unit,
     required this.quantity,
-  });
+  }) : posts = posts ?? const [];
 
   factory Objective.fromJson(Map<String, dynamic> json) =>
       _$ObjectiveFromJson(json);
