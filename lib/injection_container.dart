@@ -13,9 +13,8 @@ void setupLocator() {
   // API
   locator.registerLazySingleton<HttpClient>(() => HttpClientImpl(locator()));
 
-
   //External
-    locator.registerLazySingleton(() => Dio());
+  locator.registerLazySingleton(() => Dio());
 
   // Repository
   locator.registerLazySingleton(() => UserRepository());

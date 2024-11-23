@@ -1,17 +1,18 @@
+import 'package:bonne_reponse/src/view/widgets/custom_auto_complete.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Page4 extends StatefulWidget {
+class Page4 extends HookWidget {
   const Page4({super.key});
 
   @override
-  State<Page4> createState() => _Page4State();
-}
-
-class _Page4State extends State<Page4> {
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("Page 4"),
+    final textEditingController = useTextEditingController();
+
+    return Scaffold(
+      body: CustomAutocomplete(
+          textEditingController: textEditingController,
+          options: const ["Option 1", "Option 2"]),
     );
   }
 }
