@@ -8,6 +8,8 @@ First you need to make sure your flutter is up to date with `flutter upgrade`
 
 Then download all dependencies by running `flutter pub get`
 
+Then run `flutter pub run build_runner build` to generate the serialization files for all data types
+
 You can then run the app with `flutter run`
 
 ## App Icon ©
