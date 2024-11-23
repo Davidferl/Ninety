@@ -1,5 +1,6 @@
 import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
+import 'package:bonne_reponse/src/view/authentication/register.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
@@ -11,10 +12,10 @@ import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-enum Routes { home, startup, login }
+enum Routes { home, startup, login, signup }
 
 final _router = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/startup',
   routes: [
     GoRoute(
       name: Routes.home.name,
@@ -30,7 +31,12 @@ final _router = GoRouter(
       name: Routes.login.name,
       path: '/login',
       builder: (context, state) => const Login(),
-    )
+    ),
+    GoRoute(
+      name: Routes.signup.name,
+      path: "/signup",
+      builder: (context, state) => const Register(),
+    ),
   ],
 );
 

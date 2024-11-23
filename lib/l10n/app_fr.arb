@@ -1,4 +1,13 @@
 {
     "@@locale": "fr",
-    "hello": "Bonjour"
+    "hello": "Bonjour",
+    "unknown_error": "Oups! Une erreur est survenue!",
+    "login": "Se connecter",
+    "email": "Courriel",
+    "password": "Mot de passe",
+    "dont_have_account": "Vous n'avez pas de compte?",
+    "already_have_account": "Vous avez déjà un compte?",
+    "sign_up": "Sign up",
+    "first_name": "Prénom",
+    "last_name": "Nom"
 }
