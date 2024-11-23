@@ -13,11 +13,12 @@ class GroupService {
   final GroupRepository _groupRepository = locator<GroupRepository>();
   final UserRepository _userRepository = locator<UserRepository>();
 
-  Future<void> addGroup(String title, String description, List<String> tags,
-      List<Member> members) async {
+  Future<void> addGroup(String title, String description, String imageUrl,
+      List<String> tags, List<Member> members) async {
     final Group group = Group(
       title: title,
       description: description,
+      imageUrl: imageUrl,
       tags: tags,
       members: members,
     );
@@ -122,10 +123,10 @@ class GroupService {
 
     if (tags != null) {
       groups.sort((a, b) {
-        int aScore = a.tags.fold<int>(
-            0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
-        int bScore = b.tags.fold<int>(
-            0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
+        int aScore = a.tags
+            .fold<int>(0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
+        int bScore = b.tags
+            .fold<int>(0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
 
         return bScore.compareTo(aScore);
       });

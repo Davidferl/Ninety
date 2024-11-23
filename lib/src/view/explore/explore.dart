@@ -1,3 +1,6 @@
+import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/group/application/group_service.dart';
+import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/explore/tile.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
@@ -11,6 +14,18 @@ class Explore extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GroupService groupService = locator<GroupService>();
+
+    final groups = useState<List<Group>>([]);
+    useEffect(() {
+      Future<void> getGroups() async {
+        groups.value = await groupService.getGroups();
+      }
+
+      getGroups();
+      return () {};
+    }, []);
+
     return SafeArea(
         child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -51,16 +66,24 @@ class Explore extends HookWidget {
             ),
           ),
           Expanded(
-            child: MasonryGridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-              itemBuilder: (BuildContext context, int index) {
-                return Tile(
-                  index: index,
-                );
-              },
-            ),
+            child: groups.value.isEmpty
+                ? const Center(
+                    child:
+                        CircularProgressIndicator(), // Show a loader if empty
+                  )
+                : MasonryGridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    itemCount:
+                        groups.value.length, // Specify itemCount explicitly
+                    itemBuilder: (BuildContext context, int index) {
+                      return Tile(
+                        index: index,
+                        group: groups.value[index],
+                      );
+                    },
+                  ),
           ),
         ],
       ),

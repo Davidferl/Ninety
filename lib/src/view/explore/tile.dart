@@ -1,11 +1,13 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Tile extends StatelessWidget {
   final int index;
+  final Group group;
 
-  const Tile({super.key, required this.index});
+  const Tile({super.key, required this.index, required this.group});
 
   @override
   Widget build(BuildContext context) {

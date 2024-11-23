@@ -22,8 +22,10 @@ class GroupRepository {
   Future<List<Group>> getAll() async {
     try {
       final snapshot = await _firestore.collection('groups').get();
+
       return snapshot.docs.map((doc) => Group.fromJson(doc.data())).toList();
     } catch (e) {
+      print("Error: $e");
       throw const FirestoreException(
         message: 'Failed to fetch groups. Please try again later.',
       );
