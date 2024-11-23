@@ -1,5 +1,5 @@
-import 'package:bonne_reponse/src/domain/places/suggestion.dart';
-import 'package:bonne_reponse/src/infra/places/places_api.dart';
+import 'package:bonne_reponse/src/places/domain/suggestion.dart';
+import 'package:bonne_reponse/src/places/infra/places_api.dart';
 
 class PlacesService {
   final PlacesApi _placesApi;
