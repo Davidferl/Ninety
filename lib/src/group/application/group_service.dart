@@ -39,10 +39,10 @@ class GroupService {
   }
 
   Future<void> addMember(
-      String groupId, String memberId, double quantity, String unit) async {
+      String groupId, String memberId, double quantity, String unit, QuantityType quantityType) async {
     Group group = await _groupRepository.getById(groupId);
 
-    Objective objective = Objective(unit: unit, quantity: quantity);
+    Objective objective = Objective(unit: unit, quantity: quantity, quantityType: quantityType);
     Member member = Member(userId: memberId, objective: objective);
     group.members.add(member);
 
