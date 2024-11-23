@@ -6,15 +6,12 @@ import '../domain/user.dart';
 class UserRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> addUser(
-      String uid, String name, String surname, String carId) async {
-    final User user = User(
-      name: name,
-      surname: surname,
-    );
-
+  Future<void> addUser(User user) async {
     try {
-      await _firestore.collection('users').doc(uid).set(user.toJson());
+      await _firestore
+          .collection('users')
+          .doc(user.id)
+          .set(user.toJson(), SetOptions(merge: true));
     } on Exception catch (e) {
       print(e);
       throw const FirestoreException(
@@ -23,16 +20,32 @@ class UserRepository {
     }
   }
 
-  Future<User> getUser(String uid) async {
+  Future<User> getUser(String userId) async {
     try {
-      final DocumentSnapshot documentSnapshot =
-          await _firestore.collection('users').doc(uid).get();
-      final Map<String, dynamic> data =
-          documentSnapshot.data() as Map<String, dynamic>;
-      return User(
-        name: data['name'],
-        surname: data['surname'],
+      final DocumentSnapshot<Map<String, dynamic>> userDoc =
+          await _firestore.collection('users').doc(userId).get();
+      if (!userDoc.exists) {
+        throw const FirestoreException(
+          message: 'User not found.',
+        );
+      }
+      return User.fromJson(userDoc.data()!);
+    } on Exception catch (e) {
+      print(e);
+      throw const FirestoreException(
+        message: 'Something went wrong. Please try again later.',
       );
+    }
+  }
+
+  Future<List<User>> getUsers() async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> users =
+          await _firestore.collection('users').get();
+      return users.docs
+          .map((QueryDocumentSnapshot<Map<String, dynamic>> user) =>
+              User.fromJson(user.data()))
+          .toList();
     } on Exception catch (e) {
       print(e);
       throw const FirestoreException(
