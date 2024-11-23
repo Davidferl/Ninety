@@ -2,6 +2,7 @@
     "@@locale": "fr",
     "hello": "Bonjour",
     "unknown_error": "Oups! Une erreur est survenue!",
+    "login_error": "Ces informations ne correspondent à aucun compte.",
     "login": "Se connecter",
     "email": "Courriel",
     "password": "Mot de passe",
