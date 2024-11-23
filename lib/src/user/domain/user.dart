@@ -4,15 +4,20 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
+  final String id;
   final String name;
   final String surname;
-  List<String> groupIds;
+  List<String> groupIds  = const [];
 
   User({
+    required this.id,
     required this.name,
     required this.surname,
-    this.groupIds = const [],
   });
+
+  void addGroup(String groupId) {
+    groupIds.add(groupId);
+  }
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

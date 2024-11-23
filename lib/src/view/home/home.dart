@@ -1,5 +1,5 @@
 import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
-import 'package:bonne_reponse/src/view/addLog/add_log.dart';
+import 'package:bonne_reponse/src/view/addLog/log_objective.dart';
 import 'package:bonne_reponse/src/view/dashboard/dashboard.dart';
 import 'package:bonne_reponse/src/view/explore/explore.dart';
 import 'package:bonne_reponse/src/view/feed/feed.dart';
@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Explore(),
-    const AddLog(),
+    const LogObjective(),
     const Feed(),
     const Profile(),
   ];
