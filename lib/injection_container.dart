@@ -1,6 +1,6 @@
-import 'package:bonne_reponse/src/application/auth_service.dart';
-import 'package:bonne_reponse/src/infra/account/user_repo.dart';
-import 'package:bonne_reponse/src/infra/http_client.dart';
+import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
+import 'package:bonne_reponse/src/http/http_client.dart';
+import 'package:bonne_reponse/src/user/infra/user_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 

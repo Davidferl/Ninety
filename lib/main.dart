@@ -1,10 +1,13 @@
-import 'package:bonne_reponse/src/view/account/login.dart';
+import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/authentication/views/login.dart';
+import 'package:bonne_reponse/src/startup/views/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
-import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 enum Routes { home, startup, login }
 
@@ -30,7 +33,15 @@ final _router = GoRouter(
 );
 
 // TODO add useful stuff from last year's main.dart
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  setupLocator();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(DevicePreview(
     enabled: false,
     builder: (context) => const MyApp(),

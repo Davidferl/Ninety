@@ -1,21 +1,25 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import '../exceptions/exceptions.dart';
+import '../../exceptions/exceptions.dart';
 
 class AuthService {
-  //TODO firebaseAuth not gonna work right now
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   bool isLogged() => _auth.currentUser != null;
 
-  User? get currentUser => _auth.currentUser;
+  User? get currentUser {
+    return _auth.currentUser;
+  }
+
+  Stream<User?> get userStream {
+    return _auth.authStateChanges();
+  }
 
   Future<void> login(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      print(e);
+    } on FirebaseAuthException {
       throw const AuthenticationException(
         message: 'Invalid email or password.',
       );
