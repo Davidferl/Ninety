@@ -11,9 +11,9 @@ useStartup() {
 
   useEffect(() {
     Future.delayed(const Duration(seconds: 3), () {
-      if(context.mounted) {
+      if (context.mounted) {
         if (authService.isLogged()) {
-          context.goNamed(Routes.home.name);
+          context.goNamed(Routes.login.name);
         } else {
           context.goNamed(Routes.login.name);
         }

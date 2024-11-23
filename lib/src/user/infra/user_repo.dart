@@ -14,7 +14,7 @@ class UserRepository {
     );
 
     try {
-      await _firestore.collection('users').doc(uid).set(user.toMap());
+      await _firestore.collection('users').doc(uid).set(user.toJson());
     } on Exception catch (e) {
       print(e);
       throw const FirestoreException(
