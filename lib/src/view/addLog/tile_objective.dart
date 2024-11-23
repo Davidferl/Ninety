@@ -1,3 +1,4 @@
+import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class Tile extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(width: 16),
+          horizontalSpace(10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,10 +45,10 @@ class Tile extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: kcDarkGray,
-                        fontWeight: FontWeight.w500
-                      ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: kcDarkGray, fontWeight: FontWeight.w500),
                 ),
               ],
             ),
