@@ -18,3 +18,8 @@ class FirestoreException implements Exception {
   final String message;
   const FirestoreException({required this.message});
 }
+
+class InvalidActionException implements Exception {
+  final String message;
+  const InvalidActionException({required this.message});
+}

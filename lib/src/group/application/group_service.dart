@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/exceptions/exceptions.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/group/domain/member.dart';
 import 'package:bonne_reponse/src/group/domain/objective.dart';
@@ -73,18 +74,32 @@ class GroupService {
     await _groupRepository.save(group);
   }
 
-  Future<void> reactToPost(String groupId, String userId, String postId) async {
+  /// Throws InvalidActionException if both emoji and comment are null
+  Future<void> reactToPost(
+    String groupId,
+    String userId,
+    String postId, {
+    String? emoji,
+    String? comment,
+  }) async {
+    if (emoji == null && comment == null) {
+      throw const InvalidActionException(
+          message: "Both emoji and comment cannot be null");
+    }
+
     Group group = await _groupRepository.getById(groupId);
 
     Member member =
         group.members.firstWhere((member) => member.userId == userId);
     Post post = member.objective.posts.firstWhere((post) => post.id == postId);
 
-    if (post.likes.contains(userId)) {
-      post.likes.remove(userId);
-    } else {
-      post.likes.add(userId);
-    }
+    post.reactions.add(
+      Reaction(
+        userId: userId,
+        emoji: emoji,
+        comment: comment,
+      ),
+    );
 
     await _groupRepository.save(group);
   }
@@ -122,10 +137,10 @@ class GroupService {
 
     if (tags != null) {
       groups.sort((a, b) {
-        int aScore = a.tags.fold<int>(
-            0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
-        int bScore = b.tags.fold<int>(
-            0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
+        int aScore = a.tags
+            .fold<int>(0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
+        int bScore = b.tags
+            .fold<int>(0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
 
         return bScore.compareTo(aScore);
       });
