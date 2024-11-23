@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/view/addLog/log_progress.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
 import 'package:bonne_reponse/src/view/authentication/register.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
@@ -12,15 +13,20 @@ import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-enum Routes { home, startup, login, signup }
+enum Routes { home, startup, login, signup, progress }
 
 final _router = GoRouter(
-  initialLocation: '/startup',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       name: Routes.home.name,
       path: '/home',
       builder: (context, state) => const Home(title: "default"),
+      routes: [
+        GoRoute(name: Routes.progress.name,
+        path: "/progress",
+        builder: (context , state) => const LogProgress(title: "Hello"))
+      ]
     ),
     GoRoute(
       name: Routes.startup.name,

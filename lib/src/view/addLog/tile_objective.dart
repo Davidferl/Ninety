@@ -1,15 +1,23 @@
+import 'package:bonne_reponse/main.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Tile extends StatelessWidget {
   final String imageUri;
   final String title;
   final String description;
 
-  const Tile({super.key, required this.imageUri, required this.title, required this.description});
+  const Tile(
+      {super.key,
+      required this.imageUri,
+      required this.title,
+      required this.description});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return GestureDetector(
+      onTap: () => context.goNamed(Routes.progress.name),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
@@ -50,7 +58,7 @@ class Tile extends StatelessWidget {
             color: Colors.grey,
           ),
         ],
+      ),
     );
   }
-
 }
