@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -24,7 +25,7 @@ class Startup extends HookWidget {
 
     useEffect(() {
       Future.delayed(const Duration(seconds: 3), () {
-        context.goNamed("home");
+        context.goNamed(Routes.login.name);
       });
       return null;
     }, []);

@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/view/account/login.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
@@ -8,19 +9,26 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
+enum Routes { home, startup, login }
+
 final _router = GoRouter(
   initialLocation: '/startup',
   routes: [
     GoRoute(
-      name: 'home',
+      name: Routes.home.name,
       path: '/home',
       builder: (context, state) => const Home(title: "default"),
     ),
     GoRoute(
-      name: 'startup',
+      name: Routes.startup.name,
       path: '/startup',
       builder: (context, state) => const Startup(),
     ),
+    GoRoute(
+      name: Routes.login.name,
+      path: '/login',
+      builder: (context, state) => const Login(),
+    )
   ],
 );
 
@@ -29,7 +37,6 @@ final _router = GoRouter(
 //   print("Handling a background message: ${message.messageId}");
 // }
 
-// TODO: Add useful stuff from last year's main.dart
 void main() {
   // WidgetsFlutterBinding.ensureInitialized(); //TODO copied from last year, do we need this?
 
