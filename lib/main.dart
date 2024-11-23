@@ -14,7 +14,7 @@ import 'firebase_options.dart';
 enum Routes { home, startup, login }
 
 final _router = GoRouter(
-  initialLocation: '/startup',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       name: Routes.home.name,

@@ -1,9 +1,9 @@
+import 'package:bonne_reponse/src/dashboard/views/dashboard.dart';
+import 'package:bonne_reponse/src/explore/views/explore.dart';
+import 'package:bonne_reponse/src/feed/views/feed.dart';
+import 'package:bonne_reponse/src/log/views/log.dart';
+import 'package:bonne_reponse/src/profile/views/profile.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
-import 'package:bonne_reponse/src/view/page1/page1.dart';
-import 'package:bonne_reponse/src/view/page2/page2.dart';
-import 'package:bonne_reponse/src/view/page3/page3.dart';
-import 'package:bonne_reponse/src/view/page4/page4.dart';
-import 'package:bonne_reponse/src/view/page5/page5.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -19,11 +19,11 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const Page1(),
-    const Page2(),
-    const Page3(),
-    const Page4(),
-    const Page5(),
+    const Dashboard(),
+    const Explore(),
+    const Log(),
+    const Feed(),
+    const Profile(),
   ];
 
   void _onItemTapped(int index) {
@@ -51,47 +51,47 @@ class _HomeState extends State<Home> {
         destinations: const <Widget>[
           NavigationDestination(
             selectedIcon: Icon(
-              Icons.home,
+              Icons.bar_chart,
               color: kcPrimary,
             ),
             icon: Icon(
-              Icons.home,
+              Icons.bar_chart,
               color: kcLightSecondary,
             ),
-            label: 'Home',
+            label: 'Dashboard',
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              Icons.lightbulb,
+              Icons.explore,
               color: kcPrimary,
             ),
             icon: Icon(
-              Icons.lightbulb,
+              Icons.explore,
               color: kcLightSecondary,
             ),
-            label: 'Electricity',
+            label: 'Explore',
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              Icons.directions_car_filled,
+              Icons.add,
               color: kcPrimary,
             ),
             icon: Icon(
-              Icons.directions_car_filled,
+              Icons.add,
               color: kcLightSecondary,
             ),
-            label: 'Transport',
+            label: 'Add',
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              Icons.shopping_basket,
+              Icons.groups,
               color: kcPrimary,
             ),
             icon: Icon(
-              Icons.shopping_basket,
+              Icons.groups,
               color: kcLightSecondary,
             ),
-            label: 'Alimentation',
+            label: 'Groups',
           ),
           NavigationDestination(
             selectedIcon: Icon(
