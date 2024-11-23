@@ -1,4 +1,4 @@
-import 'package:bonne_reponse/src/view/widgets/text_input.dart';
+import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
 import 'package:flutter/material.dart';
 
 class CustomAutocomplete extends StatelessWidget {
