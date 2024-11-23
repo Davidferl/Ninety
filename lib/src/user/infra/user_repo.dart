@@ -20,7 +20,7 @@ class UserRepository {
     }
   }
 
-  Future<User> getUser(String userId) async {
+  Future<User> getUserById(String userId) async {
     try {
       final DocumentSnapshot<Map<String, dynamic>> userDoc =
           await _firestore.collection('users').doc(userId).get();
@@ -38,7 +38,7 @@ class UserRepository {
     }
   }
 
-  Future<List<User>> getUsers() async {
+  Future<List<User>> getAllUsers() async {
     try {
       final QuerySnapshot<Map<String, dynamic>> users =
           await _firestore.collection('users').get();
