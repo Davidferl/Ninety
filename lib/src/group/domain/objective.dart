@@ -7,7 +7,7 @@ part 'objective.g.dart';
 class Objective {
   final List<Post> posts;
   final String unit;
-  final int quantity;
+  final double quantity;
 
   Objective({
     List<Post>? posts,

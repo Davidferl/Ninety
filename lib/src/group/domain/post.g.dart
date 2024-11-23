@@ -16,7 +16,7 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
       timestamp: json['timestamp'] == null
           ? null
           : DateTime.parse(json['timestamp'] as String),
-      quantity: (json['quantity'] as num).toInt(),
+      quantity: (json['quantity'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{

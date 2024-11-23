@@ -11,7 +11,7 @@ class Post {
   final String description;
   final List<String> likes;
   final DateTime timestamp;
-  final int quantity;
+  final double quantity;
 
   Post({
     String? id,

@@ -11,7 +11,7 @@ Objective _$ObjectiveFromJson(Map<String, dynamic> json) => Objective(
           ?.map((e) => Post.fromJson(e as Map<String, dynamic>))
           .toList(),
       unit: json['unit'] as String,
-      quantity: (json['quantity'] as num).toInt(),
+      quantity: (json['quantity'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$ObjectiveToJson(Objective instance) => <String, dynamic>{
