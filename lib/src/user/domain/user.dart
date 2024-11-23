@@ -13,5 +13,8 @@ class User {
     required this.surname,
     this.groupIds = const [],
   });
-}
 
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+}
