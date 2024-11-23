@@ -7,6 +7,7 @@ import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../exceptions/exceptions.dart';
 import '../widgets/error_dialog.dart';
@@ -44,7 +45,7 @@ class Login extends HookWidget {
           showDialog(
             context: context,
             builder: (BuildContext context) => ErrorDialog(
-              title: "Oops",
+              title: AppLocalizations.of(context)!.unknown_error,
               message: e.message,
               buttonText: "OK",
             ),
@@ -64,14 +65,14 @@ class Login extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "ECOHUB",
+                  "Ninety",
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: kcPrimary,
                       ),
                 ),
                 verticalSpace(36),
                 Text(
-                  "Login",
+                  AppLocalizations.of(context)!.login,
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         color: kcPrimaryVariant,
                       ),
@@ -82,7 +83,7 @@ class Login extends HookWidget {
                   controller: emailController,
                   validator: validateEmail,
                   keyboardType: TextInputType.emailAddress,
-                  labelText: "Email",
+                  labelText: AppLocalizations.of(context)!.email,
                 ),
                 verticalSpace(32),
                 CustomTextInput(
@@ -91,28 +92,27 @@ class Login extends HookWidget {
                   validator: validatePassword,
                   keyboardType: TextInputType.text,
                   obscureText: true,
-                  labelText: "Password",
+                  labelText: AppLocalizations.of(context)!.password,
                 ),
                 verticalSpace(96),
                 BottomButton(
                   onPressed: () => login(),
-                  title: "Login",
+                  title: AppLocalizations.of(context)!.login,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account?",
+                      AppLocalizations.of(context)!.dont_have_account,
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!
                           .copyWith(color: kcLightSecondary),
                     ),
                     TextButton(
-                      onPressed: () => Navigator.pushReplacementNamed(
-                          context, Routes.home.name),
+                      onPressed: () => context.goNamed(Routes.signup.name),
                       child: Text(
-                        "Sign up",
+                        AppLocalizations.of(context)!.sign_up.toUpperCase(),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
