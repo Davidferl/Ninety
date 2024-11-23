@@ -13,6 +13,6 @@ class UserService {
     final userId = authService.currentUser!.uid;
     User user = User(id: userId, name: name, surname: surname);
 
-    await userRepository.addUser(user);
+    await userRepository.saveUser(user);
   }
 }

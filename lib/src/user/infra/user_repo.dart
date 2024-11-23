@@ -6,7 +6,7 @@ import '../domain/user.dart';
 class UserRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> addUser(User user) async {
+  Future<void> saveUser(User user) async {
     try {
       await _firestore
           .collection('users')
