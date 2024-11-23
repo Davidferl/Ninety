@@ -1,13 +1,15 @@
 import 'package:bonne_reponse/injection_container.dart';
-import 'package:bonne_reponse/src/view/account/login.dart';
+import 'package:bonne_reponse/src/authentication/views/login.dart';
+import 'package:bonne_reponse/src/startup/views/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
-import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 enum Routes { home, startup, login }
 
@@ -32,30 +34,15 @@ final _router = GoRouter(
   ],
 );
 
-//TODO firebase
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   print("Handling a background message: ${message.messageId}");
-// }
-
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized(); //TODO copied from last year, do we need this?
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
   setupLocator();
 
-  //TODO firebase
-  //     await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  // final token = await FirebaseMessaging.instance.getToken();
-
-  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-  //   alert: true,
-  //   badge: true,
-  //   sound: true,
-  // );
-
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(DevicePreview(
     enabled: false,

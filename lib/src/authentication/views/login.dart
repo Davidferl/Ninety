@@ -3,9 +3,14 @@ import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/account/validators.dart';
 import 'package:bonne_reponse/src/view/widgets/bottom_button.dart';
-import 'package:bonne_reponse/src/view/widgets/text_input.dart';
+import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../exceptions/exceptions.dart';
+import '../../view/widgets/error_dialog.dart';
+import '../hooks/use_authentication.dart';
 
 class Login extends HookWidget {
   const Login({super.key});
@@ -13,6 +18,11 @@ class Login extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final auth = useAuthentication();
+
+    void onLogin() {
+      context.goNamed(Routes.home.name);
+    }
 
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
@@ -23,29 +33,24 @@ class Login extends HookWidget {
       final email = emailController.text;
       final password = passwordController.text;
 
-      // if (formKey.currentState!.validate()) {
-      //   isLoading.value = true;
+      if (formKey.currentState!.validate()) {
+        isLoading.value = true;
 
-      //   try {
-      //     isLoading.value = false;
-      //     AuthService authService = locator<AuthService>();
-      //     await authService.login(email, password);
-
-      //     if (context.mounted) {
-      //       Navigator.pushReplacementNamed(context, Routes.hub.name);
-      //     }
-      //   } on AuthenticationException catch (e) {
-      //     isLoading.value = false;
-      //     showDialog(
-      //       context: context,
-      //       builder: (BuildContext context) => ErrorDialog(
-      //         title: "Oops",
-      //         message: e.message,
-      //         buttonText: "OK",
-      //       ),
-      //     );
-      //   }
-      // }
+        try {
+          isLoading.value = false;
+          await auth.login(email, password, onLogin);
+        } on AuthenticationException catch (e) {
+          isLoading.value = false;
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => ErrorDialog(
+              title: "Oops",
+              message: e.message,
+              buttonText: "OK",
+            ),
+          );
+        }
+      }
     }
 
     return Scaffold(

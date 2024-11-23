@@ -1,7 +1,7 @@
 import 'package:bonne_reponse/src/exceptions/exceptions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../domain/user/user.dart';
+import '../domain/user.dart';
 
 class UserRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
