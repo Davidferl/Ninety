@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "532598708726",
+    "project_id": "amc-fall-2024",
+    "storage_bucket": "amc-fall-2024.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532598708726:android:18c44f54bd5305925d4fd7",
+        "android_client_info": {
+          "package_name": "com.example.bonne_reponse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLaVhRpVTz5Cpn0ajQydWuWCevL_EWDbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
