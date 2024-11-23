@@ -31,10 +31,10 @@ class GroupService {
   Future<List<Objective>> getObjectives(String memberId) async {
     List<Group> groups = await _groupRepository.getAll();
     return groups
-      .expand((group) => group.members)
-      .where((member) => member.userId == memberId)
-      .map((member) => member.objective)
-      .toList();
+        .expand((group) => group.members)
+        .where((member) => member.userId == memberId)
+        .map((member) => member.objective)
+        .toList();
   }
 
   Future<void> addMember(
@@ -51,7 +51,6 @@ class GroupService {
     user.groupIds.add(groupId);
     await _userRepository.save(user);
   }
-
 
   Future<void> logActivity(String groupId, String memberId, String title,
       String description, double quantity, File image) async {
