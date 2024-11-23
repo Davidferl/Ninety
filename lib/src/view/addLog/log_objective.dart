@@ -1,10 +1,10 @@
-import 'package:bonne_reponse/src/view/addLog/tile.dart';
+import 'package:bonne_reponse/src/view/addLog/tile_objective.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AddLog extends HookWidget {
-  const AddLog({super.key});
+class LogObjective extends HookWidget {
+  const LogObjective({super.key});
 
   @override
   Widget build(BuildContext context) {
