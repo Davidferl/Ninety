@@ -60,11 +60,11 @@ class CustomTextInput extends StatelessWidget {
         labelText: labelText,
         labelStyle: Theme.of(context)
             .textTheme
-            .bodyMedium!
+            .bodySmall!
             .copyWith(color: kcLightSecondary),
         hintStyle: Theme.of(context)
             .textTheme
-            .bodyMedium!
+            .bodySmall!
             .copyWith(color: kcLightSecondary),
         fillColor: kcPrimaryVariant,
         border: const UnderlineInputBorder(

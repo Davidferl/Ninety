@@ -12,7 +12,7 @@ const TextTheme fonts = TextTheme(
     fontWeight: FontWeight.bold,
   ),
   headlineMedium: TextStyle(
-    fontSize: 38,
+    fontSize: 28,
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w800,
   ),

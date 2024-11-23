@@ -2,8 +2,8 @@ import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/authentication/validators.dart';
-import 'package:bonne_reponse/src/view/widgets/bottom_button.dart';
 import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
+import 'package:bonne_reponse/src/view/widgets/floating_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -57,22 +57,19 @@ class Login extends HookWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 76, 20, 24),
+          padding: const EdgeInsets.fromLTRB(24, 84, 24, 24),
           child: Form(
             key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Ninety",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: kcPrimary,
-                      ),
+                Image.asset(
+                  'assets/images/ninety_small_logo.png',
                 ),
                 verticalSpace(36),
                 Text(
-                  AppLocalizations.of(context)!.login,
+                  AppLocalizations.of(context)!.welcome_back,
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         color: kcPrimaryVariant,
                       ),
@@ -94,13 +91,9 @@ class Login extends HookWidget {
                   obscureText: true,
                   labelText: AppLocalizations.of(context)!.password,
                 ),
-                verticalSpace(96),
-                BottomButton(
-                  onPressed: () => login(),
-                  title: AppLocalizations.of(context)!.login,
-                ),
+                verticalSpace(16),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.dont_have_account,
@@ -112,7 +105,7 @@ class Login extends HookWidget {
                     TextButton(
                       onPressed: () => context.goNamed(Routes.signup.name),
                       child: Text(
-                        AppLocalizations.of(context)!.sign_up.toUpperCase(),
+                        AppLocalizations.of(context)!.sign_up,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -126,6 +119,7 @@ class Login extends HookWidget {
           ),
         ),
       ),
+      floatingActionButton: GradientFloatingActionButton(onPressed: () => login(), icon: const Icon(Icons.arrow_forward_ios)),
     );
   }
 }
