@@ -12,6 +12,7 @@ class Objective {
   final String groupId;
   final String memberId;
   final List<Post> posts;
+  final String title;
   final String unit;
   final double quantity;
 
@@ -25,6 +26,7 @@ class Objective {
     required this.groupId,
     required this.memberId,
     List<Post>? posts,
+    required this.title,
     required this.unit,
     required this.quantity,
     required this.quantityType,
@@ -42,4 +44,12 @@ class Objective {
     }
     return total / quantity;
   }
+
+  DateTime? getLastPostTimestamp() {
+    if (posts.isEmpty) {
+      return null;
+    }
+    return posts.last.timestamp;
+  }
 }
+

@@ -30,5 +30,10 @@
     "create_objective_continuous_objective": "Objectif (ex : 3)",
     "create_objective_continuous_unit": "Unité (ex : km)",
     "create_objective_discrete_objective": "Nombre de fois par semaine",
-    "join_group": "Join group"
+    "join_group": "Join group",
+    "no_objectives_found": "Aucun objectif trouvé",
+    "no_entry_yet": "Aucune entrée pour l'instant",
+    "last_entry_today": "Dernière entrée aujourd'hui",
+    "last_entry_yesterday": "Dernière entrée hier",
+    "last_entry_days_ago": "Dernière entrée il y a {days} jours"
 }

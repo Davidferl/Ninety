@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/src/view/addLog/log_objective.dart';
+import 'package:bonne_reponse/src/view/create_group/create_group.dart';
 import 'package:bonne_reponse/src/view/dashboard/dashboard.dart';
 import 'package:bonne_reponse/src/view/explore/explore.dart';
 import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
@@ -22,16 +23,11 @@ class _HomeState extends State<Home> {
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Explore(),
+    const CreateGroupPage(),
     const LogObjective(),
     Feed(),
     const Profile(),
   ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +49,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.bar_chart,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.bar_chart,
@@ -64,7 +60,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.explore,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.explore,
@@ -74,8 +70,19 @@ class _HomeState extends State<Home> {
           ),
           NavigationDestination(
             selectedIcon: Icon(
-              Icons.add,
+              Icons.create,
               color: kcPrimary,
+            ),
+            icon: Icon(
+              Icons.create,
+              color: kcLightSecondary,
+            ),
+            label: 'Create group',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(
+              Icons.add,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.add,
@@ -86,7 +93,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.groups,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.groups,
@@ -97,7 +104,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.person,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.person,
