@@ -28,12 +28,6 @@ class _HomeState extends State<Home> {
     const Profile(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +48,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.bar_chart,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.bar_chart,
@@ -65,7 +59,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.explore,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.explore,
@@ -87,7 +81,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.add,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.add,
@@ -98,7 +92,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.groups,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.groups,
@@ -109,7 +103,7 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             selectedIcon: Icon(
               Icons.person,
-              color: kcPrimary,
+              color: kcOnPrimary,
             ),
             icon: Icon(
               Icons.person,
