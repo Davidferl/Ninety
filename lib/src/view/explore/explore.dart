@@ -34,7 +34,7 @@ class Explore extends HookWidget {
     final isSubmitting = useState(false);
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
-    final isConnectedToInternet = useState<bool>(false);
+    final isConnectedToInternet = useState<bool>(true);
     final ValueNotifier<XFile?> selectedImage = useState<XFile?>(null);
 
     useEffect(() {
