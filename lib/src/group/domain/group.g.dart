@@ -23,5 +23,6 @@ Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
       'description': instance.description,
       'imageUrl': instance.imageUrl,
       'tags': instance.tags,
-      'members': instance.members,
+      'members': instance.members.map((e) => e.toJson()).toList(),
     };
+  

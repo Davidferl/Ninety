@@ -89,6 +89,7 @@ class PageSelectObjectiveForLog extends HookWidget {
                                   children: [
                                     ObjectiveTile(
                                       imageUri: objective.key,
+                                      objectiveId: objective.value.objectiveId,
                                       title: objective.value.title,
                                       description: getLastEntryString(
                                           context,
