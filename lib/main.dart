@@ -8,6 +8,7 @@ import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,19 +20,24 @@ import 'src/view/profile/settings.dart';
 enum Routes { home, startup, login, signup, progress, groupViewer, settings  }
 
 final _router = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/home/0',
   routes: [
     GoRoute(
         name: Routes.home.name,
-        path: '/home',
-        builder: (context, state) => const Home(title: "default"),
+        path: '/home/:index',
+        builder: (context, state) {
+          final index = int.tryParse(state.pathParameters['index'] ?? '0') ?? 0;
+          return Home(title: "Default", initialIndex: index);
+        },
         routes: [
           GoRoute(
             name: Routes.progress.name,
-            path: "/progress/:objectiveId",
+            path: "/progress/:objectiveId", // Change path to use objectiveId
             builder: (context, state) {
-              final String objectiveId = state.pathParameters['objectiveId']!;
-              return PagePostProgressLog(objectiveId: objectiveId);
+              final String objectiveId =
+                  state.pathParameters['objectiveId']!; // Access objectiveId
+              return PagePostProgressLog(
+                  objectiveId: objectiveId); // Pass objectiveId to the page
             },
           ),
           GoRoute(
@@ -66,6 +72,10 @@ final _router = GoRouter(
   ],
 );
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -74,6 +84,19 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  final token = await FirebaseMessaging.instance.getToken();
+  await FirebaseMessaging.instance.unsubscribeFromTopic("user_1");
+
+  print("FirebaseMessaging token: $token");
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(DevicePreview(
     enabled: false,

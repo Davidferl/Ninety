@@ -2,14 +2,15 @@ import 'package:bonne_reponse/src/view/addLog/page_select_objective_for_log.dart
 import 'package:bonne_reponse/src/view/create_group/create_group.dart';
 import 'package:bonne_reponse/src/view/dashboard/dashboard.dart';
 import 'package:bonne_reponse/src/view/explore/explore.dart';
-import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
 import 'package:bonne_reponse/src/view/feed/feed.dart';
 import 'package:bonne_reponse/src/view/profile/profile.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key, required this.title});
+  final int initialIndex;
+  const Home({super.key, required this.title, required this.initialIndex});
 
   final String title;
 
@@ -18,27 +19,37 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Explore(),
     const PageCreateGroup(),
     const PageSelectObjectiveForLog(),
-    Feed(),
+    const Feed(),
     const Profile(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    // Update the route to reflect the selected index
+    context.goNamed('home', pathParameters: {'index': index.toString()});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions[_selectedIndex],
       bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onDestinationSelected: _onItemTapped,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
         elevation: 3,
