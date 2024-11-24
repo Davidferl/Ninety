@@ -82,6 +82,8 @@ class GroupViewer extends HookWidget {
 
           await groupService.addMember(group.groupId, auth.user!.uid, title,
               double.parse(objective), unit, QuantityType.continuous);
+
+          context.goNamed(Routes.home.name);
         }
       } else {
         if (formKey.currentState!.validate()) {
@@ -90,242 +92,251 @@ class GroupViewer extends HookWidget {
 
           await groupService.addMember(group.groupId, auth.user!.uid, title,
               double.parse(objective), '', QuantityType.discrete);
+
+          context.goNamed(Routes.home.name);
         }
       }
-      context.goNamed(Routes.home.name);
     }
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                            onPressed: () => context.pop(''),
-                            icon: const Icon(Icons.chevron_left, size: 30)),
-                        SectionName(name: group.title),
-                        IconButton(
-                            onPressed: () => {},
-                            icon: const Icon(Icons.more_horiz))
-                      ],
-                    ),
-                    const Divider(
-                      color: kcDivider,
-                      thickness: 1,
-                    ),
-                    verticalSpace(10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.what_is_this_group,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: kcSecondaryVariant,
-                                  ),
-                        ),
-                        verticalSpace(4),
-                        Text(
-                          group.description,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color: kcDarkGray,
-                                  fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    verticalSpace(20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.create_an_objective,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: kcSecondaryVariant,
-                                  ),
-                        ),
-                        verticalSpace(4),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .create_an_objective_description,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color: kcDarkGray,
-                                  fontWeight: FontWeight.w500),
-                        ),
-                        verticalSpace(16),
-                        CustomTextInput(
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.text,
-                          labelText: AppLocalizations.of(context)!
-                              .create_objective_prompt,
-                          controller: titleController,
-                          validator: validateTitle,
-                        ),
-                        verticalSpace(16),
-                        Column(
-                          children: [
-                            ExpansionPanelList(
-                              expandIconColor: kcSecondaryVariant,
-                              expansionCallback: (panelIndex, isExpanded) {
-                                dropdownActive.value = !dropdownActive.value;
-                              },
-                              children: <ExpansionPanel>[
-                                ExpansionPanel(
-                                    headerBuilder: (context, isExpanded) {
-                                      return ListTile(
-                                        iconColor: kcSecondaryVariant,
-                                        title: Text(
+        child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              onPressed: () => context.pop(''),
+                              icon: const Icon(Icons.chevron_left, size: 30)),
+                          SectionName(name: group.title),
+                          IconButton(
+                              onPressed: () => {},
+                              icon: const Icon(Icons.more_horiz))
+                        ],
+                      ),
+                      const Divider(
+                        color: kcDivider,
+                        thickness: 1,
+                      ),
+                      verticalSpace(10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.what_is_this_group,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: kcSecondaryVariant,
+                                ),
+                          ),
+                          verticalSpace(4),
+                          Text(
+                            group.description,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    color: kcDarkGray,
+                                    fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      verticalSpace(20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.create_an_objective,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: kcSecondaryVariant,
+                                ),
+                          ),
+                          verticalSpace(4),
+                          Text(
+                            AppLocalizations.of(context)!
+                                .create_an_objective_description,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    color: kcDarkGray,
+                                    fontWeight: FontWeight.w500),
+                          ),
+                          verticalSpace(16),
+                          CustomTextInput(
+                            textInputAction: TextInputAction.next,
+                            keyboardType: TextInputType.text,
+                            labelText: AppLocalizations.of(context)!
+                                .create_objective_prompt,
+                            controller: titleController,
+                            validator: validateTitle,
+                          ),
+                          verticalSpace(16),
+                          Column(
+                            children: [
+                              ExpansionPanelList(
+                                expandIconColor: kcSecondaryVariant,
+                                expansionCallback: (panelIndex, isExpanded) {
+                                  dropdownActive.value = !dropdownActive.value;
+                                },
+                                children: <ExpansionPanel>[
+                                  ExpansionPanel(
+                                      headerBuilder: (context, isExpanded) {
+                                        return ListTile(
+                                          iconColor: kcSecondaryVariant,
+                                          title: Text(
+                                            AppLocalizations.of(context)!
+                                                .create_objective_meaning,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
+                                                .copyWith(
+                                                    color: kcSecondaryVariant,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                          ),
+                                        );
+                                      },
+                                      body: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            16, 0, 16, 16),
+                                        child: Text(
                                           AppLocalizations.of(context)!
-                                              .create_objective_meaning,
+                                              .create_objective_meaning_description,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodySmall!
                                               .copyWith(
-                                                  color: kcSecondaryVariant,
+                                                  color: kcDarkGray,
                                                   fontWeight: FontWeight.w500),
                                         ),
-                                      );
-                                    },
-                                    body: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          16, 0, 16, 16),
-                                      child: Text(
-                                        AppLocalizations.of(context)!
-                                            .create_objective_meaning_description,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                                color: kcDarkGray,
-                                                fontWeight: FontWeight.w500),
+                                      ),
+                                      isExpanded: dropdownActive.value,
+                                      canTapOnHeader: true)
+                                ],
+                              ),
+                            ],
+                          ),
+                          verticalSpace(20),
+                          Column(
+                            children: <Widget>[
+                              ListTile(
+                                minVerticalPadding: 0,
+                                title: Text(
+                                    AppLocalizations.of(context)!.continuous,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                            color: kcDarkGray,
+                                            fontWeight: FontWeight.w500)),
+                                leading: Radio<Values>(
+                                  value: Values.continuous,
+                                  groupValue:
+                                      selectedIndex.value == Values.continuous
+                                          ? Values.continuous
+                                          : Values.discrete,
+                                  onChanged: (Values? value) {
+                                    selectedIndex.value = Values.continuous;
+                                  },
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                    AppLocalizations.of(context)!.discrete,
+                                    style: const TextStyle(
+                                        color: kcDarkGray,
+                                        fontWeight: FontWeight.w500)),
+                                leading: Radio<Values>(
+                                  value: Values.discrete,
+                                  groupValue:
+                                      selectedIndex.value == Values.continuous
+                                          ? Values.continuous
+                                          : Values.discrete,
+                                  onChanged: (Values? value) {
+                                    selectedIndex.value = Values.discrete;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          selectedIndex.value == Values.continuous
+                              ? Row(
+                                  children: [
+                                    Expanded(
+                                      flex:
+                                          3, // Number of times input takes 3/4 of the space
+                                      child: CustomTextInput(
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType: TextInputType.number,
+                                        labelText: AppLocalizations.of(context)!
+                                            .create_objective_continuous_objective,
+                                        controller:
+                                            continuousObjectiveController,
+                                        validator: validateContinuousObjective,
                                       ),
                                     ),
-                                    isExpanded: dropdownActive.value,
-                                    canTapOnHeader: true)
-                              ],
-                            ),
-                          ],
-                        ),
-                        verticalSpace(20),
-                        Column(
-                          children: <Widget>[
-                            ListTile(
-                              minVerticalPadding: 0,
-                              title: Text(
-                                  AppLocalizations.of(context)!.continuous,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                          color: kcDarkGray,
-                                          fontWeight: FontWeight.w500)),
-                              leading: Radio<Values>(
-                                value: Values.continuous,
-                                groupValue:
-                                    selectedIndex.value == Values.continuous
-                                        ? Values.continuous
-                                        : Values.discrete,
-                                onChanged: (Values? value) {
-                                  selectedIndex.value = Values.continuous;
-                                },
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                  AppLocalizations.of(context)!.discrete,
-                                  style: const TextStyle(
-                                      color: kcDarkGray,
-                                      fontWeight: FontWeight.w500)),
-                              leading: Radio<Values>(
-                                value: Values.discrete,
-                                groupValue:
-                                    selectedIndex.value == Values.continuous
-                                        ? Values.continuous
-                                        : Values.discrete,
-                                onChanged: (Values? value) {
-                                  selectedIndex.value = Values.discrete;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        selectedIndex.value == Values.continuous
-                            ? Row(
-                                children: [
-                                  Expanded(
-                                    flex:
-                                        3, // Number of times input takes 3/4 of the space
-                                    child: CustomTextInput(
-                                      textInputAction: TextInputAction.next,
-                                      keyboardType: TextInputType.number,
-                                      labelText: AppLocalizations.of(context)!
-                                          .create_objective_continuous_objective,
-                                      controller: continuousObjectiveController,
-                                      validator: validateContinuousObjective,
+                                    horizontalSpace(16),
+                                    Expanded(
+                                      flex:
+                                          2, // Objective input takes 1/4 of the space
+                                      child: CustomTextInput(
+                                        textInputAction: TextInputAction.done,
+                                        keyboardType: TextInputType.number,
+                                        labelText: AppLocalizations.of(context)!
+                                            .create_objective_continuous_unit,
+                                        controller: continuousUnitController,
+                                        validator: validateContinuousUnit,
+                                      ),
                                     ),
-                                  ),
-                                  horizontalSpace(16),
-                                  Expanded(
-                                    flex:
-                                        2, // Objective input takes 1/4 of the space
-                                    child: CustomTextInput(
-                                      textInputAction: TextInputAction.done,
-                                      keyboardType: TextInputType.number,
-                                      labelText: AppLocalizations.of(context)!
-                                          .create_objective_continuous_unit,
-                                      controller: continuousUnitController,
-                                      validator: validateContinuousUnit,
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    Expanded(
+                                      flex:
+                                          1, // Objective input takes 1/4 of the space
+                                      child: CustomTextInput(
+                                        textInputAction: TextInputAction.done,
+                                        keyboardType: TextInputType.number,
+                                        labelText: AppLocalizations.of(context)!
+                                            .create_objective_discrete_objective,
+                                        controller: discreteAmountController,
+                                        validator: validateDiscreteAmount,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              )
-                            : Row(
-                                children: [
-                                  Expanded(
-                                    flex:
-                                        1, // Objective input takes 1/4 of the space
-                                    child: CustomTextInput(
-                                      textInputAction: TextInputAction.done,
-                                      keyboardType: TextInputType.number,
-                                      labelText: AppLocalizations.of(context)!
-                                          .create_objective_discrete_objective,
-                                      controller: discreteAmountController,
-                                      validator: validateDiscreteAmount,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                      ],
-                    ),
-                  ],
+                                  ],
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: BottomButton(
-                  onPressed: () => createGroup(),
-                  title: AppLocalizations.of(context)!.join_group,
-                ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: BottomButton(
+                    onPressed: () => createGroup(),
+                    title: AppLocalizations.of(context)!.join_group,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

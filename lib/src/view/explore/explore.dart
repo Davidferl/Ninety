@@ -18,15 +18,30 @@ class Explore extends HookWidget {
   Widget build(BuildContext context) {
     final GroupService groupService = locator<GroupService>();
 
-    final groups = useState<List<Group>>([]);
+    final allGroups = useState<List<Group>>([]);
+    final filteredGroups = useState<List<Group>>([]);
     useEffect(() {
       Future<void> getGroups() async {
-        groups.value = await groupService.getGroups();
+        await groupService.getGroups().then((groups) =>
+            {allGroups.value = groups, filteredGroups.value = groups});
       }
 
       getGroups();
       return () {};
     }, []);
+
+    void onSearch(String query) {
+      if (query.isEmpty) {
+        filteredGroups.value = allGroups.value;
+        return;
+      }
+      // check group title and group tags for query
+      filteredGroups.value = allGroups.value
+          .where((group) =>
+              group.title.toLowerCase().contains(query.toLowerCase()) ||
+              group.tags.any((tag) => tag.toLowerCase().contains(query)))
+          .toList();
+    }
 
     return SafeArea(
         child: Padding(
@@ -49,6 +64,7 @@ class Explore extends HookWidget {
                             color: kcDarkGray,
                           )),
                   controller: searchController,
+                  onChanged: onSearch,
                   hintText: 'Search',
                   leading: const Icon(
                     Icons.search,
@@ -68,7 +84,7 @@ class Explore extends HookWidget {
             ),
           ),
           Expanded(
-            child: groups.value.isEmpty
+            child: filteredGroups.value.isEmpty
                 ? const Center(
                     child:
                         CircularProgressIndicator(), // Show a loader if empty
@@ -77,14 +93,14 @@ class Explore extends HookWidget {
                     crossAxisCount: 2,
                     mainAxisSpacing: 4,
                     crossAxisSpacing: 4,
-                    itemCount:
-                        groups.value.length, // Specify itemCount explicitly
+                    itemCount: filteredGroups
+                        .value.length, // Specify itemCount explicitly
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () => context.goNamed(Routes.groupViewer.name,
-                            extra: groups.value[index]),
+                            extra: filteredGroups.value[index]),
                         child: Tile(
-                          group: groups.value[index],
+                          group: filteredGroups.value[index],
                           index: index,
                         ),
                       );
