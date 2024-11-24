@@ -54,7 +54,7 @@ class PostHeader extends StatelessWidget {
               style: const TextStyle(fontSize: 15), // Global style for the text
             ),
             Text(
-              "$timeAgo mins ago",
+              timeAgo,
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,

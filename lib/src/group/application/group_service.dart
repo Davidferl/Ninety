@@ -98,14 +98,13 @@ class GroupService {
   }
 
   Future<void> logActivity(String groupId, String memberId, String title,
-      String description, double quantity, File image) async {
+      String description, double quantity, XFile image) async {
     Group group = await _groupRepository.getById(groupId);
 
     Member member =
         group.members.firstWhere((member) => member.userId == memberId);
 
-    // TODO : Upload image
-    String imageUrl = image.path;
+    String imageUrl = await _groupRepository.uploadImage(image);
 
     Post post = Post(
         groupId: groupId,

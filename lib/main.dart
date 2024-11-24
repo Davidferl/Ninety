@@ -4,6 +4,7 @@ import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
 import 'package:bonne_reponse/src/view/authentication/register.dart';
 import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
+import 'package:bonne_reponse/src/view/feed/comment/comment_page.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
@@ -17,10 +18,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'src/view/profile/settings.dart';
 
-enum Routes { home, startup, login, signup, progress, groupViewer, settings }
+enum Routes { home, startup, login, signup, progress, groupViewer, settings, comments }
 
 final _router = GoRouter(
-  initialLocation: '/startup',
+  initialLocation: '/home/comments',
   routes: [
     GoRoute(
         name: Routes.home.name,
@@ -46,6 +47,13 @@ final _router = GoRouter(
               Group group = state.extra as Group;
               return GroupViewer(group: group);
             },
+          ),
+          GoRoute(
+            name: Routes.comments.name,
+            path: "/comments",
+            builder: (context, state) {
+              return CommentPage();
+            }
           ),
           GoRoute(
             name: Routes.settings.name,
