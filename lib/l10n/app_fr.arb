@@ -20,5 +20,14 @@
     "pick_objective_description": "Montre au monde de quoi tu es capable!",
     "dashboard": "Tableau de bord",
     "continuous": "Continues",
-    "discrete": "Discrètes"
+    "discrete": "Discrètes",
+    "what_is_this_group": "De quoi parle ce groupe ?",
+    "create_an_objective": "Créer un objectif !",
+    "create_an_objective_description": "Pour rejoindre ce groupe, vous devez créer un objectif. Quel type d'objectif souhaitez-vous créer ?",
+    "create_objective_prompt": "Titre de mon objectif",
+    "create_objective_meaning": "Que signifient les valeurs suivantes ?",
+    "create_objective_meaning_description": "Les valeurs continues sont pour les objectifs continus, comme 'Courir 3 km par jour'.\n\nLes valeurs discrètes sont pour les objectifs qui se produisent une ou plusieurs fois par semaine, comme 'Manger une salade pour le déjeuner'.",
+    "create_objective_continuous_objective": "Objectif (ex : 3)",
+    "create_objective_continuous_unit": "Unité (ex : km)",
+    "create_objective_discrete_objective": "Nombre de fois par semaine"
 }
