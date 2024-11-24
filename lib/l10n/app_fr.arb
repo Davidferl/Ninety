@@ -17,5 +17,8 @@
     "explore": "Explore des groupes",
     "new_log": "Entrer un nouveau log",
     "pick_objective": "Choisir un objectif",
-    "pick_objective_description": "Montre au monde de quoi tu es capable!"
+    "pick_objective_description": "Montre au monde de quoi tu es capable!",
+    "dashboard": "Tableau de bord",
+    "continuous": "Continues",
+    "discrete": "Discrètes"
 }

@@ -2,6 +2,7 @@ import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/view/addLog/log_progress.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
 import 'package:bonne_reponse/src/view/authentication/register.dart';
+import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
@@ -12,26 +13,36 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'src/view/profile/settings.dart';
 
-enum Routes { home, startup, login, signup, progress }
+enum Routes { home, startup, login, signup, progress, groupViewer, settings }
 
 final _router = GoRouter(
   initialLocation: '/home',
   routes: [
     GoRoute(
-      name: Routes.home.name,
-      path: '/home',
-      builder: (context, state) => const Home(title: "default"),
-      routes: [
-        GoRoute(name: Routes.progress.name,
-        path: "/progress/:name",
-        builder: (context, state) {
-          final String name = state.pathParameters['name']!;
-          return LogProgress(title: name);
-        },
-        ),
-      ]
-    ),
+        name: Routes.home.name,
+        path: '/home',
+        builder: (context, state) => const Home(title: "default"),
+        routes: [
+          GoRoute(
+            name: Routes.progress.name,
+            path: "/progress/:name",
+            builder: (context, state) {
+              final String name = state.pathParameters['name']!;
+              return LogProgress(title: name);
+            },
+          ),
+          GoRoute(
+            name: Routes.groupViewer.name,
+            path: "/groupViewer",
+            builder: (context, state) => const GroupViewer(),
+          ),
+          GoRoute(name: Routes.settings.name,
+            path: "/settings",
+            builder: (context, state) => const Settings(),
+          ),
+        ]),
     GoRoute(
       name: Routes.startup.name,
       path: '/startup',
@@ -58,7 +69,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   runApp(DevicePreview(
     enabled: false,

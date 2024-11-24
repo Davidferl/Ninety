@@ -14,11 +14,12 @@ class GroupService {
   final GroupRepository _groupRepository = locator<GroupRepository>();
   final UserRepository _userRepository = locator<UserRepository>();
 
-  Future<void> addGroup(String title, String description, List<String> tags,
-      List<Member> members) async {
+  Future<void> addGroup(String title, String description, String imageUrl,
+      List<String> tags, List<Member> members) async {
     final Group group = Group(
       title: title,
       description: description,
+      imageUrl: imageUrl,
       tags: tags,
       members: members,
     );
@@ -38,11 +39,12 @@ class GroupService {
         .toList();
   }
 
-  Future<void> addMember(
-      String groupId, String memberId, double quantity, String unit, QuantityType quantityType) async {
+  Future<void> addMember(String groupId, String memberId, double quantity,
+      String unit, QuantityType quantityType) async {
     Group group = await _groupRepository.getById(groupId);
 
-    Objective objective = Objective(unit: unit, quantity: quantity, quantityType: quantityType);
+    Objective objective =
+        Objective(unit: unit, quantity: quantity, quantityType: quantityType);
     Member member = Member(userId: memberId, objective: objective);
     group.members.add(member);
 

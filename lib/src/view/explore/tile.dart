@@ -1,11 +1,13 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Tile extends StatelessWidget {
   final int index;
+  final Group group;
 
-  const Tile({super.key, required this.index});
+  const Tile({super.key, required this.index, required this.group});
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +27,11 @@ class Tile extends StatelessWidget {
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
-              child: Image.asset(
-                index % 2 == 0
-                    ? 'assets/images/explore_1.jpg'
-                    : 'assets/images/explore_3.jpg',
-                width: double.infinity,
-                height: 200,
-                fit: BoxFit.cover,
-              ),
+              child:
+                  Image.network(group.imageUrl, // Load group image from the URL
+                      width: double.infinity,
+                      height: 200,
+                      fit: BoxFit.cover),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
@@ -40,22 +39,30 @@ class Tile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sleep earlier',
+                    group.title,
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
                           color: kcSecondaryVariant,
+                          fontWeight: FontWeight.bold,
                         ),
                   ),
                   verticalSpace(2),
                   Text(
-                    'This is a description of the card content.',
+                    group.description,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: kcSecondaryVariant, fontWeight: FontWeight.w500),
+                          color: kcSecondaryVariant,
+                          fontWeight: FontWeight.w500,
+                        ),
+                    maxLines: 2, // Limit description to 2 lines
+                    overflow: TextOverflow
+                        .ellipsis, // Add ellipsis if text is too long
                   ),
                   verticalSpace(12),
                   Row(
                     children: [
                       Text(
-                        '100 members',
+                        group.members.length == 1
+                            ? '1 member'
+                            : '${group.members.length} members',
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.grey,
                               fontWeight: FontWeight.w400,

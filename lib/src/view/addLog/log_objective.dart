@@ -19,10 +19,14 @@ class LogObjective extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SectionName(name: AppLocalizations.of(context)!.new_log),
+                const Divider(
+                  color: kcDivider,
+                  thickness: 1,
+                ),
                 verticalSpaceSmall,
                 Text(
                   AppLocalizations.of(context)!.pick_objective,
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: kcSecondaryVariant,
                       ),
                 ),
