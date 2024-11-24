@@ -86,7 +86,7 @@ class PostHeader extends HookWidget {
                     text: groupName,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: kcPrimary,
                     ),
                   ),
                 ],
