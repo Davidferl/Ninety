@@ -81,7 +81,8 @@ class Explore extends HookWidget {
                         groups.value.length, // Specify itemCount explicitly
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () => context.goNamed(Routes.groupViewer.name),
+                        onTap: () => context.goNamed(Routes.groupViewer.name,
+                            extra: groups.value[index]),
                         child: Tile(
                           group: groups.value[index],
                           index: index,

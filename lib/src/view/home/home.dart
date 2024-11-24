@@ -1,7 +1,8 @@
-import 'package:bonne_reponse/src/view/addLog/log_objective.dart';
+import 'package:bonne_reponse/src/view/addLog/page_select_objective_for_log.dart';
 import 'package:bonne_reponse/src/view/create_group/create_group.dart';
 import 'package:bonne_reponse/src/view/dashboard/dashboard.dart';
 import 'package:bonne_reponse/src/view/explore/explore.dart';
+import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
 import 'package:bonne_reponse/src/view/feed/feed.dart';
 import 'package:bonne_reponse/src/view/profile/profile.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
@@ -22,8 +23,8 @@ class _HomeState extends State<Home> {
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Explore(),
-    const CreateGroupPage(),
-    const LogObjective(),
+    const PageCreateGroup(),
+    const PageSelectObjectiveForLog(),
     Feed(),
     const Profile(),
   ];
