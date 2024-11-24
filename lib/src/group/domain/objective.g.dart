@@ -24,7 +24,7 @@ Map<String, dynamic> _$ObjectiveToJson(Objective instance) => <String, dynamic>{
       'objectiveId': instance.objectiveId,
       'groupId': instance.groupId,
       'memberId': instance.memberId,
-      'posts': instance.posts,
+      'posts': instance.posts.map((e) => e.toJson()).toList(),
       'title': instance.title,
       'unit': instance.unit,
       'quantity': instance.quantity,

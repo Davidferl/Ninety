@@ -1,9 +1,10 @@
-import 'dart:ffi';
-
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/main.dart';
+import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
+import 'package:bonne_reponse/src/group/domain/objective.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/widgets/bottom_button.dart';
 import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
@@ -60,6 +61,8 @@ class GroupViewer extends HookWidget {
   Widget build(BuildContext context) {
     final GroupService groupService = locator<GroupService>();
 
+    final auth = useAuthentication();
+
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final dropdownActive = useState(false);
 
@@ -76,10 +79,20 @@ class GroupViewer extends HookWidget {
           final title = titleController.text;
           final objective = continuousObjectiveController.text;
           final unit = continuousUnitController.text;
+
+          await groupService.addMember(group.groupId, auth.user!.uid, title,
+              double.parse(objective), unit, QuantityType.continuous);
         }
       } else {
-        if (formKey.currentState!.validate()) {}
+        if (formKey.currentState!.validate()) {
+          final title = titleController.text;
+          final objective = discreteAmountController.text;
+
+          await groupService.addMember(group.groupId, auth.user!.uid, title,
+              double.parse(objective), '', QuantityType.discrete);
+        }
       }
+      context.goNamed(Routes.home.name);
     }
 
     return Scaffold(
@@ -310,7 +323,6 @@ class GroupViewer extends HookWidget {
                 child: BottomButton(
                   onPressed: () => createGroup(),
                   title: AppLocalizations.of(context)!.join_group,
-                  isDisabled: false,
                 ),
               )
             ],

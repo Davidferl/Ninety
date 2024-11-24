@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class TileHeader extends StatelessWidget {
-  final String avatarImageUrl;
+class PostHeader extends StatelessWidget {
+  final String userImageUrl;
   final String username;
-  final String teamName;
-  final int timeAgo;
+  final String groupName;
+  final String timeAgo;
 
-  const TileHeader(
+  const PostHeader(
       {super.key,
-      required this.avatarImageUrl,
+      required this.userImageUrl,
       required this.username,
-      required this.teamName,
+      required this.groupName,
       required this.timeAgo});
 
   @override
@@ -19,10 +19,9 @@ class TileHeader extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 25,
-          backgroundImage: NetworkImage(avatarImageUrl),
+          backgroundImage: NetworkImage(userImageUrl),
         ),
         const SizedBox(width: 6),
-
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -44,7 +43,7 @@ class TileHeader extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: teamName,
+                    text: groupName,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
@@ -63,7 +62,6 @@ class TileHeader extends StatelessWidget {
             ),
           ],
         ),
-
         const Spacer(),
         IconButton(
           icon: const Icon(Icons.favorite_border),

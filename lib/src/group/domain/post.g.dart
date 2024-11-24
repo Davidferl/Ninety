@@ -29,7 +29,7 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'image': instance.image,
       'title': instance.title,
       'description': instance.description,
-      'reactions': instance.reactions,
+      'reactions': instance.reactions.map((e) => e.toJson()).toList(),
       'timestamp': instance.timestamp.toIso8601String(),
       'quantity': instance.quantity,
     };
