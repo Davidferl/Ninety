@@ -1,4 +1,6 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/src/user/domain/user.dart';
+import 'package:bonne_reponse/src/user/services/user_service.dart';
 import 'package:bonne_reponse/src/view/profile/text_count.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
 import 'package:bonne_reponse/main.dart';
@@ -6,11 +8,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../injection_container.dart';
+
 class Profile extends HookWidget {
   const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    UserService userService = locator<UserService>();
+
+    final userData = useState<User?>(null);
+    final isLoading = useState(true);
+
+    useEffect(() {
+      Future<void> getUser() async {
+        try {
+          isLoading.value = true;
+          userData.value = await userService.getCurrentUser();
+        } finally {
+          isLoading.value = false;
+        }
+      }
+
+      getUser();
+      return () {};
+    }, []);
+
     return Stack(
       children: [
         Positioned.fill(
@@ -21,7 +44,9 @@ class Profile extends HookWidget {
           ),
         ),
         SafeArea(
-          child: Padding(
+          child: isLoading.value
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
             padding: const EdgeInsets.only(top: 56),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,7 +68,7 @@ class Profile extends HookWidget {
                       const CircleAvatar(
                         radius: 54,
                         backgroundImage:
-                            AssetImage('assets/images/profile_avatar.png'),
+                        AssetImage('assets/images/profile_avatar.png'),
                       ),
                       Column(
                         children: [
@@ -54,27 +79,27 @@ class Profile extends HookWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'John Doe',
+                                  userData.value!.name,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineMedium!
                                       .copyWith(
-                                        color: Colors.white,
-                                      ),
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 Text(
-                                  'New York, USA',
+                                  userData.value!.surname,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        color: Colors.white.withOpacity(0.5),
-                                      ),
+                                    color: Colors.white.withOpacity(0.5),
+                                  ),
                                 ),
                                 verticalSpaceSmall,
                                 const Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     TextCount(
                                       name: "Objectives",
