@@ -170,36 +170,39 @@ class CommentPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Generate initial comments
     final c = generateComments(80);
     int numComments = Random().nextInt(10) + 1;
-    final List<Comment> comments = getRandomComments(c, numComments);
+    final initialComments = getRandomComments(c, numComments);
+
+    // State to manage comments
+    final comments = useState<List<Comment>>(initialComments);
+
+    // Text controller for input
+    final TextEditingController controller = TextEditingController();
 
     const colorPalette =
         BoringAvatarPalette([kcPrimary, kcSecondaryVariant, kcLightPrimary]);
-
-    final TextEditingController controller = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: const Padding(
           padding: EdgeInsets.only(top: 24.0),
           child: Align(
-            alignment: Alignment
-                .center, // This will center the child inside the AppBar
+            alignment: Alignment.center,
             child: SectionName(name: "Comments"),
           ),
         ),
       ),
       body: Stack(
         children: [
-          // Wrap ListView with a SingleChildScrollView to prevent overflow
+          // List of comments
           Padding(
-            padding: const EdgeInsets.only(
-                bottom: 100), // Add bottom padding to make space for input
+            padding: const EdgeInsets.only(bottom: 100),
             child: ListView.separated(
-              itemCount: comments.length,
+              itemCount: comments.value.length,
               itemBuilder: (context, index) {
-                final comment = comments[index];
+                final comment = comments.value[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ListTile(
@@ -253,14 +256,14 @@ class CommentPage extends HookWidget {
               separatorBuilder: (context, index) {
                 return const Divider(
                   color: Colors.grey,
-                  indent: 20, // Space before the divider starts
+                  indent: 20,
                   endIndent: 20,
                 );
               },
             ),
           ),
 
-          // Comment input box at the bottom
+          // Input box
           Positioned(
             bottom: 0,
             left: 0,
@@ -280,21 +283,17 @@ class CommentPage extends HookWidget {
                       child: TextField(
                         controller: controller,
                         style: const TextStyle(
-                          color: Colors
-                              .black, // Change the color of the input text
-                          fontSize: 16, // Optional: Adjust the font size
-                          fontWeight: FontWeight
-                              .w500, // Optional: Adjust the font weight
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                         decoration: const InputDecoration(
                           hintText: "Write a comment...",
                           hintStyle: TextStyle(
-                            fontSize: 16, // Change the font size
-                            color: Colors.grey, // Change the hint text color
-                            fontStyle: FontStyle
-                                .italic, // Optionally, make the hint text italic
-                            fontWeight:
-                                FontWeight.w500, // Set the weight of the font
+                            fontSize: 16,
+                            color: Colors.grey,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500,
                           ),
                           border: InputBorder.none,
                         ),
@@ -309,9 +308,17 @@ class CommentPage extends HookWidget {
                     child: IconButton(
                       icon: const Icon(Icons.send, color: Colors.white),
                       onPressed: () {
-                        // Handle sending comment here
-                        print('Comment: ${controller.text}');
-                        controller.clear(); // Clear input after sending
+                        final newComment = Comment(
+                          username:
+                              "You", // Replace with dynamic username if needed
+                          message: controller.text.trim(),
+                          timeAgo: "Just now",
+                        );
+
+                        if (newComment.message.isNotEmpty) {
+                          comments.value = [...comments.value, newComment];
+                          controller.clear();
+                        }
                       },
                     ),
                   ),

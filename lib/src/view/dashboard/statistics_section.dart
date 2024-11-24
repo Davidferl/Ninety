@@ -122,6 +122,7 @@ class _CategoryProgress extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
         ),
+        const SizedBox(height: 4),
       ],
     );
   }
