@@ -13,8 +13,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'src/view/profile/settings.dart';
 
-enum Routes { home, startup, login, signup, progress, groupViewer }
+enum Routes { home, startup, login, signup, progress, groupViewer, settings }
 
 final _router = GoRouter(
   initialLocation: '/home',
@@ -36,7 +37,11 @@ final _router = GoRouter(
             name: Routes.groupViewer.name,
             path: "/groupViewer",
             builder: (context, state) => const GroupViewer(),
-          )
+          ),
+          GoRoute(name: Routes.settings.name,
+            path: "/settings",
+            builder: (context, state) => const Settings(),
+          ),
         ]),
     GoRoute(
       name: Routes.startup.name,
