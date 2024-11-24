@@ -137,6 +137,7 @@ class GroupService {
               userName: user.name,
               userImageUrl: "",
               groupName: group.title,
+              objectiveName: member.objective.title,
               post: post,
             ));
           }
@@ -145,6 +146,16 @@ class GroupService {
     }
 
     return posts;
+  }
+
+  Future<List<Group>> getMemberGroups(String userId) async {
+    List<Group> group = await _groupRepository.getAll();
+    List<Group> memberGroups = group
+        .where(
+            (group) => group.members.any((member) => member.userId == userId))
+        .toList();
+
+    return memberGroups;
   }
 
   Future<List<Post>> getGroupFeed(String userId, String groupId) async {

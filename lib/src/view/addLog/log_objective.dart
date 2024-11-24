@@ -37,79 +37,78 @@ class LogObjective extends HookWidget {
     }, []); // Empty dependency array ensures this runs only once
 
     return SafeArea(
-        child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SectionName(name: AppLocalizations.of(context)!.new_log),
-                const Divider(
-                  color: kcDivider,
-                  thickness: 1,
-                ),
-                verticalSpaceSmall,
-                Text(
-                  AppLocalizations.of(context)!.pick_objective,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: kcSecondaryVariant,
-                      ),
-                ),
-                Text(
-                  AppLocalizations.of(context)!.pick_objective_description,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: kcDarkGray,
-                      ),
-                ),
-                verticalSpaceMedium,
-                Expanded(
-                  child: isLoading.value
-                      ? const Center(child: CircularProgressIndicator())
-                      : error.value != null
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SectionName(name: AppLocalizations.of(context)!.new_log),
+            const Divider(
+              color: kcDivider,
+              thickness: 1,
+            ),
+            verticalSpaceSmall,
+            Text(
+              AppLocalizations.of(context)!.pick_objective,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: kcSecondaryVariant,
+                  ),
+            ),
+            Text(
+              AppLocalizations.of(context)!.pick_objective_description,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: kcDarkGray,
+                  ),
+            ),
+            verticalSpaceMedium,
+            Expanded(
+              child: isLoading.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : error.value != null
+                      ? Center(
+                          child: Text(
+                            error.value!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                        )
+                      : (objectives.value == null || objectives.value!.isEmpty)
                           ? Center(
                               child: Text(
-                                error.value!,
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.error,
-                                ),
+                                AppLocalizations.of(context)!
+                                    .no_objectives_found,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             )
-                          : (objectives.value == null ||
-                                  objectives.value!.isEmpty)
-                              ? Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!
-                                        .no_objectives_found,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                )
-                              : ListView.builder(
-                                  itemCount: objectives.value!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final objective = objectives.value![index];
-                                    return Column(
-                                      children: [
-                                        ObjectiveTile(
-                                          imageUri: objective.key,
-                                          title: objective.value.title,
-                                          description: getLastEntryString(
-                                              context, objective.value),
-                                        ),
-                                        verticalSpace(10),
-                                      ],
-                                    );
-                                  },
-                                ),
-                ),
-              ],
-            )));
+                          : ListView.builder(
+                              itemCount: objectives.value!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final objective = objectives.value![index];
+                                return Column(
+                                  children: [
+                                    ObjectiveTile(
+                                      imageUri: objective.key,
+                                      title: objective.value.title,
+                                      description: getLastEntryString(
+                                          context,
+                                          objective.value
+                                              .getLastPostTimestamp()),
+                                    ),
+                                    verticalSpace(10),
+                                  ],
+                                );
+                              },
+                            ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
-String getLastEntryString(BuildContext context, Objective objective) {
-  final timestamp = objective.getLastPostTimestamp();
-
+String getLastEntryString(BuildContext context, DateTime? timestamp) {
   if (timestamp == null) {
     return AppLocalizations.of(context)!.no_entry_yet;
   }
