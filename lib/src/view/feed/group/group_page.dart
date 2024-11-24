@@ -26,8 +26,6 @@ class GroupPage extends HookWidget {
     final groupService = locator<GroupService>();
     final postsWithUserAndGroup = useState<List<PostWithUserAndGroup>>([]);
     final isLoading = useState(true);
-    const colorPalette =
-        BoringAvatarPalette([kcPrimary, kcSecondaryVariant, kcLightPrimary]);
 
     useEffect(() {
       Future<void> fetchGroup() async {
@@ -249,10 +247,31 @@ Widget _buildPostCard(BuildContext context, PostWithUserAndGroup post) {
 }
 
 Widget _buildPostHeader(BuildContext context, PostWithUserAndGroup post) {
+  final groupService = locator<GroupService>(); // Get the group service
+  final auth = useAuthentication(); // Hook for authentication
+  final userId = auth.user!.uid; // Get current user's ID
+
+  // useState to track save state for the post
+  final isLiked = useState<bool>(
+    post.post.reactions.map((e) => e.userId).contains(userId),
+  );
+
+  void _toggleLike(PostWithUserAndGroup post) {
+    if (isLiked.value) {
+      // Remove the reaction if already liked
+      groupService.removeReaction(post.post.groupId, post.post.id);
+      isLiked.value = false; // Update the state
+    } else {
+      // Add the reaction if not liked
+      groupService.reactToPost(post.post.groupId, post.post.id, emoji: "👍");
+      isLiked.value = true; // Update the state
+    }
+  }
+
   return ListTile(
     leading: CircleAvatar(
         child: BoringAvatar(
-            palette: BoringAvatarPalette(
+            palette: const BoringAvatarPalette(
                 [kcPrimary, kcSecondaryVariant, kcLightPrimary]),
             shape: const OvalBorder(),
             name: useAuthentication().user!.uid,
@@ -274,12 +293,9 @@ Widget _buildPostHeader(BuildContext context, PostWithUserAndGroup post) {
         IconButton(
           icon: Icon(
             Icons.favorite,
-            color: post.post.reactions
-                    .any((r) => r.userId == 'currentUserId' && r.emoji == '❤️')
-                ? Colors.red
-                : Colors.white,
+            color: isLiked.value ? Colors.red : Colors.white,
           ),
-          onPressed: () => print("Liked"),
+          onPressed: () => _toggleLike(post),
         ),
         IconButton(
           icon: const Icon(Icons.chat_bubble, color: Colors.white),

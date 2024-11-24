@@ -17,6 +17,7 @@ class PostTile extends StatelessWidget {
     return Column(
       children: [
         PostHeader(
+          post: postWithUserAndGroup.post,
           userImageUrl: userId,
           username: postWithUserAndGroup.userName,
           groupName: postWithUserAndGroup.groupName,

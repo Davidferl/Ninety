@@ -9,6 +9,7 @@ import 'package:bonne_reponse/src/group/domain/post_with_user_and_group.dart';
 import 'package:bonne_reponse/src/group/infra/group_repo.dart';
 import 'package:bonne_reponse/src/user/domain/user.dart';
 import 'package:bonne_reponse/src/user/infra/user_repo.dart';
+import 'package:bonne_reponse/src/view/feed/post_header.dart';
 import 'package:image_picker/image_picker.dart';
 
 class GroupService {
@@ -120,7 +121,6 @@ class GroupService {
   /// Throws InvalidActionException if both emoji and comment are null
   Future<void> reactToPost(
     String groupId,
-    String userId,
     String postId, {
     String? emoji,
     String? comment,
@@ -132,18 +132,28 @@ class GroupService {
 
     Group group = await _groupRepository.getById(groupId);
 
-    Member member =
-        group.members.firstWhere((member) => member.userId == userId);
-    Post post = member.objective.posts.firstWhere((post) => post.id == postId);
+    Post post = group.members
+        .expand((member) => member.objective.posts)
+        .firstWhere((post) => post.id == postId);
 
     post.reactions.add(
       Reaction(
-        userId: userId,
+        userId: _getUserId(),
         emoji: emoji,
         comment: comment,
       ),
     );
 
+    await _groupRepository.save(group);
+  }
+
+  Future<void> removeReaction(String groupId, String postId) async {
+    Group group = await _groupRepository.getById(groupId);
+    Post post = group.members
+        .expand((member) => member.objective.posts)
+        .firstWhere((post) => post.id == postId);
+
+    post.reactions.removeWhere((reaction) => reaction.userId == _getUserId());
     await _groupRepository.save(group);
   }
 
