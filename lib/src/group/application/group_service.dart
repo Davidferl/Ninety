@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
 import 'package:bonne_reponse/src/exceptions/exceptions.dart';
