@@ -36,5 +36,9 @@
     "no_entry_yet": "No entry yet",
     "last_entry_today": "Last entry today",
     "last_entry_yesterday": "Last entry yesterday",
-    "last_entry_days_ago": "Last entry {days} days ago"
+    "last_entry_days_ago": "Last entry {days} days ago",
+    "title": "Title",
+    "description": "Description",
+    "your_progress": "Your progress",
+    "send": "Send"
 }
