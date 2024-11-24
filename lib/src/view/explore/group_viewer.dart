@@ -73,6 +73,9 @@ class GroupViewer extends HookWidget {
     final continuousUnitController = useTextEditingController();
     final discreteAmountController = useTextEditingController();
 
+    final buttonDisabled =
+        group.members.map((member) => member.userId).contains(auth.user!.uid);
+
     Future<void> createGroup() async {
       if (selectedIndex.value == Values.continuous) {
         if (formKey.currentState!.validate()) {
@@ -130,6 +133,27 @@ class GroupViewer extends HookWidget {
                         thickness: 1,
                       ),
                       verticalSpace(10),
+                      buttonDisabled
+                          ? Column(
+                              children: [
+                                MaterialBanner(
+                                  padding: const EdgeInsets.all(20),
+                                  content: Text(
+                                    'You are already a member of this group.',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: kcSecondaryVariant),
+                                  ),
+                                  leading: const Icon(Icons.announcement),
+                                  backgroundColor:
+                                      const Color.fromARGB(66, 40, 169, 158),
+                                  actions: const <Widget>[SizedBox()],
+                                ),
+                                verticalSpace(20)
+                              ],
+                            )
+                          : Container(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -331,6 +355,7 @@ class GroupViewer extends HookWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: BottomButton(
+                    isDisabled: buttonDisabled,
                     onPressed: () => createGroup(),
                     title: AppLocalizations.of(context)!.join_group,
                   ),

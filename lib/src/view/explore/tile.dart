@@ -6,11 +6,18 @@ import 'package:flutter/material.dart';
 class Tile extends StatelessWidget {
   final int index;
   final Group group;
+  final String userId;
 
-  const Tile({super.key, required this.index, required this.group});
+  const Tile(
+      {super.key,
+      required this.index,
+      required this.group,
+      required this.userId});
 
   @override
   Widget build(BuildContext context) {
+    bool isMember = group.members.map((e) => e.userId).contains(userId);
+
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
@@ -68,6 +75,32 @@ class Tile extends StatelessWidget {
                               fontWeight: FontWeight.w400,
                             ),
                       ),
+                      isMember
+                          ? Row(
+                              children: [
+                                Text(
+                                  '  •  ',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                ),
+                                Text(
+                                  'Joined',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                ),
+                              ],
+                            )
+                          : Container(),
                     ],
                   )
                 ],
