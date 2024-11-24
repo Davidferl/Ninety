@@ -22,6 +22,8 @@ class GroupService {
 
   Future<void> addGroup(String title, String description, String imageUrl,
       List<String> tags) async {
+        //TODO CLEM receive XFile instead of imageUrl, then submit image to storage,
+        // and use the returned URL as imageUrl for the group
     final Group group = Group(
       title: title,
       description: description,

@@ -1,5 +1,5 @@
 import 'package:bonne_reponse/injection_container.dart';
-import 'package:bonne_reponse/src/view/addLog/log_progress.dart';
+import 'package:bonne_reponse/src/view/addLog/page_post_progress_log.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
 import 'package:bonne_reponse/src/view/authentication/register.dart';
 import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
@@ -25,20 +25,22 @@ final _router = GoRouter(
         path: '/home',
         builder: (context, state) => const Home(title: "default"),
         routes: [
-          GoRoute(
-            name: Routes.progress.name,
-            path: "/progress/:name",
-            builder: (context, state) {
-              final String name = state.pathParameters['name']!;
-              return LogProgress(title: name);
-            },
-          ),
+GoRoute(
+  name: Routes.progress.name,
+  path: "/progress/:objectiveId",  // Change path to use objectiveId
+  builder: (context, state) {
+    final String objectiveId = state.pathParameters['objectiveId']!;  // Access objectiveId
+    return PagePostProgressLog(objectiveId: objectiveId);  // Pass objectiveId to the page
+  },
+),
+
           GoRoute(
             name: Routes.groupViewer.name,
             path: "/groupViewer",
             builder: (context, state) => const GroupViewer(),
           ),
-          GoRoute(name: Routes.settings.name,
+          GoRoute(
+            name: Routes.settings.name,
             path: "/settings",
             builder: (context, state) => const Settings(),
           ),

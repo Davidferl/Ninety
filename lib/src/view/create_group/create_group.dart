@@ -3,8 +3,8 @@ import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class CreateGroupPage extends HookWidget {
-  const CreateGroupPage({super.key});
+class PageCreateGroup extends HookWidget {
+  const PageCreateGroup({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,7 @@ class CreateGroupPage extends HookWidget {
 
       final title = titleController.text.trim();
       final description = descriptionController.text.trim();
+      //TODO CLEM use widget/ImageSelector instead
       final imageUrl = imageUrlController.text.trim();
       final tags = tagsController.text
           .split(',')

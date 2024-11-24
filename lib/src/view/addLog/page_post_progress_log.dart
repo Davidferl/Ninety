@@ -7,11 +7,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-class LogProgress extends HookWidget {
-  final String title;
-  final Duration photoSnackBarDuration = const Duration(milliseconds: 500);
-
-  const LogProgress({super.key, required this.title});
+class PagePostProgressLog extends HookWidget {
+  final String objectiveId;
+  const PagePostProgressLog({super.key, required this.objectiveId});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,7 @@ class LogProgress extends HookWidget {
                       onPressed: () => {}, icon: const Icon(Icons.more_horiz))
                 ],
               ),
-              Text(title),
+              Text("title TODO"),
               CustomTextInput(
                 textInputAction: TextInputAction.done,
                 controller: descriptionController,
