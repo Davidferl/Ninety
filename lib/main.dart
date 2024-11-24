@@ -26,6 +26,7 @@ enum Routes {
   signup,
   progress,
   groupViewer,
+  comments,
   settings,
   feed
 }
@@ -68,12 +69,11 @@ final _router = GoRouter(
             },
           ),
           GoRoute(
-            name: Routes.comments.name,
-            path: "/comments",
-            builder: (context, state) {
-              return CommentPage();
-            }
-          ),
+              name: Routes.comments.name,
+              path: "/comments",
+              builder: (context, state) {
+                return CommentPage();
+              }),
           GoRoute(
             name: Routes.settings.name,
             path: "/settings",

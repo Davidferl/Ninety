@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/group/domain/post.dart';
@@ -6,6 +7,7 @@ import 'package:bonne_reponse/src/group/domain/post_with_user_and_group.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/addLog/page_select_objective_for_log.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -24,6 +26,8 @@ class GroupPage extends HookWidget {
     final groupService = locator<GroupService>();
     final postsWithUserAndGroup = useState<List<PostWithUserAndGroup>>([]);
     final isLoading = useState(true);
+    const colorPalette =
+        BoringAvatarPalette([kcPrimary, kcSecondaryVariant, kcLightPrimary]);
 
     useEffect(() {
       Future<void> fetchGroup() async {
@@ -247,10 +251,12 @@ Widget _buildPostCard(BuildContext context, PostWithUserAndGroup post) {
 Widget _buildPostHeader(BuildContext context, PostWithUserAndGroup post) {
   return ListTile(
     leading: CircleAvatar(
-      backgroundImage: NetworkImage(
-        'https://source.boringavatars.com/beam/120/${post.userName}',
-      ),
-    ),
+        child: BoringAvatar(
+            palette: BoringAvatarPalette(
+                [kcPrimary, kcSecondaryVariant, kcLightPrimary]),
+            shape: const OvalBorder(),
+            name: useAuthentication().user!.uid,
+            type: BoringAvatarType.beam)),
     title: Text(
       post.userName,
       style: const TextStyle(
