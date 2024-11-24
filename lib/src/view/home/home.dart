@@ -2,6 +2,7 @@ import 'package:bonne_reponse/src/view/addLog/page_select_objective_for_log.dart
 import 'package:bonne_reponse/src/view/create_group/create_group.dart';
 import 'package:bonne_reponse/src/view/dashboard/dashboard.dart';
 import 'package:bonne_reponse/src/view/explore/explore.dart';
+import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
 import 'package:bonne_reponse/src/view/feed/feed.dart';
 import 'package:bonne_reponse/src/view/profile/profile.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
