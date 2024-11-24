@@ -38,6 +38,19 @@ class GroupService {
     return await _groupRepository.getById(groupId);
   }
 
+  Future<List<Post>> getAllPostsOfConnectedUser() async {
+    List<Group> groups = await _groupRepository.getAll();
+    List<Post> posts = [];
+
+    for (Group group in groups) {
+      posts.addAll(group.members
+          .where((member) => member.userId == _getUserId())
+          .expand((member) => member.objective.posts));
+    }
+
+    return posts;
+  }
+
   /// MapEntry<groupImageUrl, Objective>
   Future<List<MapEntry<String, Objective>>> getObjectives() async {
     List<Group> groups = await _groupRepository.getAll();
