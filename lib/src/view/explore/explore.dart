@@ -98,13 +98,14 @@ class Explore extends HookWidget {
                                       color: kcSecondaryVariant,
                                       fontSize: 20,
                                     )),
+                            verticalSpace(32),
                             CustomTextInput(
                               controller: titleController,
                               validator: (value) =>
                                   value == null || value.isEmpty
                                       ? 'Title is required'
                                       : null,
-                              hintText: 'Title',
+                              labelText: "Title",
                             ),
                             verticalSpace(16),
                             CustomTextInput(
@@ -114,14 +115,14 @@ class Explore extends HookWidget {
                                       ? 'Description is required'
                                       : null,
                               maxLines: 3,
-                              hintText: 'Description',
+                              labelText: 'Description',
                             ),
                             verticalSpace(16),
                             ImageSelector(selectedImage: selectedImage),
                             verticalSpace(16),
                             CustomTextInput(
                               controller: tagsController,
-                              hintText: "Tags (comma separated)",
+                              labelText: "Tags (comma separated)",
                             ),
                             verticalSpace(32),
                           ],

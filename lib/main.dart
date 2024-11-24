@@ -20,12 +20,14 @@ import 'src/view/profile/settings.dart';
 enum Routes { home, startup, login, signup, progress, groupViewer, settings }
 
 final _router = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/startup',
   routes: [
     GoRoute(
         name: Routes.home.name,
         path: '/home',
-        builder: (context, state) => const Home(initialIndex: 0, title: ""),
+        builder: (context, state) {
+          return const Home();
+        },
         routes: [
           GoRoute(
             name: Routes.progress.name,
@@ -83,7 +85,6 @@ void main() async {
   );
 
   final token = await FirebaseMessaging.instance.getToken();
-  await FirebaseMessaging.instance.unsubscribeFromTopic("user_1");
 
   print("FirebaseMessaging token: $token");
 

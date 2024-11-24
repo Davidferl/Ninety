@@ -9,17 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class Home extends StatefulWidget {
-  final int initialIndex;
-  const Home({super.key, required this.title, required this.initialIndex});
-
-  final String title;
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  late int _selectedIndex;
+  late int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
@@ -32,15 +29,12 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.initialIndex;
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    // Update the route to reflect the selected index
-    context.goNamed('home');
   }
 
   @override
