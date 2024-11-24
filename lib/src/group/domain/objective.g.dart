@@ -13,6 +13,7 @@ Objective _$ObjectiveFromJson(Map<String, dynamic> json) => Objective(
       posts: (json['posts'] as List<dynamic>?)
           ?.map((e) => Post.fromJson(e as Map<String, dynamic>))
           .toList(),
+      title: json['title'] as String,
       unit: json['unit'] as String,
       quantity: (json['quantity'] as num).toDouble(),
       quantityType: $enumDecode(_$QuantityTypeEnumMap, json['quantityType'],
@@ -24,6 +25,7 @@ Map<String, dynamic> _$ObjectiveToJson(Objective instance) => <String, dynamic>{
       'groupId': instance.groupId,
       'memberId': instance.memberId,
       'posts': instance.posts,
+      'title': instance.title,
       'unit': instance.unit,
       'quantity': instance.quantity,
       'quantityType': _$QuantityTypeEnumMap[instance.quantityType]!,

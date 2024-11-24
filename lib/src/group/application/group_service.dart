@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
 import 'package:bonne_reponse/src/exceptions/exceptions.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/group/domain/member.dart';
@@ -15,14 +16,18 @@ class GroupService {
   final GroupRepository _groupRepository = locator<GroupRepository>();
   final UserRepository _userRepository = locator<UserRepository>();
 
+  String _getUserId() {
+    return locator<AuthService>().currentUser!.uid;
+  }
+
   Future<void> addGroup(String title, String description, String imageUrl,
-      List<String> tags, List<Member> members) async {
+      List<String> tags) async {
     final Group group = Group(
       title: title,
       description: description,
       imageUrl: imageUrl,
       tags: tags,
-      members: members,
+      members: [],
     );
     await _groupRepository.save(group);
   }
@@ -31,22 +36,27 @@ class GroupService {
     return await _groupRepository.getById(groupId);
   }
 
-  Future<List<Objective>> getObjectives(String memberId) async {
+  /// MapEntry<groupImageUrl, Objective>
+  Future<List<MapEntry<String, Objective>>> getObjectives() async {
     List<Group> groups = await _groupRepository.getAll();
+
     return groups
-        .expand((group) => group.members)
-        .where((member) => member.userId == memberId)
-        .map((member) => member.objective)
+        .expand((group) => group.members.map(
+              (member) => MapEntry(group.imageUrl, member),
+            ))
+        .where((entry) => entry.value.userId == _getUserId())
+        .map((entry) => MapEntry(entry.key, entry.value.objective))
         .toList();
   }
 
-  Future<void> addMember(String groupId, String memberId, double quantity,
-      String unit, QuantityType quantityType) async {
+  Future<void> addMember(String groupId, String memberId, String title,
+      double quantity, String unit, QuantityType quantityType) async {
     Group group = await _groupRepository.getById(groupId);
 
     Objective objective = Objective(
         groupId: groupId,
         memberId: memberId,
+        title: title,
         unit: unit,
         quantity: quantity,
         quantityType: quantityType);

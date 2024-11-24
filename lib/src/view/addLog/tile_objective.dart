@@ -4,12 +4,12 @@ import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class Tile extends StatelessWidget {
+class ObjectiveTile extends StatelessWidget {
   final String imageUri;
   final String title;
   final String description;
 
-  const Tile(
+  const ObjectiveTile(
       {super.key,
       required this.imageUri,
       required this.title,
@@ -18,7 +18,8 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.goNamed(Routes.progress.name, pathParameters: {"name": title}),
+      onTap: () => context
+          .goNamed(Routes.progress.name, pathParameters: {"name": title}),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
