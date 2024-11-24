@@ -5,10 +5,12 @@ part 'member.g.dart';
 
 @JsonSerializable()
 class Member {
+  final String groupId;
   final String userId; // Member id is userId
   final Objective objective;
 
   Member({
+    required this.groupId,
     required this.userId,
     required this.objective,
   });

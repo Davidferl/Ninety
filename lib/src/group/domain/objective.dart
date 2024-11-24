@@ -1,5 +1,6 @@
 import 'package:bonne_reponse/src/group/domain/post.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'objective.g.dart';
 
@@ -7,19 +8,28 @@ enum QuantityType { discrete, continuous }
 
 @JsonSerializable()
 class Objective {
+  final String objectiveId;
+  final String groupId;
+  final String memberId;
   final List<Post> posts;
   final String unit;
   final double quantity;
-  
-  @JsonKey(unknownEnumValue: QuantityType.discrete) // Cast invalid values to QuantityType.discrete
+
+  @JsonKey(
+      unknownEnumValue:
+          QuantityType.discrete) // Cast invalid values to QuantityType.discrete
   final QuantityType quantityType;
 
   Objective({
+    String? objectiveId,
+    required this.groupId,
+    required this.memberId,
     List<Post>? posts,
     required this.unit,
     required this.quantity,
     required this.quantityType,
-  }) : posts = posts ?? const [];
+  })  : posts = posts ?? const [],
+        objectiveId = objectiveId ?? const Uuid().v4();
 
   factory Objective.fromJson(Map<String, dynamic> json) =>
       _$ObjectiveFromJson(json);
