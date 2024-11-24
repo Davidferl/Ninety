@@ -25,9 +25,13 @@ final _router = GoRouter(
         builder: (context, state) => const Home(title: "default"),
         routes: [
           GoRoute(
-              name: Routes.progress.name,
-              path: "/progress",
-              builder: (context, state) => const LogProgress(title: "Hello")),
+            name: Routes.progress.name,
+            path: "/progress/:name",
+            builder: (context, state) {
+              final String name = state.pathParameters['name']!;
+              return LogProgress(title: name);
+            },
+          ),
           GoRoute(
             name: Routes.groupViewer.name,
             path: "/groupViewer",

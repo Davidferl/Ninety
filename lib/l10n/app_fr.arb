@@ -2,6 +2,7 @@
     "@@locale": "fr",
     "hello": "Bonjour",
     "welcome_back": "Bienvenue!",
+    "get_started": "Commençons!",
     "unknown_error": "Oups! Une erreur est survenue!",
     "login_error": "Ces informations ne correspondent à aucun compte.",
     "login": "Se connecter",

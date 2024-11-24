@@ -14,12 +14,14 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
       members: (json['members'] as List<dynamic>)
           .map((e) => Member.fromJson(e as Map<String, dynamic>))
           .toList(),
+      imageUrl: json['imageUrl'] as String,
     );
 
 Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
       'groupId': instance.groupId,
       'title': instance.title,
       'description': instance.description,
+      'imageUrl': instance.imageUrl,
       'tags': instance.tags,
       'members': instance.members,
     };

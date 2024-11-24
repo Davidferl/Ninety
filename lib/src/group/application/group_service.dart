@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/exceptions/exceptions.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/group/domain/member.dart';
 import 'package:bonne_reponse/src/group/domain/objective.dart';
@@ -13,11 +14,12 @@ class GroupService {
   final GroupRepository _groupRepository = locator<GroupRepository>();
   final UserRepository _userRepository = locator<UserRepository>();
 
-  Future<void> addGroup(String title, String description, List<String> tags,
-      List<Member> members) async {
+  Future<void> addGroup(String title, String description, String imageUrl,
+      List<String> tags, List<Member> members) async {
     final Group group = Group(
       title: title,
       description: description,
+      imageUrl: imageUrl,
       tags: tags,
       members: members,
     );
@@ -37,11 +39,12 @@ class GroupService {
         .toList();
   }
 
-  Future<void> addMember(
-      String groupId, String memberId, double quantity, String unit) async {
+  Future<void> addMember(String groupId, String memberId, double quantity,
+      String unit, QuantityType quantityType) async {
     Group group = await _groupRepository.getById(groupId);
 
-    Objective objective = Objective(unit: unit, quantity: quantity);
+    Objective objective =
+        Objective(unit: unit, quantity: quantity, quantityType: quantityType);
     Member member = Member(userId: memberId, objective: objective);
     group.members.add(member);
 
@@ -73,5 +76,78 @@ class GroupService {
     await _groupRepository.save(group);
   }
 
-  // Thom en bas moi en haut
+  /// Throws InvalidActionException if both emoji and comment are null
+  Future<void> reactToPost(
+    String groupId,
+    String userId,
+    String postId, {
+    String? emoji,
+    String? comment,
+  }) async {
+    if (emoji == null && comment == null) {
+      throw const InvalidActionException(
+          message: "Both emoji and comment cannot be null");
+    }
+
+    Group group = await _groupRepository.getById(groupId);
+
+    Member member =
+        group.members.firstWhere((member) => member.userId == userId);
+    Post post = member.objective.posts.firstWhere((post) => post.id == postId);
+
+    post.reactions.add(
+      Reaction(
+        userId: userId,
+        emoji: emoji,
+        comment: comment,
+      ),
+    );
+
+    await _groupRepository.save(group);
+  }
+
+  Future<List<Post>> getGroupsFeed(String userId) async {
+    List<Group> groups = await _groupRepository.getAll();
+    List<Post> posts = [];
+
+    posts.addAll(
+      groups
+          .where(
+              (group) => group.members.any((member) => member.userId == userId))
+          .expand((group) => group.members)
+          .expand((member) => member.objective.posts),
+    );
+
+    posts.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+    return posts;
+  }
+
+  Future<List<Post>> getGroupFeed(String userId, String groupId) async {
+    Group group = await _groupRepository.getById(groupId);
+
+    List<Post> posts = group.members
+        .expand((member) => member.objective.posts)
+        .toList()
+      ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+    return posts;
+  }
+
+  Future<List<Group>> getGroups({List<String>? tags}) async {
+    List<Group> groups = await _groupRepository.getAll();
+
+    if (tags != null) {
+      groups.sort((a, b) {
+        int aScore = a.tags
+            .fold<int>(0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
+        int bScore = b.tags
+            .fold<int>(0, (previousValue, tag) => tags.contains(tag) ? 1 : 0);
+
+        return bScore.compareTo(aScore);
+      });
+    }
+
+    return groups;
+  }
 }

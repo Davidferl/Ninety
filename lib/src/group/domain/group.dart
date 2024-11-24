@@ -9,6 +9,7 @@ class Group {
   final String groupId;
   final String title;
   final String description;
+  final String imageUrl;
   final List<String> tags;
   final List<Member> members;
 
@@ -18,6 +19,7 @@ class Group {
     required this.description,
     required this.tags,
     required this.members,
+    required this.imageUrl,
   }) : groupId = groupId ?? const Uuid().v4();
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
