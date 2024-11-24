@@ -82,10 +82,9 @@ class PagePostProgressLog extends HookWidget {
           final title = titleController.text;
           final description = descriptionController.text;
           final quantity = double.parse(quantityController.text);
-          final imageFile = File(selectedImage.value!.path);
 
           await groupService.logActivity(
-              groupId, memberId, title, description, quantity, imageFile);
+              groupId, memberId, title, description, quantity, selectedImage.value!);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Activity logged successfully')),
           );
