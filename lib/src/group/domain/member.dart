@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'member.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Member {
   final String groupId;
   final String userId; // Member id is userId

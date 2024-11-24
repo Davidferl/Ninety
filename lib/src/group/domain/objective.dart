@@ -6,7 +6,7 @@ part 'objective.g.dart';
 
 enum QuantityType { discrete, continuous }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Objective {
   final String objectiveId;
   final String groupId;
@@ -52,4 +52,3 @@ class Objective {
     return posts.last.timestamp;
   }
 }
-

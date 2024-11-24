@@ -62,6 +62,7 @@ class GroupService {
         quantityType: quantityType);
     Member member =
         Member(groupId: groupId, userId: memberId, objective: objective);
+
     group.members.add(member);
 
     await _groupRepository.save(group);

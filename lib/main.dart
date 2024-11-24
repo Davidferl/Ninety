@@ -16,7 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'src/view/profile/settings.dart';
 
-enum Routes { home, startup, login, signup, progress, groupViewer, settings }
+enum Routes { home, startup, login, signup, progress, groupViewer, settings  }
 
 final _router = GoRouter(
   initialLocation: '/home',

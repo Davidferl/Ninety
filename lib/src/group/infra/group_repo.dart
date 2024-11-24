@@ -7,12 +7,14 @@ class GroupRepository {
 
   Future<void> save(Group group) async {
     try {
+      print(group.toJson());
       await _firestore
           .collection('groups')
           .doc(group.groupId)
           .set(group.toJson(), SetOptions(merge: true));
       print("Upsert successful!");
     } catch (e) {
+      print(e);
       throw const FirestoreException(
         message: 'Something went wrong. Please try again later.',
       );

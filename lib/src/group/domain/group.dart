@@ -4,7 +4,7 @@ import 'package:uuid/uuid.dart';
 
 part 'group.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Group {
   final String groupId;
   final String title;

@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';
 
 part 'post.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Post {
   final String id;
   final String groupId;
