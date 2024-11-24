@@ -1,3 +1,5 @@
+import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/src/view/profile/text_count.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
 import 'package:bonne_reponse/main.dart';
 import 'package:flutter/material.dart';
@@ -43,32 +45,58 @@ class Profile extends HookWidget {
                         backgroundImage:
                             AssetImage('assets/images/profile_avatar.png'),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'John Doe',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'John Doe',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .copyWith(
+                                        color: Colors.white,
+                                      ),
+                                ),
+                                Text(
+                                  'New York, USA',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        color: Colors.white.withOpacity(0.5),
+                                      ),
+                                ),
+                                verticalSpaceSmall,
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextCount(
+                                      name: "Objectives",
+                                      count: 5,
+                                    ),
+                                    horizontalSpaceMedium,
+                                    TextCount(
+                                      name: "Groups",
+                                      count: 12,
+                                    ),
+                                    horizontalSpaceMedium,
+                                    TextCount(
+                                      name: "Logs",
+                                      count: 48,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            Text(
-                              'New York, USA',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: Colors.white.withOpacity(0.5),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      )
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
