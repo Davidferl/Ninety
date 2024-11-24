@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class ProfilePicture extends StatelessWidget {
+class GroupPictures extends StatelessWidget {
   final String imageUrl;
-  final bool visited;
+  final String groupId;
+  final bool visited = false;
 
   final double imageRadius = 35.0;
 
-  const ProfilePicture({
+  const GroupPictures({
     super.key,
     required this.imageUrl,
-    required this.visited,
+    required this.groupId,
   });
 
   @override
@@ -35,8 +36,7 @@ class ProfilePicture extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color:
-                  Colors.grey.withOpacity(0.35),
+              color: Colors.grey.withOpacity(0.35),
             ),
             width: imageRadius * 2,
             height: imageRadius * 2,

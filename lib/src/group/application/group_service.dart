@@ -11,6 +11,7 @@ import 'package:bonne_reponse/src/group/domain/post_with_user_and_group.dart';
 import 'package:bonne_reponse/src/group/infra/group_repo.dart';
 import 'package:bonne_reponse/src/user/domain/user.dart';
 import 'package:bonne_reponse/src/user/infra/user_repo.dart';
+import 'package:image_picker/image_picker.dart';
 
 class GroupService {
   final GroupRepository _groupRepository = locator<GroupRepository>();
@@ -20,10 +21,9 @@ class GroupService {
     return locator<AuthService>().currentUser!.uid;
   }
 
-  Future<void> addGroup(String title, String description, String imageUrl,
-      List<String> tags) async {
-        //TODO CLEM receive XFile instead of imageUrl, then submit image to storage,
-        // and use the returned URL as imageUrl for the group
+  Future<void> addGroup(
+      String title, String description, XFile image, List<String> tags) async {
+    String imageUrl = await _groupRepository.uploadImage(image);
     final Group group = Group(
       title: title,
       description: description,
@@ -74,6 +74,7 @@ class GroupService {
         quantityType: quantityType);
     Member member =
         Member(groupId: groupId, userId: memberId, objective: objective);
+
     group.members.add(member);
 
     await _groupRepository.save(group);
@@ -149,6 +150,7 @@ class GroupService {
               userName: user.name,
               userImageUrl: "",
               groupName: group.title,
+              objectiveName: member.objective.title,
               post: post,
             ));
           }
@@ -157,6 +159,16 @@ class GroupService {
     }
 
     return posts;
+  }
+
+  Future<List<Group>> getMemberGroups(String userId) async {
+    List<Group> group = await _groupRepository.getAll();
+    List<Group> memberGroups = group
+        .where(
+            (group) => group.members.any((member) => member.userId == userId))
+        .toList();
+
+    return memberGroups;
   }
 
   Future<List<Post>> getGroupFeed(String userId, String groupId) async {

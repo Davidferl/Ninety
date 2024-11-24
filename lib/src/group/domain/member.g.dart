@@ -15,5 +15,5 @@ Member _$MemberFromJson(Map<String, dynamic> json) => Member(
 Map<String, dynamic> _$MemberToJson(Member instance) => <String, dynamic>{
       'groupId': instance.groupId,
       'userId': instance.userId,
-      'objective': instance.objective,
+      'objective': instance.objective.toJson(),
     };
