@@ -6,6 +6,7 @@ import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/group/domain/member.dart';
 import 'package:bonne_reponse/src/group/domain/objective.dart';
 import 'package:bonne_reponse/src/group/domain/post.dart';
+import 'package:bonne_reponse/src/group/domain/post_with_user_and_group.dart';
 import 'package:bonne_reponse/src/group/infra/group_repo.dart';
 import 'package:bonne_reponse/src/user/domain/user.dart';
 import 'package:bonne_reponse/src/user/infra/user_repo.dart';
@@ -43,9 +44,14 @@ class GroupService {
       String unit, QuantityType quantityType) async {
     Group group = await _groupRepository.getById(groupId);
 
-    Objective objective =
-        Objective(unit: unit, quantity: quantity, quantityType: quantityType);
-    Member member = Member(userId: memberId, objective: objective);
+    Objective objective = Objective(
+        groupId: groupId,
+        memberId: memberId,
+        unit: unit,
+        quantity: quantity,
+        quantityType: quantityType);
+    Member member =
+        Member(groupId: groupId, userId: memberId, objective: objective);
     group.members.add(member);
 
     await _groupRepository.save(group);
@@ -66,6 +72,8 @@ class GroupService {
     String imageUrl = image.path;
 
     Post post = Post(
+        groupId: groupId,
+        memberId: memberId,
         title: title,
         description: description,
         quantity: quantity,
@@ -106,21 +114,38 @@ class GroupService {
     await _groupRepository.save(group);
   }
 
-  Future<List<Post>> getGroupsFeed(String userId) async {
+  Future<List<PostWithUserAndGroup>> getPostFeed(String userId) async {
     List<Group> groups = await _groupRepository.getAll();
     List<Post> posts = [];
+    List<PostWithUserAndGroup> postWithUserAndGroups = [];
 
     posts.addAll(
       groups
-          .where(
-              (group) => group.members.any((member) => member.userId == userId))
-          .expand((group) => group.members)
-          .expand((member) => member.objective.posts),
+          .where((group) => group.members
+              .any((member) => member.userId == userId)) // Filter groups
+          .expand((group) =>
+              group.members) // Get all members of the filtered groups
+          .expand((member) =>
+              member.objective.posts), // Collect all posts from members
     );
 
-    posts.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    postWithUserAndGroups = await Future.wait(posts.map((post) async {
+      User user = await _userRepository.getById(userId);
 
-    return posts;
+      Group group = groups.firstWhere(
+          (group) => group.members.any((member) => member.userId == user.id));
+
+      return PostWithUserAndGroup(
+        groupName: group.title,
+        user: user,
+        post: post,
+      );
+    }));
+
+    postWithUserAndGroups
+        .sort((a, b) => b.post.timestamp.compareTo(a.post.timestamp));
+
+    return postWithUserAndGroups;
   }
 
   Future<List<Post>> getGroupFeed(String userId, String groupId) async {

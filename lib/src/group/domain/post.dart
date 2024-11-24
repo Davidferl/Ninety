@@ -6,6 +6,8 @@ part 'post.g.dart';
 @JsonSerializable()
 class Post {
   final String id;
+  final String groupId;
+  final String memberId;
   final String image;
   final String title;
   final String description;
@@ -15,6 +17,8 @@ class Post {
 
   Post({
     String? id,
+    required this.groupId,
+    required this.memberId,
     required this.image,
     required this.title,
     required this.description,
