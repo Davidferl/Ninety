@@ -15,33 +15,36 @@ class HorizontalBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width - 24;
-    
+
     // Calculate the total ratio to determine if bar is fully filled
     final totalRatio =
         segments.fold(0.0, (sum, segment) => sum + segment.ratio);
 
-    return Container(
-      height: height,
-      width: width,
-      color: backgroundColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // Add each segment with its defined color and ratio
-          ...segments.map((segment) {
-            return Container(
-              width: (segment.ratio * width).toDouble(),
-              color: segment.color,
-            );
-          }),
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+      child: Container(
+        height: height,
+        width: width,
+        color: backgroundColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // Add each segment with its defined color and ratio
+            ...segments.map((segment) {
+              return Container(
+                width: (segment.ratio * width).toDouble(),
+                color: segment.color,
+              );
+            }),
 
-          // Add remaining space if total ratio < 1
-          if (totalRatio < 1)
-            Container(
-              width: ((1 - totalRatio) * width).toDouble(),
-              color: backgroundColor,
-            ),
-        ],
+            // Add remaining space if total ratio < 1
+            if (totalRatio < 1)
+              Container(
+                width: ((1 - totalRatio) * width).toDouble(),
+                color: backgroundColor,
+              ),
+          ],
+        ),
       ),
     );
   }

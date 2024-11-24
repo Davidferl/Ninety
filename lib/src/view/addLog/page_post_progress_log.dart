@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/widgets/objective_progress_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bonne_reponse/injection_container.dart';
@@ -11,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:confetti/confetti.dart';
 
 class PagePostProgressLog extends HookWidget {
   final String objectiveId;
@@ -18,6 +23,10 @@ class PagePostProgressLog extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ConfettiController confettiController = ConfettiController(
+      duration: const Duration(seconds: 5),
+    );
+
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
     final quantityController = useTextEditingController();
@@ -88,6 +97,7 @@ class PagePostProgressLog extends HookWidget {
 
           await groupService.logActivity(groupId, memberId, title, description,
               quantity, selectedImage.value!);
+          confettiController.play();
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Activity logged successfully')),
           );
@@ -108,6 +118,18 @@ class PagePostProgressLog extends HookWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: ConfettiWidget(
+                  confettiController: confettiController,
+                  blastDirection: pi / 2,
+                  maxBlastForce: 7, // set a lower max blast force
+                  minBlastForce: 2, // set a lower min blast force
+                  emissionFrequency: 0.02,
+                  numberOfParticles: 50, // a lot of particles at once
+                  gravity: 1,
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -121,8 +143,17 @@ class PagePostProgressLog extends HookWidget {
                       onPressed: () => {}, icon: const Icon(Icons.more_horiz))
                 ],
               ),
+              const Divider(
+                color: kcDivider,
+                thickness: 1,
+              ),
+              verticalSpaceSmall,
               if (objective.value != null)
-                Text(objective.value!.title)
+                Text(objective.value!.title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: kcPrimaryVariant))
               else
                 Text(AppLocalizations.of(context)!.objective),
               const SizedBox(height: 16),
@@ -165,8 +196,7 @@ class PagePostProgressLog extends HookWidget {
               if (objective.value != null)
                 ObjectiveProgressBar(
                     objective: objective.value!,
-                    additionalProgress:
-                        additionalProgress.value),
+                    additionalProgress: additionalProgress.value),
               const SizedBox(height: 16),
               ImageSelector(
                 selectedImage: selectedImage,
