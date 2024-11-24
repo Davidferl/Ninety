@@ -15,4 +15,12 @@ class UserService {
 
     await userRepository.save(user);
   }
+
+  Future<User> getCurrentUser() async {
+    AuthService authService = locator<AuthService>();
+    UserRepository userRepository = locator<UserRepository>();
+
+    final userId = authService.currentUser!.uid;
+    return await userRepository.getById(userId);
+  }
 }

@@ -21,17 +21,8 @@ class ObjectiveTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-  final index = GoRouter.of(context).state?.pathParameters['index'];
-  context.goNamed(
-    Routes.progress.name,
-    pathParameters: {
-      "objectiveId": objectiveId,
-      "index": index!, 
-    },
-  );
-},
-
+      onTap: () => context.goNamed(Routes.progress.name,
+          pathParameters: {"objectiveId": objectiveId}),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
