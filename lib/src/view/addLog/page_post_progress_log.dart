@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:bonne_reponse/src/view/widgets/objective_progress_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bonne_reponse/injection_container.dart';
@@ -24,6 +23,7 @@ class PagePostProgressLog extends HookWidget {
     final quantityController = useTextEditingController();
     final selectedImage = useState<XFile?>(null);
     final isSendButtonVisible = useState<bool>(false);
+    final additionalProgress = useState<double>(0.0);
 
     final objective = useState<Objective?>(null);
     final isLoading = useState<bool>(true);
@@ -55,6 +55,9 @@ class PagePostProgressLog extends HookWidget {
             descriptionController.text.isNotEmpty &&
             quantityController.text.isNotEmpty &&
             titleController.text.isNotEmpty;
+
+        additionalProgress.value =
+            double.tryParse(quantityController.text) ?? 0.0;
       }
 
       titleController.addListener(listener);
@@ -83,8 +86,8 @@ class PagePostProgressLog extends HookWidget {
           final description = descriptionController.text;
           final quantity = double.parse(quantityController.text);
 
-          await groupService.logActivity(
-              groupId, memberId, title, description, quantity, selectedImage.value!);
+          await groupService.logActivity(groupId, memberId, title, description,
+              quantity, selectedImage.value!);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Activity logged successfully')),
           );
@@ -162,7 +165,8 @@ class PagePostProgressLog extends HookWidget {
               if (objective.value != null)
                 ObjectiveProgressBar(
                     objective: objective.value!,
-                    additionalProgress: double.tryParse(quantityController.text) ?? 0.0),
+                    additionalProgress:
+                        additionalProgress.value),
               const SizedBox(height: 16),
               ImageSelector(
                 selectedImage: selectedImage,
