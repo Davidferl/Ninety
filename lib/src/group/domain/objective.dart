@@ -45,6 +45,14 @@ class Objective {
     return total / quantity;
   }
 
+  double getTotalProgress() {
+    double total = 0;
+    for (var post in posts) {
+      total += post.quantity;
+    }
+    return total;
+  }
+
   DateTime? getLastPostTimestamp() {
     if (posts.isEmpty) {
       return null;
