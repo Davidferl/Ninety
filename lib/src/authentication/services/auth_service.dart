@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../exceptions/exceptions.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
   bool isLogged() => _auth.currentUser != null;
 
@@ -18,7 +20,8 @@ class AuthService {
 
   Future<void> login(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _messaging.subscribeToTopic("user_${credential.user!.uid}");
     } on FirebaseAuthException {
       throw const AuthenticationException(
         message: 'Invalid email or password.',
@@ -32,8 +35,9 @@ class AuthService {
 
   Future<void> register(String email, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      await _messaging.subscribeToTopic("user_${credential.user!.uid}");
     } on FirebaseAuthException {
       throw const AuthenticationException(
         message: 'Invalid email or password.',
@@ -47,6 +51,7 @@ class AuthService {
 
   Future<void> logout() async {
     try {
+      await _messaging.unsubscribeFromTopic("user_${_auth.currentUser!.uid}");
       await _auth.signOut();
     } on FirebaseAuthException {
       throw const AuthenticationException(
