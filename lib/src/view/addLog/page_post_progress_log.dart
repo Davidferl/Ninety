@@ -43,6 +43,7 @@ class PagePostProgressLog extends HookWidget {
       }
 
       fetchObjective();
+      return null;
     }, [objectiveId]);
 
     // Sync visibility of the send button
@@ -63,7 +64,6 @@ class PagePostProgressLog extends HookWidget {
       };
     }, [descriptionController, selectedImage, quantityController]);
 
-    // Submit the form
     Future<void> submitForm() async {
       if (objective.value != null && selectedImage.value != null) {
         try {
@@ -129,11 +129,11 @@ class PagePostProgressLog extends HookWidget {
                 selectedImage: selectedImage,
               ),
               const Spacer(),
-              if (isSendButtonVisible.value)
-                BottomButton(
-                  onPressed: submitForm,
-                  title: "Send",
-                ),
+              BottomButton(
+                onPressed: isSendButtonVisible.value ? submitForm : null,
+                title: "Send",
+                isDisabled: !isSendButtonVisible.value,
+              ),
             ],
           ),
         ),
