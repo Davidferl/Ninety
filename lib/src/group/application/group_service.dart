@@ -22,6 +22,8 @@ class GroupService {
 
   Future<void> addGroup(String title, String description, String imageUrl,
       List<String> tags) async {
+        //TODO CLEM receive XFile instead of imageUrl, then submit image to storage,
+        // and use the returned URL as imageUrl for the group
     final Group group = Group(
       title: title,
       description: description,
@@ -138,6 +140,7 @@ class GroupService {
               userName: user.name,
               userImageUrl: "",
               groupName: group.title,
+              objectiveName: member.objective.title,
               post: post,
             ));
           }
@@ -146,6 +149,16 @@ class GroupService {
     }
 
     return posts;
+  }
+
+  Future<List<Group>> getMemberGroups(String userId) async {
+    List<Group> group = await _groupRepository.getAll();
+    List<Group> memberGroups = group
+        .where(
+            (group) => group.members.any((member) => member.userId == userId))
+        .toList();
+
+    return memberGroups;
   }
 
   Future<List<Post>> getGroupFeed(String userId, String groupId) async {
