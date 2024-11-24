@@ -17,17 +17,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'src/view/profile/settings.dart';
 
-enum Routes { home, startup, login, signup, progress, groupViewer, settings  }
+enum Routes { home, startup, login, signup, progress, groupViewer, settings }
 
 final _router = GoRouter(
-  initialLocation: '/home/0',
+  initialLocation: '/home',
   routes: [
     GoRoute(
         name: Routes.home.name,
-        path: '/home/:index',
+        path: '/home',
         builder: (context, state) {
-          final index = int.tryParse(state.pathParameters['index'] ?? '0') ?? 0;
-          return Home(title: "Default", initialIndex: index);
+          return const Home();
         },
         routes: [
           GoRoute(
