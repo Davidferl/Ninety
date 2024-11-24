@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
