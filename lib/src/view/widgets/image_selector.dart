@@ -27,7 +27,8 @@ class ImageSelector extends HookWidget {
     try {
       await requestPermissions();
       final imagePicker = ImagePicker();
-      final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+      final pickedFile =
+          await imagePicker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         selectedImage.value = pickedFile;
         ScaffoldMessenger.of(context).showSnackBar(
