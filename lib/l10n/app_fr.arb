@@ -56,7 +56,8 @@
   "stats_lifestyle": "mode de vie",
   "stats_sleep": "Sommeil",
   "stats_nutrition": "Alimentation",
-  "stats_physical": "Activité physique",
+  "stats_physical": "Act. physique",
   "stats_balance": "Équilibre travail/vie",
-  "stats_social": "Social"
+  "stats_social": "Social",
+  "welcome": "Bienvenue, {name}!"
 }

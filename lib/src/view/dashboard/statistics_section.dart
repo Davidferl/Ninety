@@ -1,3 +1,4 @@
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -7,7 +8,7 @@ class CategoriesStatsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -21,25 +22,29 @@ class CategoriesStatsSection extends StatelessWidget {
                 text: TextSpan(
                   text: AppLocalizations.of(context)!
                       .stats_habit_becomes_lifestyle_prefix,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(color: kcSecondaryVariant),
                   children: [
                     TextSpan(
                       text: AppLocalizations.of(context)!.stats_habit,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontStyle: FontStyle.italic),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                     TextSpan(
                       text: AppLocalizations.of(context)!
                           .stats_habit_becomes_lifestyle_middle,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: kcSecondaryVariant,
+                          ),
                     ),
                     TextSpan(
                       text: AppLocalizations.of(context)!.stats_lifestyle,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontStyle: FontStyle.italic),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                   ],
                 ),
@@ -106,16 +111,18 @@ class _CategoryProgress extends StatelessWidget {
     return Column(
       children: [
         Text(
+          category,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: kcDarkGray,
+              ),
+        ),
+        Text(
           ratio,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
         const SizedBox(height: 4),
-        Text(
-          category,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
       ],
     );
   }

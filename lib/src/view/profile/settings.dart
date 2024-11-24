@@ -14,6 +14,8 @@ class Settings extends HookWidget {
   Widget build(BuildContext context) {
     final auth = useAuthentication();
 
+    final Locale appLocale = Localizations.localeOf(context);
+
     void onLogout() {
       context.goNamed(Routes.login.name);
     }
@@ -73,14 +75,37 @@ class Settings extends HookWidget {
                           ),
                         ],
                       ),
-                      Text(
-                        '>',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: kcPrimaryVariant,
-                            ),
-                      ),
                     ],
                   ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.language,
+                          color: kcPrimaryVariant,
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Text(
+                          "Toggle language to french",
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: kcPrimaryVariant,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],

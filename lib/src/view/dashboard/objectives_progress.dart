@@ -1,3 +1,6 @@
+import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/src/theme/colors.dart';
+import 'package:bonne_reponse/src/view/widgets/progress_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:bonne_reponse/injection_container.dart';
@@ -68,31 +71,48 @@ class ObjectivesProgress extends HookWidget {
                 children: [
                   Row(
                     children: [
-                      if (objective.key.isNotEmpty)
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            objective.key,
-                            height: 40,
-                            width: 40,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          objective.value.title,
-                          style: Theme.of(context).textTheme.titleSmall,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          objective.key,
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
                         ),
                       ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              objective.value.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: kcPrimary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                            Chip(
+                              label: Text(
+                                'Goal: ${objective.value.quantity.toInt()} ${objective.value.unit}',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              backgroundColor: kcPrimary.withOpacity(0.1),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  ObjectiveProgressBar(
-                    objective: objective.value,
-                    additionalProgress: 0,
-                    height: 15,
-                  ),
+                  ProgressBar2(
+                      objective: objective.value,
+                      additionalProgress: 0,
+                      height: 15,
+                      hideProgresses: true),
+                  verticalSpace(8)
                 ],
               ),
             )),
