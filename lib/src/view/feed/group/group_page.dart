@@ -2,7 +2,6 @@ import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
-import 'package:bonne_reponse/src/group/domain/post.dart';
 import 'package:bonne_reponse/src/group/domain/post_with_user_and_group.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/addLog/page_select_objective_for_log.dart';
@@ -142,13 +141,13 @@ class GroupPage extends HookWidget {
 
   Widget _buildMasonryGrid(
       BuildContext context, List<PostWithUserAndGroup> posts) {
-    return SingleChildScrollView(
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 0.0),
         child: MasonryGridView.count(
+          padding: const EdgeInsets.only(top: 10),
           crossAxisCount: 2,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
           itemCount: posts.length,
           physics:
               const NeverScrollableScrollPhysics(), // Disable nested scrolling
@@ -156,15 +155,12 @@ class GroupPage extends HookWidget {
           itemBuilder: (BuildContext context, int index) {
             return _buildMasonryPostCard(context, posts[index]);
           },
-        ),
-      ),
-    );
+        ));
   }
 
   Widget _buildMasonryPostCard(
       BuildContext context, PostWithUserAndGroup post) {
     return Container(
-      margin: const EdgeInsets.all(8),
       constraints: const BoxConstraints(
         minHeight: 150, // Adjust this value to make the cards taller
       ),
@@ -214,7 +210,6 @@ class GroupPage extends HookWidget {
 
 Widget _buildPostCard(BuildContext context, PostWithUserAndGroup post) {
   return Container(
-    margin: const EdgeInsets.all(8),
     decoration: BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
@@ -239,8 +234,6 @@ Widget _buildPostCard(BuildContext context, PostWithUserAndGroup post) {
       children: [
         _buildPostHeader(context, post),
         _buildPostContent(context, post),
-        if (post.post.reactions.isNotEmpty)
-          _buildReactionsPreview(post.post.reactions),
       ],
     ),
   );
@@ -256,7 +249,7 @@ Widget _buildPostHeader(BuildContext context, PostWithUserAndGroup post) {
     post.post.reactions.map((e) => e.userId).contains(userId),
   );
 
-  void _toggleLike(PostWithUserAndGroup post) {
+  void toggleLike(PostWithUserAndGroup post) {
     if (isLiked.value) {
       // Remove the reaction if already liked
       groupService.removeReaction(post.post.groupId, post.post.id);
@@ -295,7 +288,7 @@ Widget _buildPostHeader(BuildContext context, PostWithUserAndGroup post) {
             Icons.favorite,
             color: isLiked.value ? Colors.red : Colors.white,
           ),
-          onPressed: () => _toggleLike(post),
+          onPressed: () => toggleLike(post),
         ),
         IconButton(
           icon: const Icon(Icons.chat_bubble, color: Colors.white),
@@ -360,38 +353,6 @@ Widget _buildQuantityIndicator(double quantity) {
         backgroundColor: Colors.white.withOpacity(0.2),
         valueColor: AlwaysStoppedAnimation<Color>(Colors.green[300]!),
       ),
-    ],
-  );
-}
-
-Widget _buildReactionsPreview(List<Reaction> reactions) {
-  final comments = reactions.where((r) => r.comment != null).toList();
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      if (comments.isNotEmpty) ...[
-        const Text(
-          'Recent Comments',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        ...comments.take(2).map(
-              (reaction) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  reaction.comment!,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ),
-      ],
     ],
   );
 }
