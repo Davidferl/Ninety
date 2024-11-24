@@ -45,7 +45,7 @@ class _StatCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -59,9 +59,7 @@ class _StatCard extends StatelessWidget {
             Text(
               title,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                  color: kcDarkGray),
+                  fontWeight: FontWeight.w500, fontSize: 12, color: kcDarkGray),
               textAlign: TextAlign.center,
             ),
           ],

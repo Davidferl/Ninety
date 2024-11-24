@@ -115,99 +115,102 @@ class PagePostProgressLog extends HookWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: ConfettiWidget(
-                  confettiController: confettiController,
-                  blastDirection: pi / 2,
-                  maxBlastForce: 7, // set a lower max blast force
-                  minBlastForce: 2, // set a lower min blast force
-                  emissionFrequency: 0.02,
-                  numberOfParticles: 50, // a lot of particles at once
-                  gravity: 1,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: ConfettiWidget(
+                    confettiController: confettiController,
+                    blastDirection: pi / 2,
+                    maxBlastForce: 7, // set a lower max blast force
+                    minBlastForce: 2, // set a lower min blast force
+                    emissionFrequency: 0.02,
+                    numberOfParticles: 50, // a lot of particles at once
+                    gravity: 1,
+                  ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () => context.pop(''),
-                    icon: const Icon(Icons.chevron_left, size: 30),
-                  ),
-                  const SectionName(name: 'Log progress'),
-                  IconButton(
-                      onPressed: () => {}, icon: const Icon(Icons.more_horiz))
-                ],
-              ),
-              const Divider(
-                color: kcDivider,
-                thickness: 1,
-              ),
-              verticalSpaceSmall,
-              if (objective.value != null)
-                Text(objective.value!.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: kcPrimaryVariant))
-              else
-                Text(AppLocalizations.of(context)!.objective),
-              const SizedBox(height: 16),
-              CustomTextInput(
-                textInputAction: TextInputAction.done,
-                controller: titleController,
-                keyboardType: TextInputType.text,
-                labelText: AppLocalizations.of(context)!.title,
-              ),
-              const SizedBox(height: 16),
-              CustomTextInput(
-                textInputAction: TextInputAction.done,
-                controller: descriptionController,
-                keyboardType: TextInputType.text,
-                labelText: AppLocalizations.of(context)!.description,
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextInput(
-                      textInputAction: TextInputAction.done,
-                      controller: quantityController,
-                      keyboardType: TextInputType.number,
-                      labelText: AppLocalizations.of(context)!.your_progress,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () => context.pop(''),
+                      icon: const Icon(Icons.chevron_left, size: 30),
                     ),
-                  ),
-                  if (objective.value != null &&
-                      objective.value!.quantityType == QuantityType.continuous)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        objective.value!.unit,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                    const SectionName(name: 'Log progress'),
+                    IconButton(
+                        onPressed: () => {}, icon: const Icon(Icons.more_horiz))
+                  ],
+                ),
+                const Divider(
+                  color: kcDivider,
+                  thickness: 1,
+                ),
+                verticalSpaceSmall,
+                if (objective.value != null)
+                  Text(objective.value!.title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(color: kcPrimaryVariant))
+                else
+                  Text(AppLocalizations.of(context)!.objective),
+                const SizedBox(height: 16),
+                CustomTextInput(
+                  textInputAction: TextInputAction.done,
+                  controller: titleController,
+                  keyboardType: TextInputType.text,
+                  labelText: AppLocalizations.of(context)!.title,
+                ),
+                const SizedBox(height: 16),
+                CustomTextInput(
+                  textInputAction: TextInputAction.done,
+                  controller: descriptionController,
+                  keyboardType: TextInputType.text,
+                  labelText: AppLocalizations.of(context)!.description,
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextInput(
+                        textInputAction: TextInputAction.done,
+                        controller: quantityController,
+                        keyboardType: TextInputType.number,
+                        labelText: AppLocalizations.of(context)!.your_progress,
                       ),
                     ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              if (objective.value != null)
-                ObjectiveProgressBar(
-                    objective: objective.value!,
-                    additionalProgress: additionalProgress.value),
-              const SizedBox(height: 16),
-              ImageSelector(
-                selectedImage: selectedImage,
-              ),
-              const Spacer(),
-              BottomButton(
-                onPressed: isSendButtonVisible.value ? submitForm : null,
-                title: AppLocalizations.of(context)!.send,
-                isDisabled: !isSendButtonVisible.value,
-              ),
-            ],
+                    if (objective.value != null &&
+                        objective.value!.quantityType ==
+                            QuantityType.continuous)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          objective.value!.unit,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                if (objective.value != null)
+                  ObjectiveProgressBar(
+                      objective: objective.value!,
+                      additionalProgress: additionalProgress.value),
+                const SizedBox(height: 16),
+                ImageSelector(
+                  selectedImage: selectedImage,
+                ),
+                const SizedBox(height: 16),
+                BottomButton(
+                  onPressed: isSendButtonVisible.value ? submitForm : null,
+                  title: AppLocalizations.of(context)!.send,
+                  isDisabled: !isSendButtonVisible.value,
+                ),
+              ],
+            ),
           ),
         ),
       ),

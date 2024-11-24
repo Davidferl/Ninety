@@ -6,7 +6,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/objective.dart';
-import 'package:bonne_reponse/src/view/widgets/objective_progress_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ObjectivesProgress extends HookWidget {
@@ -85,15 +84,19 @@ class ObjectivesProgress extends HookWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              objective.value.title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    color: kcPrimary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 150),
+                              child: Text(
+                                objective.value.title,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color: kcPrimary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
                             Chip(
                               label: Text(

@@ -171,7 +171,7 @@ class CommentPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final c = generateComments(80);
-    int numComments = Random().nextInt(10);
+    int numComments = Random().nextInt(10) + 1;
     final List<Comment> comments = getRandomComments(c, numComments);
 
     const colorPalette =

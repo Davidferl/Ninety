@@ -79,245 +79,247 @@ class Profile extends HookWidget {
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 56),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: GestureDetector(
-                        onTap: () => context.goNamed(Routes.settings.name),
-                        child: const Icon(Icons.settings,
-                            color: kcSecondaryVariant)),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: GestureDetector(
+                          onTap: () => context.goNamed(Routes.settings.name),
+                          child: const Icon(Icons.settings,
+                              color: kcSecondaryVariant)),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 54,
-                        child: BoringAvatar(
-                            palette: colorPalette,
-                            shape: const OvalBorder(),
-                            name: auth.user!.uid,
-                            type: BoringAvatarType.beam),
-                      ),
-                      horizontalSpace(8),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          radius: 54,
+                          child: BoringAvatar(
+                              palette: colorPalette,
+                              shape: const OvalBorder(),
+                              name: auth.user!.uid,
+                              type: BoringAvatarType.beam),
+                        ),
+                        horizontalSpace(8),
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    user.value?.name ?? '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .copyWith(
+                                          color: kcSecondaryVariant,
+                                        ),
+                                  ),
+                                  Text(
+                                    'New York, USA',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: kcDarkGray,
+                                        ),
+                                  ),
+                                  verticalSpaceSmall,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextCount(
+                                        name: "Objectives",
+                                        count: objectiveNumber.value,
+                                      ),
+                                      horizontalSpaceMedium,
+                                      TextCount(
+                                        name: "Groups",
+                                        count: groupNumber.value,
+                                      ),
+                                      horizontalSpaceMedium,
+                                      TextCount(
+                                        name: "Logs",
+                                        count: logNumber.value,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  verticalSpaceMedium,
+                  Card(
+                    elevation: 0,
+                    margin: const EdgeInsets.only(
+                        left: 8, right: 8, top: 4, bottom: 4),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'About me',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(
+                                    color: kcPrimaryVariant,
+                                  ),
+                            ),
+                            verticalSpaceSmall,
+                            Text(
+                              'I am a software engineer with a passion for mobile development. I love to learn new things and I am always looking for new challenges.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                  ),
+                  const Divider(
+                    color: kcDivider,
+                    thickness: 1,
+                  ),
+                  Card(
+                    elevation: 0,
+                    margin: const EdgeInsets.only(
+                        left: 8, right: 8, top: 4, bottom: 4),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  user.value?.name ?? '',
+                                  'Date of birth',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headlineMedium!
+                                      .displayLarge!
                                       .copyWith(
-                                        color: kcSecondaryVariant,
+                                        color: kcPrimaryVariant,
                                       ),
                                 ),
-                                Text(
-                                  'New York, USA',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        color: kcDarkGray,
-                                      ),
-                                ),
-                                verticalSpaceSmall,
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    TextCount(
-                                      name: "Objectives",
-                                      count: objectiveNumber.value,
-                                    ),
-                                    horizontalSpaceMedium,
-                                    TextCount(
-                                      name: "Groups",
-                                      count: groupNumber.value,
-                                    ),
-                                    horizontalSpaceMedium,
-                                    TextCount(
-                                      name: "Logs",
-                                      count: logNumber.value,
-                                    ),
-                                  ],
-                                ),
+                                const Icon(Icons.cake, color: kcPrimaryVariant),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            verticalSpaceSmall,
+                            Text(
+                              'December 12th, 1995',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
                   ),
-                ),
-                verticalSpaceMedium,
-                Card(
-                  elevation: 0,
-                  margin: const EdgeInsets.only(
-                      left: 8, right: 8, top: 4, bottom: 4),
-                  child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'About me',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(
-                                  color: kcPrimaryVariant,
+                  const Divider(
+                    color: kcDivider,
+                    thickness: 1,
+                  ),
+                  Card(
+                    elevation: 0,
+                    margin: const EdgeInsets.only(
+                        left: 8, right: 8, top: 4, bottom: 4),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Country',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .copyWith(
+                                        color: kcPrimaryVariant,
+                                      ),
                                 ),
-                          ),
-                          verticalSpaceSmall,
-                          Text(
-                            'I am a software engineer with a passion for mobile development. I love to learn new things and I am always looking for new challenges.',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      )),
-                ),
-                const Divider(
-                  color: kcDivider,
-                  thickness: 1,
-                ),
-                Card(
-                  elevation: 0,
-                  margin: const EdgeInsets.only(
-                      left: 8, right: 8, top: 4, bottom: 4),
-                  child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Date of birth',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(
-                                      color: kcPrimaryVariant,
-                                    ),
-                              ),
-                              const Icon(Icons.cake, color: kcPrimaryVariant),
-                            ],
-                          ),
-                          verticalSpaceSmall,
-                          Text(
-                            'December 12th, 1995',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      )),
-                ),
-                const Divider(
-                  color: kcDivider,
-                  thickness: 1,
-                ),
-                Card(
-                  elevation: 0,
-                  margin: const EdgeInsets.only(
-                      left: 8, right: 8, top: 4, bottom: 4),
-                  child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Country',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(
-                                      color: kcPrimaryVariant,
-                                    ),
-                              ),
-                              const Icon(Icons.flag, color: kcPrimaryVariant),
-                            ],
-                          ),
-                          verticalSpaceSmall,
-                          Text(
-                            'United States',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      )),
-                ),
-                const Divider(
-                  color: kcDivider,
-                  thickness: 1,
-                ),
-                Card(
-                  elevation: 0,
-                  margin: const EdgeInsets.only(
-                      left: 8, right: 8, top: 4, bottom: 4),
-                  child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Joined on',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(
-                                      color: kcPrimaryVariant,
-                                    ),
-                              ),
-                              const Icon(Icons.calendar_today,
-                                  color: kcPrimaryVariant),
-                            ],
-                          ),
-                          verticalSpaceSmall,
-                          Text(
-                            'March 22, 2020',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      )),
-                ),
-              ],
+                                const Icon(Icons.flag, color: kcPrimaryVariant),
+                              ],
+                            ),
+                            verticalSpaceSmall,
+                            Text(
+                              'United States',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                  ),
+                  const Divider(
+                    color: kcDivider,
+                    thickness: 1,
+                  ),
+                  Card(
+                    elevation: 0,
+                    margin: const EdgeInsets.only(
+                        left: 8, right: 8, top: 4, bottom: 4),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Joined on',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .copyWith(
+                                        color: kcPrimaryVariant,
+                                      ),
+                                ),
+                                const Icon(Icons.calendar_today,
+                                    color: kcPrimaryVariant),
+                              ],
+                            ),
+                            verticalSpaceSmall,
+                            Text(
+                              'March 22, 2020',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
