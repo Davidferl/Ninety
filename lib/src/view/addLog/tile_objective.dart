@@ -20,8 +20,8 @@ class ObjectiveTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context
-          .goNamed(Routes.progress.name, pathParameters: {"objectiveId": objectiveId}),
+      onTap: () => context.goNamed(Routes.progress.name,
+          pathParameters: {"objectiveId": objectiveId}),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
