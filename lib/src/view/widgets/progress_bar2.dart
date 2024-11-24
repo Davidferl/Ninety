@@ -4,13 +4,13 @@ import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/widgets/horizontal_bar_chart.dart';
 import 'package:flutter/material.dart';
 
-class ObjectiveProgressBar extends StatelessWidget {
+class ProgressBar2 extends StatelessWidget {
   final Objective objective;
   final double additionalProgress;
   final double height;
   final bool hideProgresses;
 
-  const ObjectiveProgressBar({
+  const ProgressBar2({
     super.key,
     required this.objective,
     this.additionalProgress = 0,

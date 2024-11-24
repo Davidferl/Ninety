@@ -11,7 +11,7 @@ class AnalyticsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 8,
+      elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -31,7 +31,7 @@ class AnalyticsSection extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
-                    .copyWith(color: kcPrimary, fontWeight: FontWeight.bold),
+                    .copyWith(color: kcSecondaryVariant, fontWeight: FontWeight.w500),
               ),
               contentPadding: EdgeInsets.zero,
             ),
@@ -39,10 +39,8 @@ class AnalyticsSection extends StatelessWidget {
               leading: const Icon(Icons.favorite_rounded, color: Colors.pink),
               title: Text(
                 AppLocalizations.of(context)!.encouragement_received(3),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: kcPrimary, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: kcSecondaryVariant, fontWeight: FontWeight.w500),
               ),
               contentPadding: EdgeInsets.zero,
             ),
@@ -52,10 +50,8 @@ class AnalyticsSection extends StatelessWidget {
               title: Text(
                 AppLocalizations.of(context)!.objective_streak(
                     AppLocalizations.of(context)!.demo_objective_jogging, 4),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: kcPrimary, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: kcSecondaryVariant, fontWeight: FontWeight.w500),
               ),
               contentPadding: EdgeInsets.zero,
             ),

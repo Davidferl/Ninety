@@ -48,15 +48,17 @@
   "objective_streak": "You have a {weeks} week streak for your objective '{objective}'",
   "demo_objective_jogging": "Jogging",
   "stats_health_categories": "Health categories covered",
-  "stats_supporting_count": "People you support",
+  "stats_supporting_count": "People you support recently",
   "stats_weekly_goals": "Weekly goals achieved",
-  "stats_habit_becomes_lifestyle_prefix": "After 90 days, a ",
+  "stats_habit_becomes_lifestyle_prefix": "After 90 days,\na ",
   "stats_habit": "habit",
   "stats_habit_becomes_lifestyle_middle": " becomes a ",
   "stats_lifestyle": "lifestyle",
   "stats_sleep": "Sleep",
   "stats_nutrition": "Nutrition",
-  "stats_physical": "Physical Activity",
+  "stats_physical": "Phys. Activity",
   "stats_balance": "Work/Life Balance",
-  "stats_social": "Social"
+  "stats_social": "Social",
+  "welcome": "Welcome, {name}!",
+  "internet_error": "No internet connection"
 }

@@ -4,7 +4,9 @@ import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/objective.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/addLog/tile_objective.dart';
+import 'package:bonne_reponse/src/view/widgets/no_internet.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,9 +18,21 @@ class PageSelectObjectiveForLog extends HookWidget {
   Widget build(BuildContext context) {
     final groupService = locator<GroupService>();
 
+    final isConnectedToInternet = useState<bool>(true);
     final objectives = useState<List<MapEntry<String, Objective>>?>(null);
     final isLoading = useState<bool>(true);
     final error = useState<String?>(null);
+
+    useEffect(() {
+      final connectivityStream =
+          Connectivity().onConnectivityChanged.listen((connectivityResult) {
+        isConnectedToInternet.value =
+            connectivityResult[0] == ConnectivityResult.mobile ||
+                connectivityResult[0] == ConnectivityResult.wifi;
+      });
+
+      return () => connectivityStream.cancel();
+    }, []);
 
     useEffect(() {
       Future<void> fetchObjectives() async {
@@ -34,7 +48,9 @@ class PageSelectObjectiveForLog extends HookWidget {
 
       fetchObjectives();
       return null;
-    }, []); // Empty dependency array ensures this runs only once
+    }, [
+      isConnectedToInternet
+    ]); // Empty dependency array ensures this runs only once
 
     return SafeArea(
       child: Padding(
@@ -62,45 +78,51 @@ class PageSelectObjectiveForLog extends HookWidget {
             ),
             verticalSpaceMedium,
             Expanded(
-              child: isLoading.value
-                  ? const Center(child: CircularProgressIndicator())
-                  : error.value != null
-                      ? Center(
-                          child: Text(
-                            error.value!,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
-                            ),
-                          ),
-                        )
-                      : (objectives.value == null || objectives.value!.isEmpty)
+              child: !isConnectedToInternet.value
+                  ? const NoInternet()
+                  : isLoading.value
+                      ? const Center(child: CircularProgressIndicator())
+                      : error.value != null
                           ? Center(
                               child: Text(
-                                AppLocalizations.of(context)!
-                                    .no_objectives_found,
-                                style: Theme.of(context).textTheme.bodyMedium,
+                                error.value!,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
                               ),
                             )
-                          : ListView.builder(
-                              itemCount: objectives.value!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final objective = objectives.value![index];
-                                return Column(
-                                  children: [
-                                    ObjectiveTile(
-                                      imageUri: objective.key,
-                                      objectiveId: objective.value.objectiveId,
-                                      title: objective.value.title,
-                                      description: getLastEntryString(
-                                          context,
-                                          objective.value
-                                              .getLastPostTimestamp()),
-                                    ),
-                                    verticalSpace(10),
-                                  ],
-                                );
-                              },
-                            ),
+                          : (objectives.value == null ||
+                                  objectives.value!.isEmpty)
+                              ? Center(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .no_objectives_found,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                )
+                              : ListView.builder(
+                                  itemCount: objectives.value!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final objective = objectives.value![index];
+                                    return Column(
+                                      children: [
+                                        ObjectiveTile(
+                                          imageUri: objective.key,
+                                          objectiveId:
+                                              objective.value.objectiveId,
+                                          title: objective.value.title,
+                                          description: getLastEntryString(
+                                              context,
+                                              objective.value
+                                                  .getLastPostTimestamp()),
+                                        ),
+                                        verticalSpace(10),
+                                      ],
+                                    );
+                                  },
+                                ),
             ),
           ],
         ),

@@ -9,7 +9,9 @@ import 'package:bonne_reponse/src/view/explore/tile.dart';
 import 'package:bonne_reponse/src/view/widgets/bottom_button.dart';
 import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
 import 'package:bonne_reponse/src/view/widgets/image_selector.dart';
+import 'package:bonne_reponse/src/view/widgets/no_internet.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -32,7 +34,19 @@ class Explore extends HookWidget {
     final isSubmitting = useState(false);
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
+    final isConnectedToInternet = useState<bool>(true);
     final ValueNotifier<XFile?> selectedImage = useState<XFile?>(null);
+
+    useEffect(() {
+      final connectivityStream =
+          Connectivity().onConnectivityChanged.listen((connectivityResult) {
+        isConnectedToInternet.value =
+            connectivityResult[0] == ConnectivityResult.mobile ||
+                connectivityResult[0] == ConnectivityResult.wifi;
+      });
+
+      return () => connectivityStream.cancel();
+    }, []);
 
     Future<void> showCreateGroupDialog(
         BuildContext context, Function callback) async {
@@ -78,69 +92,75 @@ class Explore extends HookWidget {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-              backgroundColor: kcBackground,
-              insetPadding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SizedBox(
-                  width: screenWidth(context),
-                  height: 600,
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text('Create a new group',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color: kcSecondaryVariant,
-                                      fontSize: 20,
-                                    )),
-                            verticalSpace(32),
-                            CustomTextInput(
-                              controller: titleController,
-                              validator: (value) =>
-                                  value == null || value.isEmpty
-                                      ? 'Title is required'
-                                      : null,
-                              labelText: "Title",
-                            ),
-                            verticalSpace(16),
-                            CustomTextInput(
-                              controller: descriptionController,
-                              validator: (value) =>
-                                  value == null || value.isEmpty
-                                      ? 'Description is required'
-                                      : null,
-                              maxLines: 3,
-                              labelText: 'Description',
-                            ),
-                            verticalSpace(16),
-                            ImageSelector(selectedImage: selectedImage),
-                            verticalSpace(16),
-                            CustomTextInput(
-                              controller: tagsController,
-                              labelText: "Tags (comma separated)",
-                            ),
-                            verticalSpace(32),
-                          ],
-                        ),
-                        BottomButton(
-                          title: "Submit",
-                          color: kcPrimary,
-                          isDisabled: isSubmitting.value,
-                          onPressed: isSubmitting.value ? null : submitForm,
-                        ),
-                      ],
+            backgroundColor: kcBackground,
+            insetPadding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SizedBox(
+                    width: screenWidth(context),
+                    height: 600,
+                    // You can adjust this if you want a more flexible height
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text('Create a new group',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        color: kcSecondaryVariant,
+                                        fontSize: 20,
+                                      )),
+                              verticalSpace(32),
+                              CustomTextInput(
+                                controller: titleController,
+                                validator: (value) =>
+                                    value == null || value.isEmpty
+                                        ? 'Title is required'
+                                        : null,
+                                labelText: "Title",
+                              ),
+                              verticalSpace(16),
+                              CustomTextInput(
+                                controller: descriptionController,
+                                validator: (value) =>
+                                    value == null || value.isEmpty
+                                        ? 'Description is required'
+                                        : null,
+                                maxLines: 3,
+                                labelText: 'Description',
+                              ),
+                              verticalSpace(16),
+                              ImageSelector(selectedImage: selectedImage),
+                              verticalSpace(16),
+                              CustomTextInput(
+                                controller: tagsController,
+                                labelText: "Tags (comma separated)",
+                              ),
+                              verticalSpace(32),
+                            ],
+                          ),
+                          BottomButton(
+                            title: "Submit",
+                            color: kcPrimary,
+                            isDisabled: isSubmitting.value,
+                            onPressed: isSubmitting.value ? null : submitForm,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ));
+              ),
+            ),
+          );
         },
       );
     }
@@ -155,7 +175,7 @@ class Explore extends HookWidget {
 
       getGroups();
       return () {};
-    }, []);
+    }, [isConnectedToInternet]);
 
     void onSearch(String query) {
       if (query.isEmpty) {
@@ -231,28 +251,31 @@ class Explore extends HookWidget {
             ),
           ),
           Expanded(
-            child: filteredGroups.value.isEmpty
-                ? const Center(
-                    child:
-                        CircularProgressIndicator(), // Show a loader if empty
-                  )
-                : MasonryGridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    itemCount: filteredGroups
-                        .value.length, // Specify itemCount explicitly
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () => context.goNamed(Routes.groupViewer.name,
-                            extra: filteredGroups.value[index]),
-                        child: Tile(
-                            group: filteredGroups.value[index],
-                            index: index,
-                            userId: auth.user!.uid),
-                      );
-                    },
-                  ),
+            child: !isConnectedToInternet.value
+                ? const NoInternet()
+                : filteredGroups.value.isEmpty
+                    ? const Center(
+                        child:
+                            CircularProgressIndicator(), // Show a loader if empty
+                      )
+                    : MasonryGridView.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 4,
+                        crossAxisSpacing: 4,
+                        itemCount: filteredGroups.value.length,
+                        // Specify itemCount explicitly
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () => context.goNamed(
+                                Routes.groupViewer.name,
+                                extra: filteredGroups.value[index]),
+                            child: Tile(
+                                group: filteredGroups.value[index],
+                                index: index,
+                                userId: auth.user!.uid),
+                          );
+                        },
+                      ),
           ),
         ],
       ),

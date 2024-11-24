@@ -4,6 +4,8 @@ import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
+import 'package:bonne_reponse/src/user/domain/user.dart';
+import 'package:bonne_reponse/src/user/services/user_service.dart';
 import 'package:bonne_reponse/src/view/profile/text_count.dart';
 import 'package:bonne_reponse/main.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,21 @@ class Profile extends HookWidget {
   Widget build(BuildContext context) {
     AuthService authService = locator<AuthService>();
     GroupService groupService = locator<GroupService>();
+    UserService userService = locator<UserService>();
+
+    final user = useState<User?>(null);
+
+    useEffect(() {
+      Future<void> getUser() async {
+        try {
+          final fetchedUser = await userService.getCurrentUser();
+          user.value = fetchedUser;
+        } catch (e) {}
+      }
+
+      getUser();
+      return () {};
+    }, []);
 
     final groupNumber = useState<int>(0);
     final objectiveNumber = useState<int>(0);
@@ -59,13 +76,6 @@ class Profile extends HookWidget {
 
     return Stack(
       children: [
-        Positioned.fill(
-          child: Image.asset(
-            'assets/images/profile_background.png',
-            // Replace with your image asset path
-            fit: BoxFit.cover,
-          ),
-        ),
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 56),
@@ -78,7 +88,8 @@ class Profile extends HookWidget {
                     padding: const EdgeInsets.only(right: 16),
                     child: GestureDetector(
                         onTap: () => context.goNamed(Routes.settings.name),
-                        child: const Icon(Icons.settings, color: Colors.white)),
+                        child: const Icon(Icons.settings,
+                            color: kcSecondaryVariant)),
                   ),
                 ),
                 Padding(
@@ -104,12 +115,12 @@ class Profile extends HookWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'John Doe',
+                                  user.value?.name ?? '',
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineMedium!
                                       .copyWith(
-                                        color: Colors.white,
+                                        color: kcSecondaryVariant,
                                       ),
                                 ),
                                 Text(
@@ -118,7 +129,7 @@ class Profile extends HookWidget {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        color: Colors.white.withOpacity(0.5),
+                                        color: kcDarkGray,
                                       ),
                                 ),
                                 verticalSpaceSmall,
@@ -149,6 +160,162 @@ class Profile extends HookWidget {
                       ),
                     ],
                   ),
+                ),
+                verticalSpaceMedium,
+                Card(
+                  elevation: 0,
+                  margin: const EdgeInsets.only(
+                      left: 8, right: 8, top: 4, bottom: 4),
+                  child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'About me',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  color: kcPrimaryVariant,
+                                ),
+                          ),
+                          verticalSpaceSmall,
+                          Text(
+                            'I am a software engineer with a passion for mobile development. I love to learn new things and I am always looking for new challenges.',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      )),
+                ),
+                const Divider(
+                  color: kcDivider,
+                  thickness: 1,
+                ),
+                Card(
+                  elevation: 0,
+                  margin: const EdgeInsets.only(
+                      left: 8, right: 8, top: 4, bottom: 4),
+                  child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Date of birth',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(
+                                      color: kcPrimaryVariant,
+                                    ),
+                              ),
+                              const Icon(Icons.cake, color: kcPrimaryVariant),
+                            ],
+                          ),
+                          verticalSpaceSmall,
+                          Text(
+                            'December 12th, 1995',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      )),
+                ),
+                const Divider(
+                  color: kcDivider,
+                  thickness: 1,
+                ),
+                Card(
+                  elevation: 0,
+                  margin: const EdgeInsets.only(
+                      left: 8, right: 8, top: 4, bottom: 4),
+                  child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Country',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(
+                                      color: kcPrimaryVariant,
+                                    ),
+                              ),
+                              const Icon(Icons.flag, color: kcPrimaryVariant),
+                            ],
+                          ),
+                          verticalSpaceSmall,
+                          Text(
+                            'United States',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      )),
+                ),
+                const Divider(
+                  color: kcDivider,
+                  thickness: 1,
+                ),
+                Card(
+                  elevation: 0,
+                  margin: const EdgeInsets.only(
+                      left: 8, right: 8, top: 4, bottom: 4),
+                  child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Joined on',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(
+                                      color: kcPrimaryVariant,
+                                    ),
+                              ),
+                              const Icon(Icons.calendar_today,
+                                  color: kcPrimaryVariant),
+                            ],
+                          ),
+                          verticalSpaceSmall,
+                          Text(
+                            'March 22, 2020',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      )),
                 ),
               ],
             ),

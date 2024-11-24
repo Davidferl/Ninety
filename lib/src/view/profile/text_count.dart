@@ -16,15 +16,13 @@ class TextCount extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .labelLarge!
-              .copyWith(color: kcOnPrimary),
+              .copyWith(color: kcSecondaryVariant),
         ),
-        Text(
-          name,
-          style: Theme.of(context)
-              .textTheme
-              .labelMedium!
-              .copyWith(color: kcOnPrimary),
-        ),
+        Text(name,
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium!
+                .copyWith(color: kcDarkGray, fontWeight: FontWeight.w500)),
       ],
     );
   }

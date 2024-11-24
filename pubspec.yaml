@@ -60,6 +60,7 @@ dependencies:
   flutter_svg: ^2.0.15
   flutter_boring_avatars: ^2.0.1
   confetti: ^0.8.0
+  connectivity_plus: ^6.1.0
 
 dev_dependencies:
   build_runner:
