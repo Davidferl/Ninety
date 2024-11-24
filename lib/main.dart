@@ -32,7 +32,7 @@ enum Routes {
 }
 
 final _router = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/startup',
   routes: [
     GoRoute(
         name: Routes.home.name,

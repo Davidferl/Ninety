@@ -9,7 +9,9 @@ import 'package:bonne_reponse/src/view/explore/tile.dart';
 import 'package:bonne_reponse/src/view/widgets/bottom_button.dart';
 import 'package:bonne_reponse/src/view/widgets/custom_text_input.dart';
 import 'package:bonne_reponse/src/view/widgets/image_selector.dart';
+import 'package:bonne_reponse/src/view/widgets/no_internet.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -32,7 +34,19 @@ class Explore extends HookWidget {
     final isSubmitting = useState(false);
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
+    final isConnectedToInternet = useState<bool>(false);
     final ValueNotifier<XFile?> selectedImage = useState<XFile?>(null);
+
+    useEffect(() {
+      final connectivityStream =
+          Connectivity().onConnectivityChanged.listen((connectivityResult) {
+        isConnectedToInternet.value =
+            connectivityResult[0] == ConnectivityResult.mobile ||
+                connectivityResult[0] == ConnectivityResult.wifi;
+      });
+
+      return () => connectivityStream.cancel();
+    }, []);
 
     Future<void> showCreateGroupDialog(
         BuildContext context, Function callback) async {
@@ -153,9 +167,12 @@ class Explore extends HookWidget {
             {allGroups.value = groups, filteredGroups.value = groups});
       }
 
-      getGroups();
+      if (isConnectedToInternet.value) {
+        getGroups();
+      }
+
       return () {};
-    }, []);
+    }, [isConnectedToInternet]);
 
     void onSearch(String query) {
       if (query.isEmpty) {
@@ -231,28 +248,31 @@ class Explore extends HookWidget {
             ),
           ),
           Expanded(
-            child: filteredGroups.value.isEmpty
-                ? const Center(
-                    child:
-                        CircularProgressIndicator(), // Show a loader if empty
-                  )
-                : MasonryGridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    itemCount: filteredGroups
-                        .value.length, // Specify itemCount explicitly
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () => context.goNamed(Routes.groupViewer.name,
-                            extra: filteredGroups.value[index]),
-                        child: Tile(
-                            group: filteredGroups.value[index],
-                            index: index,
-                            userId: auth.user!.uid),
-                      );
-                    },
-                  ),
+            child: !isConnectedToInternet.value
+                ? const NoInternet()
+                : filteredGroups.value.isEmpty
+                    ? const Center(
+                        child:
+                            CircularProgressIndicator(), // Show a loader if empty
+                      )
+                    : MasonryGridView.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 4,
+                        crossAxisSpacing: 4,
+                        itemCount: filteredGroups.value.length,
+                        // Specify itemCount explicitly
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () => context.goNamed(
+                                Routes.groupViewer.name,
+                                extra: filteredGroups.value[index]),
+                            child: Tile(
+                                group: filteredGroups.value[index],
+                                index: index,
+                                userId: auth.user!.uid),
+                          );
+                        },
+                      ),
           ),
         ],
       ),
