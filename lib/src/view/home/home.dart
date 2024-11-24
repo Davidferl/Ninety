@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
     const Dashboard(),
     const Explore(),
     const LogObjective(),
-    const Feed(),
+    Feed(),
     const Profile(),
   ];
 
