@@ -4,6 +4,7 @@ import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
 import 'package:bonne_reponse/src/view/authentication/register.dart';
 import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
+import 'package:bonne_reponse/src/view/feed/group/group_page.dart';
 import 'package:bonne_reponse/src/view/feed/comment/comment_page.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
@@ -18,7 +19,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'src/view/profile/settings.dart';
 
-enum Routes { home, startup, login, signup, progress, groupViewer, settings, comments }
+enum Routes {
+  home,
+  startup,
+  login,
+  signup,
+  progress,
+  groupViewer,
+  comments,
+  settings,
+  feed
+}
 
 final _router = GoRouter(
   initialLocation: '/home',
@@ -41,6 +52,15 @@ final _router = GoRouter(
             },
           ),
           GoRoute(
+            name: Routes.feed.name,
+            path: "/feed/:groupId",
+            builder: (context, state) {
+              final String groupId = state.pathParameters['groupId']!;
+              Group group = state.extra as Group;
+              return GroupPage(group: group, groupId: groupId);
+            },
+          ),
+          GoRoute(
             name: Routes.groupViewer.name,
             path: "/groupViewer",
             builder: (context, state) {
@@ -49,12 +69,11 @@ final _router = GoRouter(
             },
           ),
           GoRoute(
-            name: Routes.comments.name,
-            path: "/comments",
-            builder: (context, state) {
-              return CommentPage();
-            }
-          ),
+              name: Routes.comments.name,
+              path: "/comments",
+              builder: (context, state) {
+                return CommentPage();
+              }),
           GoRoute(
             name: Routes.settings.name,
             path: "/settings",

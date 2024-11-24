@@ -116,22 +116,31 @@ class Feed extends HookWidget {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: groupData.value
-                        .map(
-                          (group) => Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 2.0),
-                            child: GroupPictures(
-                              imageUrl: group.imageUrl,
-                              groupId: group.groupId,
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: groupData.value
+                          .map(
+                            (group) => GestureDetector(
+                              onTap: () {
+                                // Replace this with your desired action
+                                print('Group clicked: ${group.title}');
+                                // Example: Navigate to a group detail page
+                                context.goNamed('feed',
+                                    pathParameters: {'groupId': group.groupId},
+                                    extra: group);
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 2.0),
+                                child: GroupPictures(
+                                  imageUrl: group.imageUrl,
+                                  groupId: group.groupId,
+                                ),
+                              ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
+                          )
+                          .toList(),
+                    )),
               ),
             verticalSpaceMedium,
             Expanded(
