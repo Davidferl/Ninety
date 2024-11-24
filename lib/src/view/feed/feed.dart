@@ -1,5 +1,6 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
@@ -26,6 +27,8 @@ class Feed extends HookWidget {
   Widget build(BuildContext context) {
     GroupService groupService = locator<GroupService>();
     AuthService authService = locator<AuthService>();
+
+    final auth = useAuthentication();
 
     final postData = useState<List<PostWithUserAndGroup>>([]);
     final groupData = useState<List<Group>>([]);
@@ -144,6 +147,7 @@ class Feed extends HookWidget {
                                   0.0, 0.0, 0.0, 36.0),
                               child: PostTile(
                                 postWithUserAndGroup: postData.value[index],
+                                userId: auth.user!.uid,
                               ),
                             );
                           },

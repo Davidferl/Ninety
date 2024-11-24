@@ -7,16 +7,17 @@ import 'package:flutter/material.dart';
 
 class PostTile extends StatelessWidget {
   final PostWithUserAndGroup postWithUserAndGroup;
+  final String userId;
 
-  const PostTile({super.key, required this.postWithUserAndGroup});
+  const PostTile(
+      {super.key, required this.postWithUserAndGroup, required this.userId});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         PostHeader(
-          userImageUrl:
-              'https://source.boringavatars.com/beam/120/${postWithUserAndGroup.userName}',
+          userImageUrl: userId,
           username: postWithUserAndGroup.userName,
           groupName: postWithUserAndGroup.groupName,
           timeAgo:

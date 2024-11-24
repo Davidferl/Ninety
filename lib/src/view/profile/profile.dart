@@ -1,10 +1,13 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/profile/text_count.dart';
 import 'package:bonne_reponse/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,10 +23,16 @@ class Profile extends HookWidget {
     final objectiveNumber = useState<int>(0);
     final logNumber = useState<int>(0);
 
+    final auth = useAuthentication();
+
+    const colorPalette =
+        BoringAvatarPalette([kcPrimary, kcSecondaryVariant, kcLightPrimary]);
+
     useEffect(() {
       Future<void> getGroupNumber() async {
         try {
-          final groups = await groupService.getMemberGroups(authService.currentUser!.uid);
+          final groups =
+              await groupService.getMemberGroups(authService.currentUser!.uid);
           groupNumber.value = groups.length;
         } catch (e) {}
       }
@@ -77,11 +86,15 @@ class Profile extends HookWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 54,
-                        backgroundImage:
-                            AssetImage('assets/images/profile_avatar.png'),
+                        child: BoringAvatar(
+                            palette: colorPalette,
+                            shape: const OvalBorder(),
+                            name: auth.user!.uid,
+                            type: BoringAvatarType.beam),
                       ),
+                      horizontalSpace(8),
                       Column(
                         children: [
                           Padding(

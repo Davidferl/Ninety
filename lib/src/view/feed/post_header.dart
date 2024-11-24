@@ -1,4 +1,6 @@
+import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 
 class PostHeader extends StatelessWidget {
   final String userImageUrl;
@@ -15,11 +17,17 @@ class PostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const colorPalette =
+        BoringAvatarPalette([kcPrimary, kcSecondaryVariant, kcLightPrimary]);
+
     return Row(
       children: [
         CircleAvatar(
-          radius: 25,
-          backgroundImage: NetworkImage(userImageUrl),
+          child: BoringAvatar(
+              palette: colorPalette,
+              shape: const OvalBorder(),
+              name: userImageUrl,
+              type: BoringAvatarType.beam),
         ),
         const SizedBox(width: 6),
         Column(
@@ -63,14 +71,21 @@ class PostHeader extends StatelessWidget {
           ],
         ),
         const Spacer(),
-        IconButton(
-          icon: const Icon(Icons.favorite_border),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: const Icon(Icons.chat_bubble_outline),
-          onPressed: () {},
-        ),
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.favorite_border,
+                color: Colors.black,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.chat_bubble_outline, color: Colors.black),
+              onPressed: () {},
+            ),
+          ],
+        )
       ],
     );
   }

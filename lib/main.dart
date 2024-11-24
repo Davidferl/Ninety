@@ -21,7 +21,7 @@ import 'src/view/profile/settings.dart';
 enum Routes { home, startup, login, signup, progress, groupViewer, settings, comments }
 
 final _router = GoRouter(
-  initialLocation: '/home/comments',
+  initialLocation: '/home',
   routes: [
     GoRoute(
         name: Routes.home.name,
