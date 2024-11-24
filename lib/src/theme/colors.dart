@@ -29,7 +29,7 @@ const Color kcBlueLight = Color(0xff0073cf);
 
 const ColorScheme colorScheme = ColorScheme(
   primary: kcPrimary,
-  secondary: kcSecondary,
+  secondary: kcPrimary,
   surface: kcSurface,
   error: kcPrimary,
   onPrimary: kcOnPrimary,
