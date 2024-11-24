@@ -59,5 +59,6 @@
   "stats_physical": "Act. physique",
   "stats_balance": "Équilibre travail/vie",
   "stats_social": "Social",
-  "welcome": "Bienvenue, {name}!"
+  "welcome": "Bienvenue, {name}!",
+  "internet_error": "Pas de connexion internet"
 }
