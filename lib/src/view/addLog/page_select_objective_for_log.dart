@@ -18,7 +18,7 @@ class PageSelectObjectiveForLog extends HookWidget {
   Widget build(BuildContext context) {
     final groupService = locator<GroupService>();
 
-    final isConnectedToInternet = useState<bool>(false);
+    final isConnectedToInternet = useState<bool>(true);
     final objectives = useState<List<MapEntry<String, Objective>>?>(null);
     final isLoading = useState<bool>(true);
     final error = useState<String?>(null);
