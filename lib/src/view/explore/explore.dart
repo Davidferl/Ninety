@@ -34,7 +34,7 @@ class Explore extends HookWidget {
     final isSubmitting = useState(false);
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
-    final isConnectedToInternet = useState<bool>(false);
+    final isConnectedToInternet = useState<bool>(true);
     final ValueNotifier<XFile?> selectedImage = useState<XFile?>(null);
 
     useEffect(() {
@@ -92,69 +92,75 @@ class Explore extends HookWidget {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-              backgroundColor: kcBackground,
-              insetPadding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SizedBox(
-                  width: screenWidth(context),
-                  height: 600,
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text('Create a new group',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color: kcSecondaryVariant,
-                                      fontSize: 20,
-                                    )),
-                            verticalSpace(32),
-                            CustomTextInput(
-                              controller: titleController,
-                              validator: (value) =>
-                                  value == null || value.isEmpty
-                                      ? 'Title is required'
-                                      : null,
-                              labelText: "Title",
-                            ),
-                            verticalSpace(16),
-                            CustomTextInput(
-                              controller: descriptionController,
-                              validator: (value) =>
-                                  value == null || value.isEmpty
-                                      ? 'Description is required'
-                                      : null,
-                              maxLines: 3,
-                              labelText: 'Description',
-                            ),
-                            verticalSpace(16),
-                            ImageSelector(selectedImage: selectedImage),
-                            verticalSpace(16),
-                            CustomTextInput(
-                              controller: tagsController,
-                              labelText: "Tags (comma separated)",
-                            ),
-                            verticalSpace(32),
-                          ],
-                        ),
-                        BottomButton(
-                          title: "Submit",
-                          color: kcPrimary,
-                          isDisabled: isSubmitting.value,
-                          onPressed: isSubmitting.value ? null : submitForm,
-                        ),
-                      ],
+            backgroundColor: kcBackground,
+            insetPadding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SizedBox(
+                    width: screenWidth(context),
+                    height: 600,
+                    // You can adjust this if you want a more flexible height
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text('Create a new group',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        color: kcSecondaryVariant,
+                                        fontSize: 20,
+                                      )),
+                              verticalSpace(32),
+                              CustomTextInput(
+                                controller: titleController,
+                                validator: (value) =>
+                                    value == null || value.isEmpty
+                                        ? 'Title is required'
+                                        : null,
+                                labelText: "Title",
+                              ),
+                              verticalSpace(16),
+                              CustomTextInput(
+                                controller: descriptionController,
+                                validator: (value) =>
+                                    value == null || value.isEmpty
+                                        ? 'Description is required'
+                                        : null,
+                                maxLines: 3,
+                                labelText: 'Description',
+                              ),
+                              verticalSpace(16),
+                              ImageSelector(selectedImage: selectedImage),
+                              verticalSpace(16),
+                              CustomTextInput(
+                                controller: tagsController,
+                                labelText: "Tags (comma separated)",
+                              ),
+                              verticalSpace(32),
+                            ],
+                          ),
+                          BottomButton(
+                            title: "Submit",
+                            color: kcPrimary,
+                            isDisabled: isSubmitting.value,
+                            onPressed: isSubmitting.value ? null : submitForm,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ));
+              ),
+            ),
+          );
         },
       );
     }

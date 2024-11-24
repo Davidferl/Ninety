@@ -36,7 +36,7 @@ class Feed extends HookWidget {
     final groupData = useState<List<Group>>([]);
     final isPostsLoading = useState<bool>(true); // Track post loading status
     final isGroupsLoading = useState<bool>(true); // Track group loading status
-    final isConnectedToInternet = useState<bool>(false);
+    final isConnectedToInternet = useState<bool>(true);
 
     useEffect(() {
       final connectivityStream =
