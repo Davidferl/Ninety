@@ -1,14 +1,17 @@
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/group/domain/post_with_user_and_group.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/addLog/page_select_objective_for_log.dart';
+import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:go_router/go_router.dart';
 
 class GroupPage extends HookWidget {
   final Group group;
@@ -244,7 +247,6 @@ Widget _buildPostHeader(BuildContext context, PostWithUserAndGroup post) {
   final auth = useAuthentication(); // Hook for authentication
   final userId = auth.user!.uid; // Get current user's ID
 
-  // useState to track save state for the post
   final isLiked = useState<bool>(
     post.post.reactions.map((e) => e.userId).contains(userId),
   );
@@ -292,7 +294,7 @@ Widget _buildPostHeader(BuildContext context, PostWithUserAndGroup post) {
         ),
         IconButton(
           icon: const Icon(Icons.chat_bubble, color: Colors.white),
-          onPressed: () => print("Comment"),
+          onPressed: () => context.goNamed(Routes.comments.name),
         ),
       ],
     ),
