@@ -26,15 +26,14 @@ final _router = GoRouter(
         path: '/home',
         builder: (context, state) => const Home(title: "default"),
         routes: [
-GoRoute(
-  name: Routes.progress.name,
-  path: "/progress/:objectiveId",  // Change path to use objectiveId
-  builder: (context, state) {
-    final String objectiveId = state.pathParameters['objectiveId']!;  // Access objectiveId
-    return PagePostProgressLog(objectiveId: objectiveId);  // Pass objectiveId to the page
-  },
-),
-
+          GoRoute(
+            name: Routes.progress.name,
+            path: "/progress/:objectiveId",
+            builder: (context, state) {
+              final String objectiveId = state.pathParameters['objectiveId']!;
+              return PagePostProgressLog(objectiveId: objectiveId);
+            },
+          ),
           GoRoute(
             name: Routes.groupViewer.name,
             path: "/groupViewer",

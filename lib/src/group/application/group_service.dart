@@ -51,6 +51,16 @@ class GroupService {
         .toList();
   }
 
+  Future<Objective> getObjectiveById(String objectiveId) async {
+    List<Group> groups = await _groupRepository.getAll();
+
+    return groups
+        .expand((group) => group.members.map(
+              (member) => member.objective,
+            ))
+        .firstWhere((objective) => objective.objectiveId == objectiveId);
+  }
+
   Future<void> addMember(String groupId, String memberId, String title,
       double quantity, String unit, QuantityType quantityType) async {
     Group group = await _groupRepository.getById(groupId);

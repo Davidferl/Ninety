@@ -6,12 +6,14 @@ import 'package:go_router/go_router.dart';
 
 class ObjectiveTile extends StatelessWidget {
   final String imageUri;
+  final String objectiveId;
   final String title;
   final String description;
 
   const ObjectiveTile(
       {super.key,
       required this.imageUri,
+      required this.objectiveId,
       required this.title,
       required this.description});
 
@@ -19,7 +21,7 @@ class ObjectiveTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => context
-          .goNamed(Routes.progress.name, pathParameters: {"name": title}),
+          .goNamed(Routes.progress.name, pathParameters: {"objectiveId": objectiveId}),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

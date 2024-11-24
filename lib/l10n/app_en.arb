@@ -25,6 +25,7 @@
     "create_an_objective": "Create an objective!",
     "create_an_objective_description": "To join this group, you need to create an objective. What type of objective would you like to create?",
     "create_objective_prompt": "My objective title",
+    "objective": "Objective",
     "create_objective_meaning": "What do the following values mean?",
     "create_objective_meaning_description": "Continuous values are for objectives that are ongoing, like 'Run 3km a day'.\n\nDiscrete values are for objectives that happen one or many times during the week, like 'Eat a salad for lunch'.",
     "create_objective_continuous_objective": "Objective (ex: 3)",
