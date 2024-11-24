@@ -21,7 +21,6 @@ class _HomeState extends State<Home> {
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Explore(),
-    const PageCreateGroup(),
     const PageSelectObjectiveForLog(),
     const Feed(),
     const Profile(),
@@ -72,17 +71,6 @@ class _HomeState extends State<Home> {
               color: kcLightSecondary,
             ),
             label: 'Explore',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(
-              Icons.create,
-              color: kcPrimary,
-            ),
-            icon: Icon(
-              Icons.create,
-              color: kcLightSecondary,
-            ),
-            label: 'Create group',
           ),
           NavigationDestination(
             selectedIcon: Icon(

@@ -1,6 +1,8 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
+import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
+import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/view/profile/text_count.dart';
-import 'package:bonne_reponse/src/view/widgets/section_name.dart';
 import 'package:bonne_reponse/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,6 +13,41 @@ class Profile extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthService authService = locator<AuthService>();
+    GroupService groupService = locator<GroupService>();
+
+    final groupNumber = useState<int>(0);
+    final objectiveNumber = useState<int>(0);
+    final logNumber = useState<int>(0);
+
+    useEffect(() {
+      Future<void> getGroupNumber() async {
+        try {
+          final groups = await groupService.getMemberGroups(authService.currentUser!.uid);
+          groupNumber.value = groups.length;
+        } catch (e) {}
+      }
+
+      Future<void> getObjectiveNumber() async {
+        try {
+          final objectives = await groupService.getObjectives();
+          objectiveNumber.value = objectives.length;
+        } catch (e) {}
+      }
+
+      Future<void> getLogNumber() async {
+        try {
+          final logs = await groupService.getAllPostsOfConnectedUser();
+          logNumber.value = logs.length;
+        } catch (e) {}
+      }
+
+      getGroupNumber();
+      getObjectiveNumber();
+      getLogNumber();
+      return () {};
+    }, []);
+
     return Stack(
       children: [
         Positioned.fill(
@@ -72,23 +109,23 @@ class Profile extends HookWidget {
                                       ),
                                 ),
                                 verticalSpaceSmall,
-                                const Row(
+                                Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     TextCount(
                                       name: "Objectives",
-                                      count: 5,
+                                      count: objectiveNumber.value,
                                     ),
                                     horizontalSpaceMedium,
                                     TextCount(
                                       name: "Groups",
-                                      count: 12,
+                                      count: groupNumber.value,
                                     ),
                                     horizontalSpaceMedium,
                                     TextCount(
                                       name: "Logs",
-                                      count: 48,
+                                      count: logNumber.value,
                                     ),
                                   ],
                                 ),
