@@ -4,7 +4,7 @@ class ProfilePicture extends StatelessWidget {
   final String imageUrl;
   final bool visited;
 
-  final double imageRadius = 40.0;
+  final double imageRadius = 35.0;
 
   const ProfilePicture({
     super.key,
