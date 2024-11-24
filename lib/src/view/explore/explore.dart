@@ -167,10 +167,7 @@ class Explore extends HookWidget {
             {allGroups.value = groups, filteredGroups.value = groups});
       }
 
-      if (isConnectedToInternet.value) {
-        getGroups();
-      }
-
+      getGroups();
       return () {};
     }, [isConnectedToInternet]);
 
