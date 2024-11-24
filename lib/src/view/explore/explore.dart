@@ -1,3 +1,4 @@
+import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
 import 'package:bonne_reponse/src/view/explore/tile.dart';
 import 'package:bonne_reponse/src/view/widgets/section_name.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class Explore extends HookWidget {
   const Explore({super.key});
@@ -56,8 +58,11 @@ class Explore extends HookWidget {
               mainAxisSpacing: 4,
               crossAxisSpacing: 4,
               itemBuilder: (BuildContext context, int index) {
-                return Tile(
-                  index: index,
+                return GestureDetector(
+                  onTap: () => context.goNamed(Routes.groupViewer.name),
+                  child: Tile(
+                    index: index,
+                  ),
                 );
               },
             ),

@@ -2,6 +2,7 @@ import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/view/addLog/log_progress.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
 import 'package:bonne_reponse/src/view/authentication/register.dart';
+import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
@@ -13,21 +14,26 @@ import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-enum Routes { home, startup, login, signup, progress }
+enum Routes { home, startup, login, signup, progress, groupViewer }
 
 final _router = GoRouter(
   initialLocation: '/home',
   routes: [
     GoRoute(
-      name: Routes.home.name,
-      path: '/home',
-      builder: (context, state) => const Home(title: "default"),
-      routes: [
-        GoRoute(name: Routes.progress.name,
-        path: "/progress",
-        builder: (context , state) => const LogProgress(title: "Hello"))
-      ]
-    ),
+        name: Routes.home.name,
+        path: '/home',
+        builder: (context, state) => const Home(title: "default"),
+        routes: [
+          GoRoute(
+              name: Routes.progress.name,
+              path: "/progress",
+              builder: (context, state) => const LogProgress(title: "Hello")),
+          GoRoute(
+            name: Routes.groupViewer.name,
+            path: "/groupViewer",
+            builder: (context, state) => const GroupViewer(),
+          )
+        ]),
     GoRoute(
       name: Routes.startup.name,
       path: '/startup',
@@ -54,7 +60,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   runApp(DevicePreview(
     enabled: false,

@@ -1,4 +1,3 @@
-import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/view/addLog/log_objective.dart';
 import 'package:bonne_reponse/src/view/dashboard/dashboard.dart';
 import 'package:bonne_reponse/src/view/explore/explore.dart';

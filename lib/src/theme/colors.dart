@@ -16,9 +16,10 @@ const Color kcError = Color(0xfffd687d);
 const Color kcOnError = Colors.white;
 const Color kcGray = Color(0xfff5f6f8);
 const Color kcDarkGray = Color(0xff928899);
+const Color kcDivider = Color.fromARGB(255, 220, 221, 223);
 
-  const Color kcGold = Color(0xffEEAC14);
-  const Color kcPlatinum = Color(0xff7E7E7E);
+const Color kcGold = Color(0xffEEAC14);
+const Color kcPlatinum = Color(0xff7E7E7E);
 Color kcShadowColor = Colors.black.withOpacity(0.15);
 const Color kcPink = Color(0xffE6506C);
 const Color kcRed = Color.fromARGB(255, 235, 38, 38);

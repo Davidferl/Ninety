@@ -16,5 +16,8 @@
     "explore": "Explore groups",
     "new_log": "Enter new log",
     "pick_objective": "Pick your objective",
-    "pick_objective_description": "Show the world how it is done!"
+    "pick_objective_description": "Show the world how it is done!",
+    "dashboard": "Dashboard",
+    "continuous": "Continuous",
+    "discrete": "Discrete"
 }
