@@ -29,5 +29,6 @@
     "create_objective_meaning_description": "Continuous values are for objectives that are ongoing, like 'Run 3km a day'.\n\nDiscrete values are for objectives that happen one or many times during the week, like 'Eat a salad for lunch'.",
     "create_objective_continuous_objective": "Objective (ex: 3)",
     "create_objective_continuous_unit": "Unit (ex: km)",
-    "create_objective_discrete_objective": "Number of times per week"
+    "create_objective_discrete_objective": "Number of times per week",
+    "join_group": "Join group"
 }

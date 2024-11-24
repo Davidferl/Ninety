@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/view/addLog/log_progress.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
 import 'package:bonne_reponse/src/view/authentication/register.dart';
@@ -36,9 +37,13 @@ final _router = GoRouter(
           GoRoute(
             name: Routes.groupViewer.name,
             path: "/groupViewer",
-            builder: (context, state) => const GroupViewer(),
+            builder: (context, state) {
+              Group group = state.extra as Group;
+              return GroupViewer(group: group);
+            },
           ),
-          GoRoute(name: Routes.settings.name,
+          GoRoute(
+            name: Routes.settings.name,
             path: "/settings",
             builder: (context, state) => const Settings(),
           ),

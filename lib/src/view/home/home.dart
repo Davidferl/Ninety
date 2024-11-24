@@ -1,6 +1,7 @@
 import 'package:bonne_reponse/src/view/addLog/log_objective.dart';
 import 'package:bonne_reponse/src/view/dashboard/dashboard.dart';
 import 'package:bonne_reponse/src/view/explore/explore.dart';
+import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
 import 'package:bonne_reponse/src/view/feed/feed.dart';
 import 'package:bonne_reponse/src/view/profile/profile.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
