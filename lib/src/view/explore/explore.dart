@@ -1,6 +1,7 @@
 import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/theme/colors.dart';
@@ -21,6 +22,8 @@ class Explore extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final auth = useAuthentication();
+
     final groupService = locator<GroupService>();
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
@@ -244,9 +247,9 @@ class Explore extends HookWidget {
                         onTap: () => context.goNamed(Routes.groupViewer.name,
                             extra: filteredGroups.value[index]),
                         child: Tile(
-                          group: filteredGroups.value[index],
-                          index: index,
-                        ),
+                            group: filteredGroups.value[index],
+                            index: index,
+                            userId: auth.user!.uid),
                       );
                     },
                   ),

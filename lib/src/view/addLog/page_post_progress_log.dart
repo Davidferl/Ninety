@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:bonne_reponse/src/view/widgets/objective_progress_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
@@ -18,10 +18,12 @@ class PagePostProgressLog extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
     final quantityController = useTextEditingController();
     final selectedImage = useState<XFile?>(null);
     final isSendButtonVisible = useState<bool>(false);
+    final additionalProgress = useState<double>(0.0);
 
     final objective = useState<Objective?>(null);
     final isLoading = useState<bool>(true);
@@ -43,6 +45,7 @@ class PagePostProgressLog extends HookWidget {
       }
 
       fetchObjective();
+      return null;
     }, [objectiveId]);
 
     // Sync visibility of the send button
@@ -50,32 +53,41 @@ class PagePostProgressLog extends HookWidget {
       void listener() {
         isSendButtonVisible.value = selectedImage.value != null &&
             descriptionController.text.isNotEmpty &&
-            quantityController.text.isNotEmpty;
+            quantityController.text.isNotEmpty &&
+            titleController.text.isNotEmpty;
+
+        additionalProgress.value =
+            double.tryParse(quantityController.text) ?? 0.0;
       }
 
+      titleController.addListener(listener);
       descriptionController.addListener(listener);
       selectedImage.addListener(listener);
       quantityController.addListener(listener);
       return () {
+        titleController.removeListener(listener);
         descriptionController.removeListener(listener);
         selectedImage.removeListener(listener);
         quantityController.removeListener(listener);
       };
-    }, [descriptionController, selectedImage, quantityController]);
+    }, [
+      titleController,
+      descriptionController,
+      selectedImage,
+      quantityController
+    ]);
 
-    // Submit the form
     Future<void> submitForm() async {
       if (objective.value != null && selectedImage.value != null) {
         try {
           final groupId = objective.value!.groupId;
           final memberId = objective.value!.memberId;
-          final title = objective.value!.title;
+          final title = titleController.text;
           final description = descriptionController.text;
           final quantity = double.parse(quantityController.text);
-          final imageFile = File(selectedImage.value!.path);
 
-          await groupService.logActivity(
-              groupId, memberId, title, description, quantity, imageFile);
+          await groupService.logActivity(groupId, memberId, title, description,
+              quantity, selectedImage.value!);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Activity logged successfully')),
           );
@@ -113,27 +125,58 @@ class PagePostProgressLog extends HookWidget {
                 Text(objective.value!.title)
               else
                 Text(AppLocalizations.of(context)!.objective),
+              const SizedBox(height: 16),
+              CustomTextInput(
+                textInputAction: TextInputAction.done,
+                controller: titleController,
+                keyboardType: TextInputType.text,
+                labelText: AppLocalizations.of(context)!.title,
+              ),
+              const SizedBox(height: 16),
               CustomTextInput(
                 textInputAction: TextInputAction.done,
                 controller: descriptionController,
                 keyboardType: TextInputType.text,
-                labelText: "How it went...",
+                labelText: AppLocalizations.of(context)!.description,
               ),
-              CustomTextInput(
-                textInputAction: TextInputAction.done,
-                controller: quantityController,
-                keyboardType: TextInputType.number,
-                labelText: "Quantity",
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextInput(
+                      textInputAction: TextInputAction.done,
+                      controller: quantityController,
+                      keyboardType: TextInputType.number,
+                      labelText: AppLocalizations.of(context)!.your_progress,
+                    ),
+                  ),
+                  if (objective.value != null &&
+                      objective.value!.quantityType == QuantityType.continuous)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        objective.value!.unit,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                ],
               ),
+              const SizedBox(height: 16),
+              if (objective.value != null)
+                ObjectiveProgressBar(
+                    objective: objective.value!,
+                    additionalProgress:
+                        additionalProgress.value),
+              const SizedBox(height: 16),
               ImageSelector(
                 selectedImage: selectedImage,
               ),
               const Spacer(),
-              if (isSendButtonVisible.value)
-                BottomButton(
-                  onPressed: submitForm,
-                  title: "Send",
-                ),
+              BottomButton(
+                onPressed: isSendButtonVisible.value ? submitForm : null,
+                title: AppLocalizations.of(context)!.send,
+                isDisabled: !isSendButtonVisible.value,
+              ),
             ],
           ),
         ),
