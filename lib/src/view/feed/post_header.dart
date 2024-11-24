@@ -1,4 +1,5 @@
 import 'package:bonne_reponse/injection_container.dart';
+import 'package:bonne_reponse/main.dart';
 import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
 import 'package:bonne_reponse/src/group/domain/post.dart';
@@ -7,6 +8,7 @@ import 'package:bonne_reponse/src/view/widgets/like_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 
 class PostHeader extends HookWidget {
   final Post post;
@@ -111,7 +113,9 @@ class PostHeader extends HookWidget {
             ),
             IconButton(
               icon: const Icon(Icons.chat_bubble_outline, color: Colors.black),
-              onPressed: () {},
+              onPressed: () {
+                context.goNamed(Routes.comments.name);
+              },
             ),
           ],
         )
