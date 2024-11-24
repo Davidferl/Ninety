@@ -101,7 +101,7 @@ class Feed extends HookWidget {
                       onPressed: () {
                         // Navigate to Explore screen
                         print('Click');
-                        context.goNamed('home', pathParameters: {'index': '2'});
+                        context.goNamed('home');
                       },
                       child: const Text("Go to Explore"),
                     ),
