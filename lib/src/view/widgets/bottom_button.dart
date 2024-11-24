@@ -7,12 +7,14 @@ class BottomButton extends StatelessWidget {
   final void Function()? onPressed;
   final String title;
   final Color? color;
+  final bool? isDisabled;
 
   const BottomButton({
     super.key,
     required this.onPressed,
     required this.title,
     this.color,
+    this.isDisabled,
   });
 
   @override
@@ -22,8 +24,12 @@ class BottomButton extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            foregroundColor: kcOnPrimary,
-            backgroundColor: color ?? kcPrimary,
+            foregroundColor: isDisabled != null && isDisabled!
+                ? kcPrimaryVariant
+                : kcOnPrimary,
+            backgroundColor: isDisabled != null && isDisabled!
+                ? kcDivider
+                : color ?? kcPrimary,
             minimumSize: Size(screenWidth(context), 52),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -33,7 +39,7 @@ class BottomButton extends StatelessWidget {
                 .bodyMedium!
                 .copyWith(color: kcOnPrimary),
           ),
-          onPressed: onPressed,
+          onPressed: isDisabled != null && isDisabled! ? null : onPressed,
           child: Text(
             title.toUpperCase(),
           )),
