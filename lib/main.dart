@@ -4,6 +4,7 @@ import 'package:bonne_reponse/src/group/domain/group.dart';
 import 'package:bonne_reponse/src/view/authentication/login.dart';
 import 'package:bonne_reponse/src/view/authentication/register.dart';
 import 'package:bonne_reponse/src/view/explore/group_viewer.dart';
+import 'package:bonne_reponse/src/view/feed/group/group_page.dart';
 import 'package:bonne_reponse/src/view/startup/startup.dart';
 import 'package:bonne_reponse/src/view/home/home.dart';
 import 'package:bonne_reponse/src/theme/theme.dart';
@@ -17,7 +18,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'src/view/profile/settings.dart';
 
-enum Routes { home, startup, login, signup, progress, groupViewer, settings }
+enum Routes {
+  home,
+  startup,
+  login,
+  signup,
+  progress,
+  groupViewer,
+  settings,
+  feed
+}
 
 final _router = GoRouter(
   initialLocation: '/startup',
@@ -37,6 +47,15 @@ final _router = GoRouter(
                   state.pathParameters['objectiveId']!; // Access objectiveId
               return PagePostProgressLog(
                   objectiveId: objectiveId); // Pass objectiveId to the page
+            },
+          ),
+          GoRoute(
+            name: Routes.feed.name,
+            path: "/feed/:groupId",
+            builder: (context, state) {
+              final String groupId = state.pathParameters['groupId']!;
+              Group group = state.extra as Group;
+              return GroupPage(group: group, groupId: groupId);
             },
           ),
           GoRoute(

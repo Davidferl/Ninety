@@ -171,6 +171,31 @@ class GroupService {
       }
     }
 
+    posts.sort((a, b) => b.post.timestamp.compareTo(a.post.timestamp));
+
+    return posts;
+  }
+
+  Future<List<PostWithUserAndGroup>> getGroupFeed(String groupId) async {
+    Group group = await _groupRepository.getById(groupId);
+
+    List<PostWithUserAndGroup> posts = [];
+
+    for (Member member in group.members) {
+      for (Post post in member.objective.posts) {
+        User user = await _userRepository.getById(member.userId);
+        posts.add(PostWithUserAndGroup(
+          userName: user.name,
+          userImageUrl: "",
+          groupName: group.title,
+          objectiveName: member.objective.title,
+          post: post,
+        ));
+      }
+    }
+
+    posts.sort((a, b) => b.post.timestamp.compareTo(a.post.timestamp));
+
     return posts;
   }
 
@@ -182,17 +207,6 @@ class GroupService {
         .toList();
 
     return memberGroups;
-  }
-
-  Future<List<Post>> getGroupFeed(String userId, String groupId) async {
-    Group group = await _groupRepository.getById(groupId);
-
-    List<Post> posts = group.members
-        .expand((member) => member.objective.posts)
-        .toList()
-      ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
-
-    return posts;
   }
 
   Future<List<Group>> getGroups({List<String>? tags}) async {
