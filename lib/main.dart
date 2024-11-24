@@ -19,22 +19,26 @@ import 'src/view/profile/settings.dart';
 enum Routes { home, startup, login, signup, progress, groupViewer, settings }
 
 final _router = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/home/0',
   routes: [
     GoRoute(
         name: Routes.home.name,
-        path: '/home',
-        builder: (context, state) => const Home(title: "default"),
+        path: '/home/:index',
+        builder: (context, state) {
+          final index = int.tryParse(state.pathParameters['index'] ?? '0') ?? 0;
+          return Home(title: "Default", initialIndex: index);
+        },
         routes: [
-GoRoute(
-  name: Routes.progress.name,
-  path: "/progress/:objectiveId",  // Change path to use objectiveId
-  builder: (context, state) {
-    final String objectiveId = state.pathParameters['objectiveId']!;  // Access objectiveId
-    return PagePostProgressLog(objectiveId: objectiveId);  // Pass objectiveId to the page
-  },
-),
-
+          GoRoute(
+            name: Routes.progress.name,
+            path: "/progress/:objectiveId", // Change path to use objectiveId
+            builder: (context, state) {
+              final String objectiveId =
+                  state.pathParameters['objectiveId']!; // Access objectiveId
+              return PagePostProgressLog(
+                  objectiveId: objectiveId); // Pass objectiveId to the page
+            },
+          ),
           GoRoute(
             name: Routes.groupViewer.name,
             path: "/groupViewer",
