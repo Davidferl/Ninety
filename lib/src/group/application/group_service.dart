@@ -116,36 +116,25 @@ class GroupService {
 
   Future<List<PostWithUserAndGroup>> getPostFeed(String userId) async {
     List<Group> groups = await _groupRepository.getAll();
-    List<Post> posts = [];
-    List<PostWithUserAndGroup> postWithUserAndGroups = [];
+    List<PostWithUserAndGroup> posts = [];
 
-    posts.addAll(
-      groups
-          .where((group) => group.members
-              .any((member) => member.userId == userId)) // Filter groups
-          .expand((group) =>
-              group.members) // Get all members of the filtered groups
-          .expand((member) =>
-              member.objective.posts), // Collect all posts from members
-    );
+    for (Group group in groups) {
+      if (group.members.any((member) => member.userId == userId)) {
+        for (Member member in group.members) {
+          for (Post post in member.objective.posts) {
+            User user = await _userRepository.getById(member.userId);
+            posts.add(PostWithUserAndGroup(
+              userName: user.name,
+              userImageUrl: "",
+              groupName: group.title,
+              post: post,
+            ));
+          }
+        }
+      }
+    }
 
-    postWithUserAndGroups = await Future.wait(posts.map((post) async {
-      User user = await _userRepository.getById(userId);
-
-      Group group = groups.firstWhere(
-          (group) => group.members.any((member) => member.userId == user.id));
-
-      return PostWithUserAndGroup(
-        groupName: group.title,
-        user: user,
-        post: post,
-      );
-    }));
-
-    postWithUserAndGroups
-        .sort((a, b) => b.post.timestamp.compareTo(a.post.timestamp));
-
-    return postWithUserAndGroups;
+    return posts;
   }
 
   Future<List<Post>> getGroupFeed(String userId, String groupId) async {
