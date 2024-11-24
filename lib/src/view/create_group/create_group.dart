@@ -1,7 +1,9 @@
 import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/group/application/group_service.dart';
+import 'package:bonne_reponse/src/view/widgets/image_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PageCreateGroup extends HookWidget {
   const PageCreateGroup({super.key});
@@ -11,19 +13,26 @@ class PageCreateGroup extends HookWidget {
     final groupService = locator<GroupService>();
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
-    final imageUrlController = useTextEditingController();
     final tagsController = useTextEditingController();
 
     final isSubmitting = useState(false);
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
+    final ValueNotifier<XFile?> selectedImage = useState<XFile?>(null);
+
+    void clearForm() {
+      titleController.clear();
+      descriptionController.clear();
+      selectedImage.value = null;
+      tagsController.clear();
+    }
+
     Future<void> submitForm() async {
       if (!formKey.currentState!.validate()) return;
+      if (selectedImage.value == null) return;
 
       final title = titleController.text.trim();
       final description = descriptionController.text.trim();
-      //TODO CLEM use widget/ImageSelector instead
-      final imageUrl = imageUrlController.text.trim();
       final tags = tagsController.text
           .split(',')
           .map((tag) => tag.trim())
@@ -34,15 +43,12 @@ class PageCreateGroup extends HookWidget {
       isSubmitting.value = true;
 
       try {
-        await groupService.addGroup(title, description, imageUrl, tags);
+        await groupService.addGroup(
+            title, description, selectedImage.value!, tags);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Group added successfully!')),
         );
-        // Clear the form
-        titleController.clear();
-        descriptionController.clear();
-        imageUrlController.clear();
-        tagsController.clear();
+        clearForm();
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error adding group: $e')),
@@ -77,13 +83,7 @@ class PageCreateGroup extends HookWidget {
                 maxLines: 3,
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: imageUrlController,
-                decoration: const InputDecoration(labelText: 'Image URL'),
-                validator: (value) => value == null || value.isEmpty
-                    ? 'Image URL is required'
-                    : null,
-              ),
+              ImageSelector(selectedImage: selectedImage),
               const SizedBox(height: 16),
               TextFormField(
                 controller: tagsController,
