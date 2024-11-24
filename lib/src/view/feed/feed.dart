@@ -1,4 +1,3 @@
-import 'package:bonne_reponse/helpers/ui_helpers.dart';
 import 'package:bonne_reponse/injection_container.dart';
 import 'package:bonne_reponse/src/authentication/hooks/use_authentication.dart';
 import 'package:bonne_reponse/src/authentication/services/auth_service.dart';
@@ -118,14 +117,6 @@ class Feed extends HookWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Navigate to Explore screen
-                        print('Click');
-                        context.goNamed('home');
-                      },
-                      child: const Text("Go to Explore"),
-                    ),
                   ],
                 ),
               )
@@ -159,7 +150,6 @@ class Feed extends HookWidget {
                           .toList(),
                     )),
               ),
-            verticalSpaceMedium,
             Expanded(
               child: !isConnectedToInternet.value
                   ? const NoInternet()
