@@ -50,12 +50,15 @@ class PostContent extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          postWithUserAndGroup.objectiveName,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(color: kcSecondaryVariant),
+                        SizedBox(
+                          width: 125,
+                          child: Text(
+                            postWithUserAndGroup.objectiveName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(color: kcSecondaryVariant),
+                          ),
                         ),
                         Text(
                           "Third day in a row",
