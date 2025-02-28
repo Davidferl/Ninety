@@ -540,3 +540,6 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/dart,vs,android,flutter
 android/app/build.gradle
 android/settings.gradle
+
+.google
+
