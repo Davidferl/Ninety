@@ -541,5 +541,5 @@ MigrationBackup/
 android/app/build.gradle
 android/settings.gradle
 
-.google
+google-services.json
 
