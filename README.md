@@ -1,6 +1,6 @@
 # Ninety
 
-## 🏆 Winning project of the November 2024 AMC Hackathon
+## 🏆 Winning App of the November 2024 AMC Hackathon
 
 ### Made by team "Here we go again"
 
