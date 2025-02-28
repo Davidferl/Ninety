@@ -542,5 +542,5 @@ android/app/build.gradle
 android/settings.gradle
 
 google-services.json
-.google
+firebase.json
 
