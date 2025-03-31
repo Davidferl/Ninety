@@ -8,7 +8,7 @@
 #### Team members
 - [Christophe Duchesne](https://github.com/cduchesne1)
 - [Jonathan Bessette](https://github.com/JoBess7)
-- [David Ferland](https://github.com/Davidferl)
+- [Thomas Mondor](https://github.com/ThomMondor)
 - [BaboucheOne](https://github.com/BaboucheOne)
 
 
